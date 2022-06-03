@@ -1,0 +1,35 @@
+TJQKA X, NNNN* *, LMNOP X
+
+royal flush
+n of a kind
+straight
+flush
+full house = 3 of a kind + 2 of a kind
+
+eval_straight()
+    
+
+n kind n_of_a_kind()
+    unique = unique(hand)
+    switch (unique)
+        case(2) return 
+
+US1 D5; UF2 MC4; US1 D5 LT 
+
+MC3 MCFA;
+D5; US1; MC3 UF2;
+MC3;
+D
+
+
+hand 
+    unique_suits;
+    unique_faces;
+    sum_distances;
+    most_common_multiplicity;
+    most_common_face;
+    lowest_card;
+
+
+1 2 4 5 6
+

@@ -1,0 +1,11 @@
+st fl hi:A #Royal Flush
+st fl #Straight Flush
+nb:A:4 #Four Aces
+nb:2-4:4 #Four 2–4
+nb:5-K:4 #Four 5–K
+nb:*:2,3 #Full House
+fl #Flush
+str #Straight
+nb:*:3 #Three of a Kind
+nb*:2 #Two Pair
+nb:J-A:2 #Jacks or Better
