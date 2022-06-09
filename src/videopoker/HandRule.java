@@ -1,5 +1,5 @@
 package videopoker;
 
-public interface handRule {
+public interface HandRule {
 	Boolean check(Object hand);
 }
