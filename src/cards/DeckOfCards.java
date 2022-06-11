@@ -13,7 +13,7 @@ public class DeckOfCards{
 	public DeckOfCards(String filename)
     {
         try{        
-            File fullDeckFile = new File("../files/fulldeck.txt");
+            File fullDeckFile = new File("./files/fulldeck.txt");
             Scanner scanFullDeck = new Scanner(fullDeckFile);
 
             File deckFile = new File(filename);
@@ -29,12 +29,15 @@ public class DeckOfCards{
             while (scanDeck.hasNext()){
                 deck.add(new Card(scanDeck.next()));
             }
+
             scanDeck.close();
-            scanFullDeck.close();        
+            scanFullDeck.close();
+            
         }
         catch(FileNotFoundException e){
             System.out.println(e.getMessage());
         }
+
     }    
     
     public DeckOfCards(Boolean jokers, Boolean use89T) { //vou deixar isto para o fim
@@ -59,6 +62,7 @@ public class DeckOfCards{
     	Collections.shuffle(deck);
 	}
     public ArrayList<Card> deal(int nCards){
+        if(nCards <= 0)throw new IllegalArgumentException("number of dealt cards must be greater than 0");
     	ArrayList<Card> giveCards = new ArrayList<Card>(nCards);
     	for(int i = 0; i < nCards;i++){
     		giveCards.add(deck.get(0));
@@ -81,7 +85,7 @@ public class DeckOfCards{
     
     public static void main(String[] args)
     { 
-        DeckOfCards deckteste = new DeckOfCards("../files/card-file.txt");
+        DeckOfCards deckteste = new DeckOfCards("./files/card-file.txt");
         System.out.println(deckteste.deck);
         deckteste.reset();
         System.out.println(deckteste.deck);

@@ -16,11 +16,13 @@ public class Card implements Comparable<Card>{
 //constructors
 	public Card(int face, int suit)//using ints 
 	{   
+		if(face>13||face<1) throw new IllegalArgumentException("Card rank is not valid.");
+		if(suit>4||suit<1) throw new IllegalArgumentException("Card suit is not valid.");
 		cardFace = face; // initialize face of card
 		cardSuit = suit; // initialize suit of card
 	}
 
-	public Card(String card)//using a 2 letter string as in the files the teacher provided 
+	public Card(String card)//using a 2 char string as in the files the teacher provided 
 	{   
 		for (int i=1; i<Suit.length;i++) {
 			if(Suit[i] == card.charAt(1)) {
@@ -42,7 +44,8 @@ public class Card implements Comparable<Card>{
 			}
 		}
 		
-		if(cardSuit==-1 || cardFace==-1)System.out.println("o ranque ou o naipe fornecido para esta carta não existe.");
+		if(cardSuit==-1) throw new IllegalArgumentException("Card suit is not valid.");
+		if(cardFace==-1) throw new IllegalArgumentException("Card rank is not valid.");
 		
 		//cardFace = Arrays.asList(Face).indexOf(card.substring(0,1)); // initialize face of card
 		//cardSuit =  Arrays.asList(Suit).indexOf(card.substring(0)); // initialize suit of card
