@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class DebugPlayer extends Player{
 	
-	 ArrayList<Action> action_list;
+	 ArrayList<Action> action_list = new ArrayList<Action>();
 	
 	 
 	 public DebugPlayer(int _money, String filename) {
@@ -26,13 +26,46 @@ public class DebugPlayer extends Player{
 
             scanFile.useDelimiter(" ");
 
+            String temp;
+            Action new_action;
+            
             while (scanFile.hasNext()){
-    
-            	//check character -> check if it needs to check numbers -> build action list
-                //action_list.add(new Action(scanFile.next()));
+            	
+            	temp = scanFile.next();       
+            	
+            	
+        		new_action = new Action(temp.charAt(0));
+        		action_list.add(new_action); 
+        		
+        		switch(temp.charAt(0)) {
+        		
+	        		case 'h':
+	        			// adds hold positions
+	            		while(scanFile.hasNextInt()) {
+	            			temp = scanFile.next();						// prob can remove this variable temp
+	            			int position = Integer.parseInt(temp);     // prob can remove this variable position            			
+	            			new_action.add_positions(position); 	// Q: should we check exceptions of parseInt, or it is good  with just the while condition ?
+	            		}
+	            		continue;
+	            		
+	        		case 'b':
+	        			// adds the amount of money to bet, if specified
+	            		if(scanFile.hasNextInt()) {
+	                		temp = scanFile.next();
+	                		int money = Integer.parseInt(temp);	                		
+	                		new_action.add_money(money);            			
+	            		}
+	            		continue;
+	        			
+        		}
+
+            	
+//            	System.out.println(temp);
+            	
+              		
             }
             
-            System.out.println(action_list);
+            System.out.println("action_list: "+ action_list);
 
             scanFile.close();
         }
