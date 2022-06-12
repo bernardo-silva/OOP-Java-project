@@ -1,4 +1,4 @@
-package videopoker;
+package videopoker.old;
 
 public class DistanceToStraight implements HandRule {
 	int distance;

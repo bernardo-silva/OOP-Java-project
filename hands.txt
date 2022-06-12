@@ -1,3 +1,6 @@
+Royal Flush:1
+distanceToStraight=0
+distanceToFlush
 st fl hi:A #Royal Flush
 st fl #Straight Flush
 nb:A:4 #Four Aces

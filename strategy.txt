@@ -1,14 +1,43 @@
-st fl ; nb:*:4#1. Straight flush, four of a kind, royal flush
+#1. Straight flush, four of a kind, royal flush
+Hand=0
+Hand=1
+Hand=2
+Hand=3
+Hand=4
+
 #2. 4 to a royal flush
+inHandOf=TX,JX,QX,KX,AX;4
+
 #3. Three aces
+numberRank=A;3
+
 #4. Straight, flush, full house
+Hand=5
+Hand=6
+Hand=7
+
 #5. Three of a kind (except aces)
+Hand=8
+
 #6. 4 to a straight flush
+distanceToStraight=1
+distanceToFlush=1
+------
+
 #7. Two pair
+Hand=9
+
 #8. High pair
+Hand=10
+
 #9. 4 to a flush
+distanceToFlush=1
+
 #10. 3 to a royal flush
+inHandOf=TX,JX,QX,KX,AX;3
+
 #11. 4 to an outside straight
+
 #12. Low pair
 #13. AKQJ unsuited
 #14. 3 to a straight flush (type 1)

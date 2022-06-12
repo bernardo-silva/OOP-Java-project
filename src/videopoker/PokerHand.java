@@ -1,35 +1,26 @@
 package videopoker;
 
-import java.util.ArrayList;
-
-public class PokerHand implements Comparable<PokerHand>{
+public abstract class PokerHand{
 	private String name;
-	private int payout;
-	private ArrayList<HandRule> rules;
+	private int[] payout;
+//	private ArrayList<HandRule> rules;
 	/**
 	 * @param name
 	 * @param payout
-	 * @param rules
 	 */
-	public PokerHand(String name, int payout, ArrayList<HandRule> rules) {
+	public PokerHand(String name, int[] payout) {//, ArrayList<HandRule> rules) {
 		this.name = name;
 		this.payout = payout;
-		this.rules = rules;
+//		this.rules = rules;
 	}
-	public boolean checkHand(Object hand) {
-		for(HandRule rule : rules) {
-			if(!rule.check(hand)) return false;
-		}
-		return true;
-	}
+	public abstract boolean checkHand(HandOfCards hand);
+
+	public abstract boolean checkHandOffBy(HandOfCards hand, int n);
+
 	public String getName() {
 		return name;
 	}
-	public int getPayout() {
-		return payout;
-	}
-	@Override
-	public int compareTo(PokerHand o) {
-		return (payout > o.getPayout())?1:0;
+	public int getPayout(int betAmount) {
+		return payout[betAmount-1];
 	}
 }

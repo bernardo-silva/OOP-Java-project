@@ -1,4 +1,4 @@
-package videopoker;
+package videopoker.old;
 
 public class DistanceToFlush implements HandRule {
 	int distance;

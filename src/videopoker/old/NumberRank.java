@@ -1,4 +1,4 @@
-package videopoker;
+package videopoker.old;
 
 public class NumberRank implements HandRule {
 	private String[] ranks;
