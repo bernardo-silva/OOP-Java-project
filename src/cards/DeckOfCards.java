@@ -1,6 +1,5 @@
 package cards;
 import java.io.*;
-import java.awt.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,6 +38,15 @@ public class DeckOfCards{
         }
 
     }    
+
+    public DeckOfCards() { //Default deck
+    	for(int suit=1; suit <= 4; suit++) {
+    		for(int face=1; face <= 13; face++) {
+    			fullDeck.add(new Card(face, suit));
+    			deck.add(new Card(face, suit));
+    		}
+    	}
+    } 
     
     public DeckOfCards(Boolean jokers, Boolean use89T) { //vou deixar isto para o fim
         if (jokers == null) {
@@ -62,9 +70,9 @@ public class DeckOfCards{
     	Collections.shuffle(deck);
 	}
     public ArrayList<Card> deal(int nCards){
-        if(nCards <= 0)throw new IllegalArgumentException("number of dealt cards must be greater than 0");
+        if(nCards <= 0)throw new IllegalArgumentException("Number of dealt cards must be greater than 0");
     	ArrayList<Card> giveCards = new ArrayList<Card>(nCards);
-    	for(int i = 0; i < nCards;i++){
+    	for(int i = 0; i < nCards; i++){
     		giveCards.add(deck.get(0));
     		deck.remove(0);
     	}

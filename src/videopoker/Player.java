@@ -1,37 +1,55 @@
 package videopoker;
 
-public class Player {
-	private int credits;
+import java.util.ArrayList;
+import cards.Card;
+import cards.HandOfCards;
+
+public abstract class Player {
+	//private int credits;
 	private int money;
-	private int last_bet;
-	private String strategy;
-	private String hand;
+	private int last_bet = 0;
+	//private String strategy;
+	private HandOfCards hand;
 	
 //	public Player(int _money, String _strategy, String _hand) {
 	public Player(int _money) {	
 		money = _money;
+		hand = new HandOfCards(5);
 		//strategy = _strategy;	
 		//hand = _hand;
 	}
 	
 	//NOTE: instead of performAction() in the UML, i implemented separately the methods
 	//______________Should we create another class called Action ?
-	public void credit(int i) {
-		money += i;
+	
+	public void setHand(ArrayList<Card> cards) {
+		if(cards.size() != 5) throw new IllegalArgumentException("The hand must have 5 cards");
+		int[] positions = {0,1,2,3,4};
+		hand.replaceCards(cards, positions);
+	}
+	public HandOfCards getHand() {
+		return hand;
+	}
+
+	public abstract Action askAction();
+	public abstract int askBet();
+
+	public void credit(int amount) {
+		money += amount;
 	}
 		
-	public void bet(int i) {
-		money -= i;
-		last_bet = i;
+	public void bet(int amount) {
+		money -= amount;
+		last_bet = amount;
 	}
 
 	public void bet() {
 		if(last_bet==0) {
-			money = money - 5;
+			money -= 5;
 			last_bet = 5;
 			return;
 		}
-		money = money - last_bet;		
+		money -= last_bet;		
 	}
 		
 	public void advice() {

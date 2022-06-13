@@ -1,5 +1,7 @@
 package videopoker;
 
+import cards.HandOfCards;
+
 public class FullHouse extends PokerHand {
 
 	public FullHouse(String name, int[] payout) {

@@ -1,4 +1,5 @@
 package videopoker;
+import cards.HandOfCards;
 
 public abstract class PokerHand{
 	private String name;

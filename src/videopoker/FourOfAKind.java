@@ -1,4 +1,8 @@
 package videopoker;
+
+import cards.Card;
+import cards.HandOfCards;
+
 public class FourOfAKind extends PokerHand {
 	private  Card minCard = null;
 	private  Card maxCard = null;
@@ -8,12 +12,13 @@ public class FourOfAKind extends PokerHand {
 	}
 	public FourOfAKind(String name, int[] payout, Card minCard, Card maxCard) {
 		super(name, payout);
-		this.cards = cards;
+		this.minCard = minCard;
+		this.maxCard = maxCard;
 	}
 
 	@Override
 	public boolean checkHand(HandOfCards hand) {
-		return fals;
+		return false;
 	}
 
 	@Override
@@ -21,5 +26,4 @@ public class FourOfAKind extends PokerHand {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

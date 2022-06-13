@@ -1,5 +1,8 @@
 package videopoker;
 
+import cards.Card;
+import cards.HandOfCards;
+
 public class NPairOf extends PokerHand {
 	private final int n;
 	private  Card minCard = null;

@@ -1,4 +1,8 @@
 package videopoker;
+
+import cards.Card;
+import cards.HandOfCards;
+
 public class ThreeOfAKind extends PokerHand {
 	private  Card minCard = null;
 	private  Card maxCard = null;
@@ -14,7 +18,7 @@ public class ThreeOfAKind extends PokerHand {
 
 	@Override
 	public boolean checkHand(HandOfCards hand) {
-		return hand.ranks.indexOf(3) != -1;
+//		return hand.ranks.indexOf(3) != -1;
 		return false;
 	}
 

@@ -1,5 +1,7 @@
 package videopoker;
 
+import cards.HandOfCards;
+
 public class RoyalFlush extends PokerHand {
 
 	public RoyalFlush(String name, int[] payout) {

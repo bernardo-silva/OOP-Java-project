@@ -6,10 +6,15 @@ import java.util.Collections;
 
 public class HandOfCards {
 	
-	protected ArrayList<Card> hand = new ArrayList<Card>(5);
+	protected ArrayList<Card> hand;
+
+	public HandOfCards(int size){
+		hand = new ArrayList<Card>(size);
+	}
 
 	public HandOfCards(ArrayList<Card> _hand){
-		if(_hand.size() > 5) throw new IllegalArgumentException("The hand must have less than 5 cards");
+		hand = new ArrayList<Card>(_hand.size());
+//		if(_hand.size() > 5) throw new IllegalArgumentException("The hand must have less than 5 cards");
 		hand = _hand;
 		sortCards();
 	}

@@ -81,6 +81,20 @@ public class DebugPlayer extends Player{
     { 
         DebugPlayer teste = new DebugPlayer(20, "C:\\Users\\vicen\\Desktop\\POO\\oop-project\\cmd-file.txt");
     }
+
+
+	@Override
+	public Action askAction() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public int askBet() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
 
 
