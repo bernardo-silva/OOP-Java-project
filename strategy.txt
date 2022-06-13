@@ -1,0 +1,34 @@
+st fl ; nb:*:4#1. Straight flush, four of a kind, royal flush
+#2. 4 to a royal flush
+#3. Three aces
+#4. Straight, flush, full house
+#5. Three of a kind (except aces)
+#6. 4 to a straight flush
+#7. Two pair
+#8. High pair
+#9. 4 to a flush
+#10. 3 to a royal flush
+#11. 4 to an outside straight
+#12. Low pair
+#13. AKQJ unsuited
+#14. 3 to a straight flush (type 1)
+#15. 4 to an inside straight with 3 high cards
+#16. QJ suited
+#17. 3 to a flush with 2 high cards
+#18. 2 suited high cards
+#19. 4 to an inside straight with 2 high cards
+#20. 3 to a straight flush (type 2)
+#21. 4 to an inside straight with 1 high card
+#22. KQJ unsuited
+#23. JT suited
+#24. QJ unsuited
+#25. 3 to a flush with 1 high card
+#26. QT suited
+#27. 3 to a straight flush (type 3)
+#28. KQ, KJ unsuited
+#29. Ace
+#30. KT suited
+#31. Jack, Queen or King
+#32. 4 to an inside straight with no high cards
+#33. 3 to a flush with no high cards
+#34. Discard everything3
