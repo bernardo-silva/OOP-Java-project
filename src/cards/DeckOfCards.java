@@ -6,32 +6,26 @@ import java.util.Collections;
 
 public class DeckOfCards{
 	
-	private final ArrayList<Card> fullDeck = new ArrayList<Card>(52);
-	private ArrayList<Card> deck = new ArrayList<Card>(52);
+	private final ArrayList<Card> fullDeck = new ArrayList<Card>();
+	private ArrayList<Card> deck = new ArrayList<Card>();
 
 	public DeckOfCards(String filename)
     {
         try{        
-            File fullDeckFile = new File("./files/fulldeck.txt");
-            Scanner scanFullDeck = new Scanner(fullDeckFile);
-
             File deckFile = new File(filename);
             Scanner scanDeck = new Scanner(deckFile);
+            Card card;
 
-            scanFullDeck.useDelimiter(" ");
-            scanDeck.useDelimiter(" ");
+            scanDeck.useDelimiter("\\s+");
             
-            while(scanFullDeck.hasNext()){
-                fullDeck.add(new Card(scanFullDeck.next()));
-            }
-
             while (scanDeck.hasNext()){
-                deck.add(new Card(scanDeck.next()));
+            	card = new Card(scanDeck.next());
+
+                fullDeck.add(card);
+                deck.add(card);
             }
 
             scanDeck.close();
-            scanFullDeck.close();
-            
         }
         catch(FileNotFoundException e){
             System.out.println(e.getMessage());
@@ -69,6 +63,7 @@ public class DeckOfCards{
     public void shuffle(){
     	Collections.shuffle(deck);
 	}
+
     public ArrayList<Card> deal(int nCards){
         if(nCards <= 0)throw new IllegalArgumentException("Number of dealt cards must be greater than 0");
     	ArrayList<Card> giveCards = new ArrayList<Card>(nCards);
@@ -88,19 +83,23 @@ public class DeckOfCards{
     }
     
     public void print() {
-        System.out.println(deck);
+    	System.out.println("Deck with " + deck.size() + " cards.");
+    	for(Card card : deck) {
+    		System.out.print(card + " ");
+    	}
+        System.out.println();
     }
     
-    public static void main(String[] args)
-    { 
-        DeckOfCards deckteste = new DeckOfCards("./files/card-file.txt");
-        System.out.println(deckteste.deck);
-        deckteste.reset();
-        System.out.println(deckteste.deck);
-        deckteste.shuffle();
-        System.out.println(deckteste.deck);
-        ArrayList<Card> testHand = deckteste.deal(3);
-        System.out.println(deckteste.deck);
-        System.out.println(testHand);
-    }
+//    public static void main(String[] args)
+//    { 
+//        DeckOfCards deckteste = new DeckOfCards("./files/card-file.txt");
+//        System.out.println(deckteste.deck);
+//        deckteste.reset();
+//        System.out.println(deckteste.deck);
+//        deckteste.shuffle();
+//        System.out.println(deckteste.deck);
+//        ArrayList<Card> testHand = deckteste.deal(3);
+//        System.out.println(deckteste.deck);
+//        System.out.println(testHand);
+//    }
 }

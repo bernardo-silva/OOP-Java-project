@@ -3,70 +3,59 @@ package videopoker;
 import java.io.File;
 import java.io.*;
 import java.util.Scanner;
-import java.util.ArrayList; 
+import java.util.LinkedList;
 
 
 public class DebugPlayer extends Player{
-	
-	 ArrayList<Action> action_list = new ArrayList<Action>();
-	
+
+	 LinkedList<Action> actions = new LinkedList<Action>();
 	 
 	 public DebugPlayer(int _money, String filename) {
 		 super(_money);
-		 get_action_list(filename);
+		 readActionsFromFile(filename);
 	 }
 	 
 	 
-	 public void get_action_list(String filename) {
+	 public void readActionsFromFile(String filename) {
 		 //reads the file and builds the list of actions
-		 
         try{        
             File actionFile = new File(filename);
             Scanner scanFile = new Scanner(actionFile);
 
             scanFile.useDelimiter(" ");
 
-            String temp;
+            String read;
             Action new_action;
             
             while (scanFile.hasNext()){
+            	read = scanFile.next();       
             	
-            	temp = scanFile.next();       
-            	
-            	
-        		new_action = new Action(temp.charAt(0));
-        		action_list.add(new_action); 
+        		new_action = new Action(read.charAt(0));
+        		actions.add(new_action); 
         		
-        		switch(temp.charAt(0)) {
-        		
-	        		case 'h':
-	        			// adds hold positions
-	            		while(scanFile.hasNextInt()) {
-	            			temp = scanFile.next();						// prob can remove this variable temp
-	            			int position = Integer.parseInt(temp);     // prob can remove this variable position            			
-	            			new_action.add_positions(position); 	// Q: should we check exceptions of parseInt, or it is good  with just the while condition ?
-	            		}
-	            		continue;
-	            		
-	        		case 'b':
-	        			// adds the amount of money to bet, if specified
-	            		if(scanFile.hasNextInt()) {
-	                		temp = scanFile.next();
-	                		int money = Integer.parseInt(temp);	                		
-	                		new_action.add_money(money);            			
-	            		}
-	            		continue;
-	        			
+        		switch(read.charAt(0)) {
+				case 'h':
+					// adds hold positions
+					int position;
+					while(scanFile.hasNextInt()) {
+						read = scanFile.next();						// prob can remove this variable read
+						position = Integer.parseInt(read);     // prob can remove this variable position            			
+						new_action.addPosition(position); 	// Q: should we check exceptions of parseInt, or it is good  with just the while condition ?
+					}
+					break;
+					
+				case 'b':
+					// adds the amount of money to bet, if specified
+					if(scanFile.hasNextInt()) {
+						read = scanFile.next();
+						int betAmount = Integer.parseInt(read);	                		
+						new_action.setBet(betAmount);            			
+					}
+					break;
         		}
-
-            	
 //            	System.out.println(temp);
-            	
-              		
             }
-            
-            System.out.println("action_list: "+ action_list);
-
+            System.out.println("actions: "+ actions);
             scanFile.close();
         }
         catch(FileNotFoundException e){
@@ -75,25 +64,23 @@ public class DebugPlayer extends Player{
 		 
 	 }
 	 
-	 
-	 
-    public static void main(String[] args)
-    { 
-        DebugPlayer teste = new DebugPlayer(20, "C:\\Users\\vicen\\Desktop\\POO\\oop-project\\cmd-file.txt");
-    }
-
-
 	@Override
 	public Action askAction() {
-		// TODO Auto-generated method stub
-		return null;
+		if (actions.isEmpty()) return null;
+		return actions.remove();
 	}
-
 
 	@Override
 	public int askBet() {
-		// TODO Auto-generated method stub
-		return 0;
+		int setBet = actions.remove().getBet();
+		if(setBet == 0) {
+			if(lastBet == 0) {
+				setBet =  5;
+				lastBet = 5;
+			}
+			else setBet = lastBet;
+		}
+		return lastBet;
 	}
 }
 

@@ -6,10 +6,10 @@ import cards.HandOfCards;
 
 public abstract class Player {
 	//private int credits;
-	private int money;
-	private int last_bet = 0;
+	protected int money;
+	protected int lastBet = 0;
 	//private String strategy;
-	private HandOfCards hand;
+	protected HandOfCards hand;
 	
 //	public Player(int _money, String _strategy, String _hand) {
 	public Player(int _money) {	
@@ -27,6 +27,11 @@ public abstract class Player {
 		int[] positions = {0,1,2,3,4};
 		hand.replaceCards(cards, positions);
 	}
+
+	public void replaceInHand(ArrayList<Card> card, ArrayList<Integer> positions) {
+		hand.replaceCards(card, positions);
+	}
+
 	public HandOfCards getHand() {
 		return hand;
 	}
@@ -34,22 +39,26 @@ public abstract class Player {
 	public abstract Action askAction();
 	public abstract int askBet();
 
+	public int getMoney() {
+		return money;
+
+	}
 	public void credit(int amount) {
-		money += amount;
+		money -= amount;
 	}
 		
 	public void bet(int amount) {
 		money -= amount;
-		last_bet = amount;
+		lastBet = amount;
 	}
 
 	public void bet() {
-		if(last_bet==0) {
+		if(lastBet==0) {
 			money -= 5;
-			last_bet = 5;
+			lastBet = 5;
 			return;
 		}
-		money -= last_bet;		
+		money -= lastBet;		
 	}
 		
 	public void advice() {

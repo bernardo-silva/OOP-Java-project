@@ -10,6 +10,14 @@ public class HandOfCards {
 
 	public HandOfCards(int size){
 		hand = new ArrayList<Card>(size);
+		for(int i = 0; i<size; i++) {
+			hand.add(null);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "" + hand;
 	}
 
 	public HandOfCards(ArrayList<Card> _hand){
@@ -22,9 +30,17 @@ public class HandOfCards {
 	public void sortCards(){
 		Collections.sort(hand);
 	}
+
+	public void replaceCards(ArrayList<Card> cards, ArrayList<Integer> positions) {
+    	for(int i = 0; i < positions.size(); i++){
+			if(positions.get(i)>4 || positions.get(i)<0)throw new IllegalArgumentException("position is 0 for the first card and 4 for the last.");
+    		hand.set(positions.get(i), cards.get(i));
+    	}
+    	sortCards();
+    }
 	
 	public void replaceCards(ArrayList<Card> cards, int[] positions) {
-    	for(int i = 0; i < positions.length;i++){
+    	for(int i = 0; i < positions.length; i++){
 			if(positions[i]>4 || positions[i]<0)throw new IllegalArgumentException("position is 0 for the first card and 4 for the last.");
     		hand.set(positions[i],cards.get(i));
     	}

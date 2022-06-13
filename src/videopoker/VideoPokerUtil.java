@@ -22,7 +22,6 @@ public class VideoPokerUtil {
 			while(scan.hasNextLine()) {
 				hands.add(scanHand(scan));
 			}
-			System.out.println("Coiso");
 			scan.close();
 
 		} catch (Exception e) {
@@ -55,7 +54,6 @@ public class VideoPokerUtil {
 			hand = new StraightFlush(name, payouts);
 			break;
 		case "FourOfAKind":
-			System.out.println("FourOfAKind " + params[1]);
 			String[] cards = params[1].split("-",2);
 			minCard = new Card(params[1].split("-",2)[0]);
 			if (cards.length == 2)
@@ -107,9 +105,6 @@ public class VideoPokerUtil {
 	}
 	
 	private static int[] stringArrToIntArr(String[] split) {
-		for(String s : split)
-			System.out.print(s);
-		System.out.println();
 		int[] payouts = new int[split.length];
 
 		for(int i=0;i<split.length;i++) {
