@@ -37,7 +37,7 @@ public abstract class Player {
 	}
 
 	public abstract Action askAction();
-	public abstract int askBet();
+//	public abstract int askBet();
 
 	public int getMoney() {
 		return money;
@@ -51,25 +51,20 @@ public abstract class Player {
 	}
 		
 		
-	public void bet(int amount) {
-		money -= amount;
-		lastBet = amount;
-	}
-
-	public void bet() {
-		if(lastBet==0) {
-			money -= 5;
-			lastBet = 5;
-			return;
-		}
-		money -= lastBet;		
-	}
+//	public void bet(int amount) {
+//		money -= amount;
+//		lastBet = amount;
+//	}
+//
+//	public void bet() {
+//		if(lastBet==0) {
+//			money -= 5;
+//			lastBet = 5;
+//			return;
+//		}
+//		money -= lastBet;		
+//	}
 		
-	public void advice() {
-		// Q: THIS IS IMPLEMENTED ON VIDEO POKER??
-		// prints the next action the player should take
-		
-	}
 	
 	public void	statistics() {
 		// prints average statistics of the game
