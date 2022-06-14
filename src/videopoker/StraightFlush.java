@@ -1,5 +1,7 @@
 package videopoker;
 
+import cards.HandOfCards;
+
 public class StraightFlush extends PokerHand {
 
 	public StraightFlush(String name, int[] payout) {

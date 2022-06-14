@@ -1,4 +1,8 @@
 package videopoker;
+
+import cards.Card;
+import cards.HandOfCards;
+
 public class FourOfAKind extends PokerHand {
 	private  Card minCard = null;
 	private  Card maxCard = null;
@@ -7,13 +11,29 @@ public class FourOfAKind extends PokerHand {
 		super(name, payout);
 	}
 	public FourOfAKind(String name, int[] payout, Card minCard, Card maxCard) {
-		super(name, payout);
-		this.cards = cards;
+		super(name + " " + minCard.getFace() + " - " + maxCard.getFace(), payout);
+		this.minCard = minCard;
+		this.maxCard = maxCard;
 	}
 
 	@Override
 	public boolean checkHand(HandOfCards hand) {
-		return fals;
+		int[] frequencies = hand.getFrequencies();
+		int start, end;
+
+		if(minCard == null && maxCard == null) {
+			start = 2;
+			end = 14;
+		}
+		else {
+			start = minCard.getFace();
+			end = maxCard.getFace();
+		}
+
+		for(int i = start; i<=end; i++) 
+			if(frequencies[i] == 4) return true;
+		
+		return false;
 	}
 
 	@Override
@@ -21,5 +41,4 @@ public class FourOfAKind extends PokerHand {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

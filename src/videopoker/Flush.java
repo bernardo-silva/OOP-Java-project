@@ -1,5 +1,7 @@
 package videopoker;
 
+import cards.HandOfCards;
+
 public class Flush extends PokerHand {
 
 	public Flush(String name, int[] payout) {
@@ -8,13 +10,12 @@ public class Flush extends PokerHand {
 
 	@Override
 	public boolean checkHand(HandOfCards hand) {
-		return hand.uniqueSuits.length == 1;
+		return hand.getUniqueSuits() == 1;
 	}
 
 	@Override
 	public boolean checkHandOffBy(HandOfCards hand, int n) {
-		// TODO Auto-generated method stub
-		return false;
+		return hand.getUniqueSuits() == 1 + n;
 	}
 
 }

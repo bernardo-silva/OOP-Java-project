@@ -1,5 +1,7 @@
 package videopoker;
 
+import cards.HandOfCards;
+
 public class RoyalFlush extends PokerHand {
 
 	public RoyalFlush(String name, int[] payout) {
@@ -9,8 +11,11 @@ public class RoyalFlush extends PokerHand {
 
 	@Override
 	public boolean checkHand(HandOfCards hand) {
-		// TODO Auto-generated method stub
-		return false;
+		PokerHand straight = new Straight("Straight", null);
+		PokerHand flush = new Flush("Flush", null);
+		
+		return (hand.getLowCard() == 10) && (flush.checkHand(hand)) &&
+		(straight.checkHand(hand));
 	}
 
 	@Override
