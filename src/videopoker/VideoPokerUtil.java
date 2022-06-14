@@ -42,7 +42,7 @@ public class VideoPokerUtil {
 		String name = params[0];
 		Card minCard, maxCard;
 		
-		System.out.println("Parsing " + name);
+//		System.out.println("Parsing " + name);
 		
 		switch(name) {
 		case "RoyalFlush":

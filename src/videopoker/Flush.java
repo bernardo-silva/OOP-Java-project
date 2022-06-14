@@ -10,14 +10,12 @@ public class Flush extends PokerHand {
 
 	@Override
 	public boolean checkHand(HandOfCards hand) {
-//		return hand.uniqueSuits.length == 1;
-		return false;
+		return hand.getUniqueSuits() == 1;
 	}
 
 	@Override
 	public boolean checkHandOffBy(HandOfCards hand, int n) {
-		// TODO Auto-generated method stub
-		return false;
+		return hand.getUniqueSuits() == 1 + n;
 	}
 
 }

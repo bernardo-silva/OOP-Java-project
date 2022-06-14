@@ -46,6 +46,10 @@ public abstract class Player {
 	public void credit(int amount) {
 		money -= amount;
 	}
+	public void payout(int amount) {
+		money += amount;
+	}
+		
 		
 	public void bet(int amount) {
 		money -= amount;

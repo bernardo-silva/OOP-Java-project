@@ -10,8 +10,7 @@ public class Straight extends PokerHand {
 
 	@Override
 	public boolean checkHand(HandOfCards hand) {
-		// TODO Auto-generated method stub
-		return false;
+		return hand.getUniqueFaces() == 5 && hand.getCardDistances() == 4;
 	}
 
 	@Override

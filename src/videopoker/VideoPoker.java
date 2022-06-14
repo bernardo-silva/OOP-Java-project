@@ -37,7 +37,6 @@ public class VideoPoker {
 		hands= new ArrayList<PokerHand>();
 
 		hands = VideoPokerUtil.handsFromFile(handFile);
-		System.out.println(hands);
 	}
 
 	public VideoPoker(String handFile, String stratFile, Player player) {
@@ -53,7 +52,13 @@ public class VideoPoker {
 
 	public int payout() {
 		PokerHand highestHand = checkPlayerHand();
-		if(highestHand == null) return 0;
+		if(highestHand == null) {
+			System.out.println("Player lost.");
+			System.out.println("Player money: " + player.getMoney());
+			return 0;
+		}
+		System.out.println("Player won with " + highestHand.getName() + ".");
+		System.out.println("Player money: " + player.getMoney());
 		return highestHand.getPayout(bet);
 	}
 
@@ -63,6 +68,7 @@ public class VideoPoker {
 
 	private PokerHand checkPlayerHand(){
 		for(PokerHand hand : hands) {
+//			System.out.println("Checking " + hand.getName());
 			if (hand.checkHand(player.getHand())) return hand;
 		}
 		return null;
@@ -99,11 +105,16 @@ public class VideoPoker {
 			ArrayList<Integer> holdPositions = action.getPositions();
 			holdPositions.replaceAll(e -> e - 1);
 			positions.removeAll(holdPositions);
+			
+			if (positions.size() == 0) break;
 
 			player.replaceInHand(deck.deal(positions.size()), positions);
 			System.out.println("Dealt new cards. Hand is " + player.getHand());
 			break;
+		default:
+			System.out.println("Peformed " + action.getAction());
 		}
+		System.out.println();
 		return true;
 	}
 
@@ -112,7 +123,7 @@ public class VideoPoker {
 			if(!gamePhase('b')) break;
 			if(!gamePhase('d')) break;
 			if(!gamePhase('h')) break;
-			payout();
+			player.payout(payout());
 		}
 		System.out.println("Game finished.");
 	}
@@ -121,7 +132,7 @@ public class VideoPoker {
 		Action action = player.askAction();
 		if(action == null) return false;
 
-		while(action.getAction() == '$') {
+		while(action.getAction() == '$' || action.getAction() == 'a') {
 			System.out.println("Performing action " + action);
 			performAction(action);
 			action = player.askAction();

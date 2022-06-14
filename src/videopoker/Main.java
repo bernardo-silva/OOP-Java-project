@@ -9,6 +9,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		if(args.length != 4) {
+			System.out.println(args.length);
 			printCommandLineHelp();
 			System.exit(0);
 		}
@@ -25,6 +26,7 @@ public class Main {
 				game = new VideoPoker("hands.txt", stratfile, args[3], false, player);
 			}
 			catch(Exception e){
+				e.printStackTrace();
 				printCommandLineHelp();
 				System.exit(0);
 			}

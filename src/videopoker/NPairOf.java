@@ -17,8 +17,23 @@ public class NPairOf extends PokerHand {
 
 	@Override
 	public boolean checkHand(HandOfCards hand) {
-		// TODO Auto-generated method stub
-		return false;
+		int[] frequencies = hand.getFrequencies();
+		int start, end;
+		int nFound = 0;
+
+		if(minCard == null && maxCard == null) {
+			start = 2;
+			end = 14;
+		}
+		else {
+			start = minCard.getFace();
+			end = maxCard.getFace();
+		}
+
+		for(int i = start; i<=end; i++) 
+			if(frequencies[i] == 2) nFound ++;
+		
+		return nFound == n;
 	}
 
 	@Override

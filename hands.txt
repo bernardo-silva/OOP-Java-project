@@ -1,11 +1,11 @@
-RoyalFlush                0,1,3,4,5
-StraightFlush             1,2,3,4,5
-FourOfAKind        A      1,2,3,4,5
-FourOfAKind        2-4    1,2,3,4,5
-FourOfAKind        5-K    4,5,6,7,8
-FullHouse                 5,3,4,5,1
-Flush                     6,3,4,5,6
-Straight                  7,2,3,4,5
-ThreeOfAKind       2-A    3,4,5,1,3
+RoyalFlush                250,500,750,1000,4000
+StraightFlush             50,100,150,200,250
+FourOfAKind        A      160,320,480,640,800
+FourOfAKind        2-4    80,160,240,320,400
+FourOfAKind        5-K    50,100,150,200,250
+FullHouse                 10,20,30,40,50
+Flush                     7,14,21,28,35
+Straight                  5,10,15,20,25
+ThreeOfAKind       2-A    3,6,9,12,15
 NPairOf        2   2-A    1,2,3,4,5
 NPairOf        1   J-A    1,2,3,4,5

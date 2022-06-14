@@ -15,7 +15,7 @@ public class Card implements Comparable<Card>{
 		H,
 		D
 	}
-	static final char[] Face = {' ','2','3','4','5','6','7','8','9','T','J','Q','K','A'};
+	static final char[] Face = {' ',' ','2','3','4','5','6','7','8','9','T','J','Q','K','A'};
 
 	private int cardFace; // face of card
 	private Suit cardSuit; // suit of card
@@ -32,9 +32,9 @@ public class Card implements Comparable<Card>{
 	public Card(String card)//using a 2 char string as in the files the teacher provided 
 	{   
 		cardFace = -1;
-		for (int i=1; i<Face.length;i++) {
+		for (int i=2; i<Face.length;i++) {
 			if(Face[i] == card.charAt(0)) {
-				cardFace=i;
+				cardFace = i;
 				break;
 			}
 		}

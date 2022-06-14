@@ -11,8 +11,12 @@ public class FullHouse extends PokerHand {
 
 	@Override
 	public boolean checkHand(HandOfCards hand) {
-		// TODO Auto-generated method stub
-		return false;
+		int[] frequencies = hand.getFrequencies();
+
+		for(int i = 2; i<=14; i++) 
+			if(frequencies[i] == 1 || frequencies[i] == 4) return false;
+		
+		return true;
 	}
 
 	@Override
