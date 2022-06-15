@@ -3,13 +3,12 @@
  */
 package videopoker;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.HashMap;
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Scanner;
+
+import cards.DeckOfCards;
+import cards.HandOfCards;
+import cards.Card;
+
 /**
  * @author bs
  *
@@ -18,142 +17,135 @@ public class VideoPoker {
 	Player player;
 	DeckOfCards deck;
 	
-	private List<String> hands;
-	private HashMap<String, String[]> handsParameters;
-	private HashMap<String, Integer> payouts;
-	private List<String> optimalStrat;
+//	private List<String> hands;
+	private ArrayList<PokerHand> hands;
+	private ArrayList<PokerHand> optimalStrat;
 	
-	/**
-	 * @param handFile 
-	 * 
-	 */
-	public VideoPoker(String stratFile, String handFile) {
-		player = new Player();
+	private boolean shuffle = true;
+	
+	private int bet = 0;
+	
+	public VideoPoker(String handFile, String stratFile, String deckFile, boolean shuffle, Player player) {
+		this.player = player;
+		this.shuffle = shuffle;
+
+		deck = new DeckOfCards(deckFile);
+		
+		deck.print();
+		
+		optimalStrat = VideoPokerUtil.stratFromFile(stratFile);
+		hands= new ArrayList<PokerHand>();
+
+		hands = VideoPokerUtil.handsFromFile(handFile);
+	}
+
+	public VideoPoker(String handFile, String stratFile, Player player) {
+		this.player = player;
 		deck = new DeckOfCards();
 		
-		optimalStrat = stratFromFile(stratFile);
-		handsParameters = new HashMap<String, String[]>();
-		payouts = new HashMap<String, Integer>();
-		handsFromFile(handFile);
+		optimalStrat = VideoPokerUtil.stratFromFile(stratFile);
+		hands= new ArrayList<PokerHand>();
+
+		hands = VideoPokerUtil.handsFromFile(handFile);
 		System.out.println(hands);
 	}
 
-	private List<String> stratFromFile(String stratFile) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-//	private void handsFromJson(String handFile) {
-//		try {
-//			File f = new File(handFile);
-//			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-//			DocumentBuilder dBuilder;
-//			dBuilder = dbFactory.newDocumentBuilder();
-//			Document doc = dBuilder.parse(handFile);
-//			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-//	        NodeList nList = doc.getElementsByTagName("hand");
-//	        System.out.println("----------------------------");
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-	
-	private void handsFromFile(String handFile) {
-		File f = new File(handFile);
-		Scanner scan;
-		try {
-			scan = new Scanner(f);
-			while(scan.hasNextLine()) {
-				String line = scan.nextLine();
-				System.out.println(line);
-//				String[] parameters = line.split("#", 0)[0].split(" ",0);
-//				String name = line.split("#", 0)[1];
-//
-//				hands.add(name);
-//				handsParameters.put(name, parameters);
-//				//TODO: Implement payouts
-//				payouts.put(name, 1);
-			}
-			scan.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("Bad Hand File");
-			e.printStackTrace();
+	public int payout() {
+		PokerHand highestHand = checkPlayerHand();
+		if(highestHand == null) {
+			System.out.println("Player lost.");
+			System.out.println("Player money: " + player.getMoney());
+			return 0;
 		}
-	}
-	
-	private void scanHand(Scanner scan) {
-		String line = scan.nextLine();
-		String[] params = line.split(":",2);
-		
-		String name = params[0];
-		int payout =  Integer.parseInt(params[1]);
-		
-		String rule;
-		List<handRule> rules = new ArrayList<>();
-		while(scan.hasNextLine()) {
-			line = scan.nextLine();
-			if(line.isBlank()) return;
-			params = line.split("=",2);
-			rule = params[0];
-
-			switch (rule) {
-			case "numberRank":
-				String[] ranks = rule.split(";",2)[0].split(",",0);
-				int value = Integer.parseInt(rule.split(";",2)[0].split(",",0)[1]);
-				rules.add(new numberRank(ranks, value));
-			}
-
-
-		}
-		
-		
-	}
-
-	public void payout() {
-		
+		System.out.println("Player won with " + highestHand.getName() + ".");
+		System.out.println("Player money: " + player.getMoney());
+		return highestHand.getPayout(bet);
 	}
 
 	public int[] advice(){
 		return null;
 	}
 
-	private String checkHand(){
-		boolean satisfies = true;
-		for(String hand : hands) {
-
-			for(String par : handsParameters.get(hand)) {
-				String rule = par.split(":", 2)[0];
-				String value = par.split(":", 2)[1];
-				
-				satisfies = checkRule(rule, value);
-
-				if(!satisfies) break;
-			}
+	private PokerHand checkPlayerHand(){
+		for(PokerHand hand : hands) {
+//			System.out.println("Checking " + hand.getName());
+			if (hand.checkHand(player.getHand())) return hand;
 		}
 		return null;
 	}
 
-	private boolean checkRule(String rule, String value) {
-		switch (rule) {
-			case "nb":
-				String[] nbRules = value.split(":", 0);
-				break;
-			case "st":
-				if(player.hand.straightDistance != 0)
-					return false;
-				break;
-			case "fl":
-				if(player.hand.flushDistance != 0)
-					return false;
-				break;
-			case "hi":
-				break;
+	private boolean performAction(Action action) {
+		switch(action.getAction()) {
+		case 'b':
+			if(action.getBet() != 0) bet = action.getBet();
+			else if(bet == 0) bet = 5;
+			
+			if(bet < 1 || bet > 5) {
+				System.out.println("Invalid bet amount: " + bet);
+				bet = 5;
+				return false;
+			}
+			player.credit(bet);
+			System.out.println("Betted " + bet + ". Player cash is " + player.getMoney());
+			break;
+
+		case 'd':
+			player.setHand(deck.deal(5));
+			System.out.println("Dealt cards. Hand is " + player.getHand());
+			break;
+		case '$':
+			System.out.println("Player cash is " + player.getMoney());
+			break;
+
+		case 'h':
+			ArrayList<Integer> positions = new ArrayList<Integer>();
+
+			for(int i=0; i<5; i++) positions.add(i);
+
+			ArrayList<Integer> holdPositions = action.getPositions();
+			holdPositions.replaceAll(e -> e - 1);
+			positions.removeAll(holdPositions);
+			
+			if (positions.size() == 0) break;
+
+			player.replaceInHand(deck.deal(positions.size()), positions);
+			System.out.println("Dealt new cards. Hand is " + player.getHand());
+			break;
+		default:
+			System.out.println("Peformed " + action.getAction());
 		}
-		return false;
+		System.out.println();
+		return true;
 	}
 
-	public static void main(String[] args) {
+	public void playGame() {
+		while(true) {
+			if(!gamePhase('b')) break;
+			if(!gamePhase('d')) break;
+			if(!gamePhase('h')) break;
+			player.payout(payout());
+		}
+		System.out.println("Game finished.");
+	}
 
-		VideoPoker vp = new VideoPoker("", "hands2.txt");
+	private boolean gamePhase(char expectedAction) {
+		Action action = player.askAction();
+		if(action == null) return false;
+
+		while(action.getAction() == '$' || action.getAction() == 'a') {
+			System.out.println("Performing action " + action);
+			performAction(action);
+			action = player.askAction();
+		}
+
+		if(action.getAction() != expectedAction) {
+			 System.out.println("Illegal action. Please provide a bet");
+			 gamePhase(expectedAction);
+		}
+
+		System.out.println("Performing action " + action);
+		if(!performAction(action)) gamePhase(expectedAction);
+		
+		return true;
 	}
 }

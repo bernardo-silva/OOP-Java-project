@@ -1,6 +1,6 @@
-package videopoker;
+package videopoker.old;
 
-public class numberRank implements handRule {
+public class NumberRank implements HandRule {
 	private String[] ranks;
 	private int value;
 
@@ -8,7 +8,7 @@ public class numberRank implements handRule {
 	 * @param ranks
 	 * @param value
 	 */
-	public numberRank(String[] ranks, int value) {
+	public NumberRank(String[] ranks, int value) {
 		this.ranks = ranks;
 		this.value = value;
 	}
