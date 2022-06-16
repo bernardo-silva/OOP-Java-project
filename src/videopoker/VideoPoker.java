@@ -67,10 +67,16 @@ public class VideoPoker {
 	}
 
 	private PokerHand checkPlayerHand(){
+		int count = 10;
 		for(PokerHand hand : hands) {
 //			System.out.println("Checking " + hand.getName());
-			if (hand.checkHand(player.getHand())) return hand;
+			if (hand.checkHand(player.getHand())){
+				player.addStatistic(count); //aqui adicionar metodo que adiciona 1 às estatisticas da mao que ganhou.
+				return hand;
+			}
+			count--; 
 		}
+		player.addStatistic(11);
 		return null;
 	}
 
@@ -91,6 +97,7 @@ public class VideoPoker {
 
 		case 'd':
 			player.setHand(deck.deal(5));
+			player.addStatistic(12);
 			System.out.println("Dealt cards. Hand is " + player.getHand());
 			break;
 		case '$':
@@ -110,6 +117,9 @@ public class VideoPoker {
 
 			player.replaceInHand(deck.deal(positions.size()), positions);
 			System.out.println("Dealt new cards. Hand is " + player.getHand());
+			break;
+		case 's':
+			player.statistics();
 			break;
 		default:
 			System.out.println("Peformed " + action.getAction());

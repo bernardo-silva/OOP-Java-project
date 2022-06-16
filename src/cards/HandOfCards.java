@@ -31,8 +31,8 @@ public class HandOfCards {
 		for(int i = 0; i<size; i++) {
 			hand.add(null);
 		}
-		uniqueSuits = new LinkedHashSet<Integer>(5);
-		uniqueFaces = new LinkedHashSet<Integer>(5);
+		uniqueSuits = new LinkedHashSet<Integer>();
+		uniqueFaces = new LinkedHashSet<Integer>();
 		cardFrequencies = new int[15];
 	}
 

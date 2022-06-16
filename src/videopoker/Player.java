@@ -6,14 +6,17 @@ import cards.HandOfCards;
 
 public abstract class Player {
 	//private int credits;
+	protected final int money0; //seria melhor guardar no stats? nao seria final nesse caso.
 	protected int money;
 	protected int lastBet = 0;
 	//private String strategy;
 	protected HandOfCards hand;
+	protected int[] stats = new int[13]; 
 	
 //	public Player(int _money, String _strategy, String _hand) {
 	public Player(int _money) {	
 		money = _money;
+		money0 = _money;
 		hand = new HandOfCards(5);
 		//strategy = _strategy;	
 		//hand = _hand;
@@ -37,7 +40,7 @@ public abstract class Player {
 	}
 
 	public abstract Action askAction();
-//	public abstract int askBet();
+	public abstract int askBet();
 
 	public int getMoney() {
 		return money;
@@ -68,27 +71,30 @@ public abstract class Player {
 	
 	public void	statistics() {
 		// prints average statistics of the game
-        int N0 = 0;
-        
+
         System.out.println(" Hand                    Nb"
                        + "\n __________________________" 
-                       + "\n Jacks or Better         " + N0 
-                       + "\n Two Pair                " + N0
-                       + "\n Three of a Kind         " + N0
-                       + "\n Straight                " + N0
-                       + "\n Flush                   " + N0
-                       + "\n Full house              " + N0
-                       + "\n Four of a Kind          " + N0
-                       + "\n Straight Flush          " + N0
-                       + "\n Royal Flush             " + N0
-                       + "\n Other                   " + N0
+                       + "\n Jacks or Better         " + stats[0]
+                       + "\n Two Pair                " + stats[1]
+                       + "\n Three of a Kind         " + stats[2]
+                       + "\n Straight                " + stats[3]
+                       + "\n Flush                   " + stats[4]
+                       + "\n Full house              " + stats[5]
+                       + "\n Four of a Kind          " + (stats[6] + stats[7] + stats[8])
+                       + "\n Straight Flush          " + stats[9]
+                       + "\n Royal Flush             " + stats[10]
+                       + "\n Other                   " + stats[11]
                        + "\n___________________________"
-                       + "\n Total                   " + N0
+                       + "\n Total                   " + stats[12]
                        + "\n___________________________"
-                       + "\n Credit                " + money + " (" + N0 + "%)");
+                       + "\n Credit                " + money + " (" + (money/money0*100-100) + "%)");
 		
 	}
 	
+	public void addStatistic(int i){
+		stats[i] = stats[i] + 1;
+	}
+
 	public void	hold() {
 		// discards the cards that aren't hold and swaps them with new cards from the deck
 		
