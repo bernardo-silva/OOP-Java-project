@@ -20,5 +20,14 @@ public class OptimalPlayer extends Player{
 		//4. Player holds indexes given by advice 
 		return null;
 	}
+	@Override
+	public int askBet() {
+		// TODO Auto-generated method stub
+		//1. Player bets defined amount
+		//2. Player deals
+		//3. Player asks advice and stores indexes
+		//4. Player holds indexes given by advice 
+		return 1;
+	}
 
 }
