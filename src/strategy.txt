@@ -1,0 +1,67 @@
+#1. Straight flush, four of a kind, royal flush
+Hand 0
+Hand 1
+Hand 2
+Hand 3
+Hand 4
+
+#2. 4 to a royal flush
+NToHand 0 1
+
+#3. Three aces
+ThreeOfAKind A 
+
+#4. Straight, flush, full house
+Hand 5
+Hand 6
+Hand 7
+
+#5. Three of a kind (except aces)
+Hand 8
+
+#6. 4 to a straight flush
+NToHand 1 1
+
+#7. Two pair
+Hand 9
+
+#8. High pair
+Hand 10
+
+#9. 4 to a flush
+NToHand 5 1
+
+#10. 3 to a royal flush
+NToHand 0 2
+
+#11. 4 to an outside straight
+NToHand 6 2 O
+
+#12. Low pair
+NPairOf 1  2-T 
+
+#13. AKQJ unsuited
+Cards A K Q J
+
+#14. 3 to a straight flush (type 1)
+NToHand 1 2
+#15. 4 to an inside straight with 3 high cards
+#16. QJ suited
+#17. 3 to a flush with 2 high cards
+#18. 2 suited high cards
+#19. 4 to an inside straight with 2 high cards
+#20. 3 to a straight flush (type 2)
+#21. 4 to an inside straight with 1 high card
+#22. KQJ unsuited
+#23. JT suited
+#24. QJ unsuited
+#25. 3 to a flush with 1 high card
+#26. QT suited
+#27. 3 to a straight flush (type 3)
+#28. KQ, KJ unsuited
+#29. Ace
+#30. KT suited
+#31. Jack, Queen or King
+#32. 4 to an inside straight with no high cards
+#33. 3 to a flush with no high cards
+#34. Discard everything
