@@ -31,20 +31,20 @@ public class Main {
 				System.exit(0);
 			}
 			break;
-//		case "-s":
-//			try {
-//				int credit = Integer.parseInt(args[1]);
-//				int bet = Integer.parseInt(args[2]);
-//				int nbdeals = Integer.parseInt(args[3]);
-//
-//				player = new SimulationPlayer(credit, bet, nbdeals);
-//				game = new VideoPoker(args[3], stratfile, player);
-//			}
-//			catch(Exception e){
-//				printCommandLineHelp();
-//				System.exit(0);
-//			}
-//			break;
+		case "-s":
+			try {
+				int credit = Integer.parseInt(args[1]);
+				int bet = Integer.parseInt(args[2]);
+				int nbdeals = Integer.parseInt(args[3]);
+
+				player = new SimulationPlayer(credit, bet, nbdeals);
+				game = new VideoPoker(args[3], stratfile, player);
+			}
+			catch(Exception e){
+				printCommandLineHelp();
+				System.exit(0);
+			}
+			break;
 		default:
 			printCommandLineHelp();
 			System.exit(0);

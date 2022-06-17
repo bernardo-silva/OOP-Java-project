@@ -10,6 +10,7 @@ public abstract class Player {
 	protected int lastBet = 0;
 	//private String strategy;
 	protected HandOfCards hand;
+	protected int advised_positions[];
 	
 //	public Player(int _money, String _strategy, String _hand) {
 	public Player(int _money) {	
@@ -89,11 +90,11 @@ public abstract class Player {
 		
 	}
 	
-	public void	hold() {
-		// discards the cards that aren't hold and swaps them with new cards from the deck
+	public void setAdvicePositions(int _positionsFromAdvice[]) {
 		
-		// prints current hand
-		
+		advised_positions = _positionsFromAdvice.clone();
+	
 	}
+	
 	
 }
