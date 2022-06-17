@@ -1,66 +1,69 @@
 package videopoker;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 public class SimulationPlayer extends Player{
-	private ArrayList<Integer> advicePositions;
-	// Adicionar metodo "setAdvicePositions na classe player
-	
-	//private LinkedList<Action> actions;
 	private int bet;
 	private int nbdeals;
-	private int i;
-	private int current_nbdeals;
-	Action action;
+	private int current_nbdeals = 1;
 	
+	private enum gameStage{
+		BET,
+		DEAL,
+		ADVICE,
+		HOLD,
+		END;
+	}
+	private gameStage stage = gameStage.BET;
 
 	public SimulationPlayer(int credit, int _bet, int _nbdeals) {
 		super(credit);
 		bet = _bet;
 		nbdeals = _nbdeals;
-				
 	}
 
 
 	@Override
 	public Action askAction() {
-		// TODO Auto-generated method stub
-		switch(i) {
-		case 0:
+		Action action;
+
+		if(current_nbdeals == nbdeals) {
+			stage = gameStage.END;
+			return new Action('s');   // "This method must return a result of type Action" -> return null é mesmo legit????
+		}
+
+		switch(stage) {
+		case BET:
 			// Player bets defined amount
 			action = new Action('b');
 			action.setBet(bet);
-			i++;
+			stage = gameStage.DEAL;
 			return action;
-			
-		case 1:
+
+		case DEAL:
 			// Player deals
-			i++;
-			current_nbdeals++;
+			stage = gameStage.ADVICE;
 			return new Action('d');
-		
-		case 2:
+
+		case ADVICE:
 			// Player asks advice and stores indexes
-			i++;
+			stage = gameStage.HOLD;
 			return new Action('a');
 			
-		case 3:
+		case HOLD:
 			// Player holds indexes given by advice
-			
-			if(current_nbdeals == nbdeals) return null;   // "This method must return a result of type Action" -> return null é mesmo legit????
-			
-			i = 0; 	// starts a new game cycle of b-d-a-h 
 			action = new Action('h');
-			
-			// potential bug: 
 			action.addPositions(advised_positions); // add a flag to control the execution of this?
-			return action;
-			
-		}
-				
-	}
 
+			stage = gameStage.BET; //Restart cyle
+			current_nbdeals++;
+			return action;
+
+		case END:
+			return null;
+			
+		default:
+			return null;
+		}
+	}
 }
 
 

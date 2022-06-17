@@ -10,24 +10,16 @@ public abstract class Player {
 	protected final int money0; //seria melhor guardar no stats? nao seria final nesse caso.
 	protected int money;
 	protected int lastBet = 0;
-	// private String strategy;
 	protected HandOfCards hand;
 
 	protected int[] stats = new int[13]; 
 	protected int advised_positions[];
 
-//	public Player(int _money, String _strategy, String _hand) {
 	public Player(int _money) {
 		money = _money;
 		money0 = _money;
 		hand = new HandOfCards(5);
-		// strategy = _strategy;
-		// hand = _hand;
 	}
-
-	// NOTE: instead of performAction() in the UML, i implemented separately the
-	// methods
-	// ______________Should we create another class called Action ?
 
 	public void setHand(ArrayList<Card> cards) {
 		if (cards.size() != 5)
@@ -45,7 +37,6 @@ public abstract class Player {
 	}
 
 	public abstract Action askAction();
-	public abstract int askBet();
 
 	public int getMoney() {
 		return money;
@@ -60,23 +51,11 @@ public abstract class Player {
 		money += amount;
 	}
 
-//	public void bet(int amount) {
-//		money -= amount;
-//		lastBet = amount;
-//	}
-//
-//	public void bet() {
-//		if(lastBet==0) {
-//			money -= 5;
-//			lastBet = 5;
-//			return;
-//		}
-//		money -= lastBet;		
-//	}
-
-	public void statistics() {
+	public void printStatistics() {
 		// prints average statistics of the game
 
+		System.out.println();
+		System.out.println("----- GAME STATISTICS -----");
         System.out.println(" Hand                    Nb"
                        + "\n __________________________" 
                        + "\n Jacks or Better         " + stats[0]
@@ -92,20 +71,14 @@ public abstract class Player {
                        + "\n___________________________"
                        + "\n Total                   " + stats[12]
                        + "\n___________________________"
-                       + "\n Credit                " + money + " (" + (money/money0*100-100) + "%)");
+                       + "\n Credit                " + money + " (" + ((float)money/(float)money0*100) + "%)");
 		
 	}
-	
 
 	public void addStatistic(int i){
 		stats[i] = stats[i] + 1;
 	}
 
-	public void	hold() {
-		// discards the cards that aren't hold and swaps them with new cards from the deck
-		
-		// prints current hand
-  }
 	public void setAdvicePositions(int _positionsFromAdvice[]) {		
 		advised_positions = _positionsFromAdvice.clone();
 	}

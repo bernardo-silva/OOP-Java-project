@@ -222,6 +222,52 @@ public class Strategy {
 		}
 		return positions;
 	}
+	public static ArrayList<Integer> strat11(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat12(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat13(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat14(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat15(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat16(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat17(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat18(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat19(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat20(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat21(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat22(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat23(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat24(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat25(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat26(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat27(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat28(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat29(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat30(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat31(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat32(HandOfCards hand) {
+        }
+	public static ArrayList<Integer> strat33(HandOfCards hand) {
+        }
 
 	public static void main(String[] args) {
 		ArrayList<Card> cards = new ArrayList<Card>(5);

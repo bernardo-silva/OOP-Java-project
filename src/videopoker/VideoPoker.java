@@ -4,10 +4,9 @@
 package videopoker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-import playingCards.Card;
 import playingCards.DeckOfCards;
-import playingCards.HandOfCards;
 
 /**
  * @author bs
@@ -16,25 +15,27 @@ import playingCards.HandOfCards;
 public class VideoPoker {
 	Player player;
 	DeckOfCards deck;
-	
-//	private List<String> hands;
+
 	private ArrayList<PokerHand> hands;
 	private ArrayList<PokerHand> optimalStrat;
-	
-	private boolean shuffle = true;
-	
+
+	private boolean debugMode = false;
+
 	private int bet = 0;
-	
-	public VideoPoker(String handFile, String stratFile, String deckFile, boolean shuffle, Player player) {
+
+	public VideoPoker(String handFile, String stratFile, String deckFile, Player player, boolean debugMode) {
 		this.player = player;
-		this.shuffle = shuffle;
+		this.debugMode = debugMode;
 
 		deck = new DeckOfCards(deckFile);
-		
-		deck.print();
-		
+
+		if (debugMode) {
+			System.out.println("Deck is: " + deck);
+			System.out.println();
+		}
+
 		optimalStrat = VideoPokerUtil.stratFromFile(stratFile);
-		hands= new ArrayList<PokerHand>();
+		hands = new ArrayList<PokerHand>();
 
 		hands = VideoPokerUtil.handsFromFile(handFile);
 	}
@@ -42,97 +43,124 @@ public class VideoPoker {
 	public VideoPoker(String handFile, String stratFile, Player player) {
 		this.player = player;
 		deck = new DeckOfCards();
-		
+
 		optimalStrat = VideoPokerUtil.stratFromFile(stratFile);
-		hands= new ArrayList<PokerHand>();
+		hands = new ArrayList<PokerHand>();
 
 		hands = VideoPokerUtil.handsFromFile(handFile);
 		System.out.println(hands);
 	}
 
-	public int payout() {
+	private int payout() {
 		PokerHand highestHand = checkPlayerHand();
-		if(highestHand == null) {
-			System.out.println("Player lost.");
-			System.out.println("Player money: " + player.getMoney());
+		if (highestHand == null) {
+			if (debugMode) {
+				System.out.println("Player lost.");
+				System.out.println("Player cash is now " + player.getMoney());
+				System.out.println();
+			}
 			return 0;
 		}
-		System.out.println("Player won with " + highestHand.getName() + ".");
-		System.out.println("Player money: " + player.getMoney());
+		if (debugMode) {
+			System.out.println("Player won with " + highestHand.getName() + ".");
+			System.out.println("Player cash is now " + player.getMoney());
+			System.out.println();
+		}
 		return highestHand.getPayout(bet);
 	}
 
-	public int[] advice(){
+	public int[] advice() {
 		return null;
 	}
 
-	private PokerHand checkPlayerHand(){
+	private PokerHand checkPlayerHand() {
 		int count = 10;
-		for(PokerHand hand : hands) {
-//			System.out.println("Checking " + hand.getName());
-			if (hand.checkHand(player.getHand())){
-				player.addStatistic(count); //aqui adicionar metodo que adiciona 1 às estatisticas da mao que ganhou.
+		for (PokerHand hand : hands) {
+			if (hand.checkHand(player.getHand())) {
+				player.addStatistic(count); // aqui adicionar metodo que adiciona 1 às estatisticas da mao que ganhou.
 				return hand;
 			}
-			count--; 
+			count--;
 		}
 		player.addStatistic(11);
 		return null;
 	}
 
 	private boolean performAction(Action action) {
-		switch(action.getAction()) {
+		switch (action.getAction()) {
 		case 'b':
-			if(action.getBet() != 0) bet = action.getBet();
-			else if(bet == 0) bet = 5;
-			
-			if(bet < 1 || bet > 5) {
+			if(debugMode) System.out.println("Performing action " + action + " " + action.getBet());
+
+			if (action.getBet() != 0)
+				bet = action.getBet();
+			else if (bet == 0)
+				bet = 5;
+
+			if (bet < 1 || bet > 5) {
 				System.out.println("Invalid bet amount: " + bet);
+				System.out.println();
 				bet = 5;
 				return false;
 			}
+
 			player.credit(bet);
-			System.out.println("Betted " + bet + ". Player cash is " + player.getMoney());
+			if (debugMode)
+				System.out.println("Player betted " + bet + ". Player cash is now " + player.getMoney());
 			break;
 
-		case 'd':
+		case 'd': //Deal cards
+			if(debugMode) System.out.println("Performing action " + action);
+
 			player.setHand(deck.deal(5));
 			player.addStatistic(12);
 			System.out.println("Dealt cards. Hand is " + player.getHand());
 			break;
-		case '$':
+
+		case '$': //Show player money
+			if(debugMode) System.out.println("Performing action " + action);
 			System.out.println("Player cash is " + player.getMoney());
 			break;
 
-		case 'h':
-			ArrayList<Integer> positions = new ArrayList<Integer>();
+		case 'h': //Hold cards
+			if(debugMode) System.out.println("Performing action " + action + " " + action.getPositions());
 
-			for(int i=0; i<5; i++) positions.add(i);
-
+			ArrayList<Integer> positions = new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3, 4));
 			ArrayList<Integer> holdPositions = action.getPositions();
-			holdPositions.replaceAll(e -> e - 1);
-			positions.removeAll(holdPositions);
-			
-			if (positions.size() == 0) break;
+
+			holdPositions.replaceAll(e -> e - 1); // Decrease all positions by 1
+			positions.removeAll(holdPositions); // Get positions to remove from
+
+			if (positions.size() == 0) {
+				if(debugMode)
+					System.out.println("Held all cards. Player hand is " + player.getHand());
+				
+				break;
+			}
 
 			player.replaceInHand(deck.deal(positions.size()), positions);
-			System.out.println("Dealt new cards. Hand is " + player.getHand());
+			if(debugMode)
+				System.out.println("Dealt new cards. Player hand is now " + player.getHand());
 			break;
-		case 's':
-			player.statistics();
+
+		case 's': //Show statistics
+			if(debugMode) System.out.println("Performing action " + action);
+
+			player.printStatistics();
 			break;
-		default:
-			System.out.println("Peformed " + action.getAction());
 		}
-		System.out.println();
+
+		if(debugMode) System.out.println();
 		return true;
 	}
 
 	public void playGame() {
-		while(true) {
-			if(!gamePhase('b')) break;
-			if(!gamePhase('d')) break;
-			if(!gamePhase('h')) break;
+		while (true) {
+			if (!gamePhase('b'))
+				break;
+			if (!gamePhase('d'))
+				break;
+			if (!gamePhase('h'))
+				break;
 			player.payout(payout());
 		}
 		System.out.println("Game finished.");
@@ -140,22 +168,26 @@ public class VideoPoker {
 
 	private boolean gamePhase(char expectedAction) {
 		Action action = player.askAction();
-		if(action == null) return false;
+		if (action == null)
+			return false;
 
-		while(action.getAction() == '$' || action.getAction() == 'a') {
-			System.out.println("Performing action " + action);
+		while (action.getAction() == '$' || action.getAction() == 'a' ||
+		action.getAction() == 's') {
+
 			performAction(action);
+
 			action = player.askAction();
+			if (action == null) return false;
 		}
 
-		if(action.getAction() != expectedAction) {
-			 System.out.println("Illegal action. Please provide a bet");
-			 gamePhase(expectedAction);
+		if (action.getAction() != expectedAction) {
+			System.out.println("Illegal action. Please provide a bet");
+			gamePhase(expectedAction);
 		}
 
-		System.out.println("Performing action " + action);
-		if(!performAction(action)) gamePhase(expectedAction);
-		
+		if (!performAction(action))
+			gamePhase(expectedAction);
+
 		return true;
 	}
 }

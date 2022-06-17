@@ -28,7 +28,7 @@ public class Main {
 			try {
 				int credit = Integer.parseInt(args[1]);
 				player = new DebugPlayer(credit, args[2]);
-				game = new VideoPoker("hands.txt", stratfile, args[3], false, player);
+				game = new VideoPoker("hands.txt", stratfile, args[3], player, true);
 			}
 			catch(Exception e){
 				e.printStackTrace();

@@ -6,6 +6,11 @@ import java.util.Collections;
 
 public class DeckOfCards{
 	
+	@Override
+	public String toString() {
+		return "" + deck;
+	}
+
 	private final ArrayList<Card> fullDeck = new ArrayList<Card>();
 	private ArrayList<Card> deck = new ArrayList<Card>();
 
