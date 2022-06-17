@@ -12,7 +12,6 @@ public class SimulationPlayer extends Player{
 	private int nbdeals;
 	private int i;
 	private int current_nbdeals;
-	private int[] hold_positions;
 	Action action;
 	
 
@@ -45,18 +44,17 @@ public class SimulationPlayer extends Player{
 			// Player asks advice and stores indexes
 			i++;
 			return new Action('a');
-			// how to get indexes? 
 			
 		case 3:
 			// Player holds indexes given by advice
 			
-			// if(current_nbdeals == nbdeals) return null; ?? HOW TO MAKE THIS RETURN NULL? 
+			if(current_nbdeals == nbdeals) return null;   // "This method must return a result of type Action" -> return null é mesmo legit????
 			
 			i = 0; 	// starts a new game cycle of b-d-a-h 
 			action = new Action('h');
 			
-			// !! falta : ADD HOLD POSITIONS GIVEN BY ADVICE
-			//action.addPosition(int position_from_advice, Action action or ListActions ???????); 
+			// potential bug: 
+			action.addPositions(advised_positions); // add a flag to control the execution of this?
 			return action;
 			
 		}
@@ -66,6 +64,3 @@ public class SimulationPlayer extends Player{
 }
 
 
-////player = new SimulationPlayer(credit, bet, nbdeals);
-//game = new VideoPoker(args[3], stratfile, player);
-//
