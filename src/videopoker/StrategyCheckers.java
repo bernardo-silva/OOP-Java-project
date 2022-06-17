@@ -2,7 +2,7 @@ package videopoker;
 
 import java.util.function.Function;
 
-import cards.HandOfCards;
+import playingCards.HandOfCards;
 
 public enum StrategyCheckers {
 	STRAT1(Strategy::strat1),

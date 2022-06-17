@@ -1,4 +1,9 @@
-package videopoker;
+package main;
+
+import videopoker.DebugPlayer;
+import videopoker.Player;
+import videopoker.SimulationPlayer;
+import videopoker.VideoPoker;
 
 public class Main {
 	private static void printCommandLineHelp() {

@@ -8,8 +8,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.function.Function;
 
-import cards.Card;
-import cards.HandOfCards;
+import playingCards.Card;
+import playingCards.HandOfCards;
 
 public class Strategy {
 //	private final static ArrayList<Integer> allPositions = new ArrayList<Integer>(Arrays.asList(1,2,3,4,5));

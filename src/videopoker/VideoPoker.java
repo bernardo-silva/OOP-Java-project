@@ -5,9 +5,9 @@ package videopoker;
 
 import java.util.ArrayList;
 
-import cards.DeckOfCards;
-import cards.HandOfCards;
-import cards.Card;
+import playingCards.Card;
+import playingCards.DeckOfCards;
+import playingCards.HandOfCards;
 
 /**
  * @author bs

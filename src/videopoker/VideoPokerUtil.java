@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import cards.Card;
+import playingCards.Card;
 
 public class VideoPokerUtil {
 	public static ArrayList<PokerHand> stratFromFile(String stratFile) {

@@ -1,8 +1,9 @@
 package videopoker;
 
 import java.util.ArrayList;
-import cards.Card;
-import cards.HandOfCards;
+
+import playingCards.Card;
+import playingCards.HandOfCards;
 
 public abstract class Player {
 
