@@ -17,14 +17,15 @@ public class VideoPoker {
 	DeckOfCards deck;
 
 	private ArrayList<PokerHand> hands;
-	private ArrayList<PokerHand> optimalStrat;
+	private Strategy strategy;
 
 	private boolean debugMode = false;
 
 	private int bet = 0;
 
-	public VideoPoker(String handFile, String stratFile, String deckFile, Player player, boolean debugMode) {
+	public VideoPoker(String handFile, String deckFile, Player player, Strategy strategy, boolean debugMode) {
 		this.player = player;
+		this.strategy = strategy;
 		this.debugMode = debugMode;
 
 		deck = new DeckOfCards(deckFile);
@@ -34,17 +35,16 @@ public class VideoPoker {
 			System.out.println();
 		}
 
-		optimalStrat = VideoPokerUtil.stratFromFile(stratFile);
-		hands = new ArrayList<PokerHand>();
 
+		hands = new ArrayList<PokerHand>();
 		hands = VideoPokerUtil.handsFromFile(handFile);
 	}
 
-	public VideoPoker(String handFile, String stratFile, Player player) {
+	public VideoPoker(String handFile, Player player, Strategy strategy) {
 		this.player = player;
-		deck = new DeckOfCards();
+		this.strategy = strategy;
 
-		optimalStrat = VideoPokerUtil.stratFromFile(stratFile);
+		deck = new DeckOfCards();
 		hands = new ArrayList<PokerHand>();
 
 		hands = VideoPokerUtil.handsFromFile(handFile);
@@ -57,20 +57,91 @@ public class VideoPoker {
 			if (debugMode) {
 				System.out.println("Player lost.");
 				System.out.println("Player cash is now " + player.getMoney());
-				System.out.println();
 			}
 			return 0;
 		}
 		if (debugMode) {
 			System.out.println("Player won with " + highestHand.getName() + ".");
 			System.out.println("Player cash is now " + player.getMoney());
-			System.out.println();
 		}
 		return highestHand.getPayout(bet);
 	}
 
-	public int[] advice() {
-		return null;
+	private boolean advice() {
+		if(debugMode) System.out.println("Performing action a");
+
+		ArrayList<Integer> positions = strategy.getOptimalStrategy(player.getHand());
+		player.setAdvicePositions(positions);
+
+		if(positions == null)
+			if(debugMode) System.out.println("Player should discard all cards");
+
+		if(debugMode) System.out.println("Player should hold cards " + positions);
+		return true;
+	}
+
+	private boolean bet(Action action) {
+		if(debugMode) System.out.println("Performing action b " + action.getBet());
+
+		if (action.getBet() != 0)
+			bet = action.getBet();
+		else if (bet == 0)
+			bet = 5;
+
+		if (bet < 1 || bet > 5) {
+			System.out.println("Invalid bet amount: " + bet);
+			bet = 5;
+			return false;
+		}
+		player.credit(bet);
+		if (debugMode)
+			System.out.println("Player betted " + bet + ". Player cash is now " + player.getMoney());
+		return true;
+	}
+
+	private boolean credit() {
+			if(debugMode) System.out.println("Performing action $");
+			System.out.println("Player cash is " + player.getMoney());
+			return true;
+	}
+
+	private boolean deal() {
+		if(debugMode) System.out.println("Performing action d");
+
+		player.setHand(deck.deal(5));
+		player.addStatistic(12);
+
+		if(debugMode) System.out.println("Dealt cards. Hand is " + player.getHand());
+		return true;
+	}
+
+	private boolean hold(Action action) {
+		if(debugMode) System.out.println("Performing action " + action + " " + action.getPositions());
+
+		ArrayList<Integer> positions = new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3, 4));
+		ArrayList<Integer> holdPositions = action.getPositions();
+
+		holdPositions.replaceAll(e -> e - 1); // Decrease all positions by 1
+		positions.removeAll(holdPositions); // Get positions to remove from
+
+		if (positions.size() == 0) { //hold all cards
+			if(debugMode)
+				System.out.println("Held all cards. Player hand is " + player.getHand());
+			return true;
+		}
+
+		player.replaceInHand(deck.deal(positions.size()), positions);
+		if(debugMode)
+			System.out.println("Dealt new cards. Player hand is now " + player.getHand());
+		return true;
+	}
+
+	private boolean statistics() {
+		if(debugMode) System.out.println("Performing action s");
+
+		player.printStatistics();
+
+		return true;
 	}
 
 	private PokerHand checkPlayerHand() {
@@ -88,69 +159,20 @@ public class VideoPoker {
 
 	private boolean performAction(Action action) {
 		switch (action.getAction()) {
+		case 'a':
+			return advice();
 		case 'b':
-			if(debugMode) System.out.println("Performing action " + action + " " + action.getBet());
-
-			if (action.getBet() != 0)
-				bet = action.getBet();
-			else if (bet == 0)
-				bet = 5;
-
-			if (bet < 1 || bet > 5) {
-				System.out.println("Invalid bet amount: " + bet);
-				System.out.println();
-				bet = 5;
-				return false;
-			}
-
-			player.credit(bet);
-			if (debugMode)
-				System.out.println("Player betted " + bet + ". Player cash is now " + player.getMoney());
-			break;
-
-		case 'd': //Deal cards
-			if(debugMode) System.out.println("Performing action " + action);
-
-			player.setHand(deck.deal(5));
-			player.addStatistic(12);
-			System.out.println("Dealt cards. Hand is " + player.getHand());
-			break;
-
+			return bet(action);
 		case '$': //Show player money
-			if(debugMode) System.out.println("Performing action " + action);
-			System.out.println("Player cash is " + player.getMoney());
-			break;
-
+			return credit();
+		case 'd': //Deal cards
+			return deal();
 		case 'h': //Hold cards
-			if(debugMode) System.out.println("Performing action " + action + " " + action.getPositions());
-
-			ArrayList<Integer> positions = new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3, 4));
-			ArrayList<Integer> holdPositions = action.getPositions();
-
-			holdPositions.replaceAll(e -> e - 1); // Decrease all positions by 1
-			positions.removeAll(holdPositions); // Get positions to remove from
-
-			if (positions.size() == 0) {
-				if(debugMode)
-					System.out.println("Held all cards. Player hand is " + player.getHand());
-				
-				break;
-			}
-
-			player.replaceInHand(deck.deal(positions.size()), positions);
-			if(debugMode)
-				System.out.println("Dealt new cards. Player hand is now " + player.getHand());
-			break;
-
+			return hold(action);
 		case 's': //Show statistics
-			if(debugMode) System.out.println("Performing action " + action);
-
-			player.printStatistics();
-			break;
+			return statistics();
 		}
-
-		if(debugMode) System.out.println();
-		return true;
+		return false;
 	}
 
 	public void playGame() {
@@ -173,6 +195,7 @@ public class VideoPoker {
 
 		while (action.getAction() == '$' || action.getAction() == 'a' ||
 		action.getAction() == 's') {
+			if(debugMode) System.out.println();
 
 			performAction(action);
 
@@ -185,6 +208,7 @@ public class VideoPoker {
 			gamePhase(expectedAction);
 		}
 
+		if(debugMode) System.out.println();
 		if (!performAction(action))
 			gamePhase(expectedAction);
 

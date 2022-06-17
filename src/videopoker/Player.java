@@ -13,7 +13,7 @@ public abstract class Player {
 	protected HandOfCards hand;
 
 	protected int[] stats = new int[13]; 
-	protected int advised_positions[];
+	protected ArrayList<Integer> advised_positions;
 
 	public Player(int _money) {
 		money = _money;
@@ -79,7 +79,7 @@ public abstract class Player {
 		stats[i] = stats[i] + 1;
 	}
 
-	public void setAdvicePositions(int _positionsFromAdvice[]) {		
-		advised_positions = _positionsFromAdvice.clone();
+	public void setAdvicePositions(ArrayList<Integer> positions) {		
+		advised_positions = positions;
 	}
 }
