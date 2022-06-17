@@ -5,30 +5,33 @@ import cards.Card;
 import cards.HandOfCards;
 
 public abstract class Player {
-	//private int credits;
+
 	protected final int money0; //seria melhor guardar no stats? nao seria final nesse caso.
 	protected int money;
 	protected int lastBet = 0;
-	//private String strategy;
+	// private String strategy;
 	protected HandOfCards hand;
+
 	protected int[] stats = new int[13]; 
 	protected int advised_positions[];
-	
+
 //	public Player(int _money, String _strategy, String _hand) {
-	public Player(int _money) {	
+	public Player(int _money) {
 		money = _money;
 		money0 = _money;
 		hand = new HandOfCards(5);
-		//strategy = _strategy;	
-		//hand = _hand;
+		// strategy = _strategy;
+		// hand = _hand;
 	}
-	
-	//NOTE: instead of performAction() in the UML, i implemented separately the methods
-	//______________Should we create another class called Action ?
-	
+
+	// NOTE: instead of performAction() in the UML, i implemented separately the
+	// methods
+	// ______________Should we create another class called Action ?
+
 	public void setHand(ArrayList<Card> cards) {
-		if(cards.size() != 5) throw new IllegalArgumentException("The hand must have 5 cards");
-		int[] positions = {0,1,2,3,4};
+		if (cards.size() != 5)
+			throw new IllegalArgumentException("The hand must have 5 cards");
+		int[] positions = { 0, 1, 2, 3, 4 };
 		hand.replaceCards(cards, positions);
 	}
 
@@ -47,14 +50,15 @@ public abstract class Player {
 		return money;
 
 	}
+
 	public void credit(int amount) {
 		money -= amount;
 	}
+
 	public void payout(int amount) {
 		money += amount;
 	}
-		
-		
+
 //	public void bet(int amount) {
 //		money -= amount;
 //		lastBet = amount;
@@ -68,9 +72,8 @@ public abstract class Player {
 //		}
 //		money -= lastBet;		
 //	}
-		
-	
-	public void	statistics() {
+
+	public void statistics() {
 		// prints average statistics of the game
 
         System.out.println(" Hand                    Nb"
@@ -105,6 +108,4 @@ public abstract class Player {
 	public void setAdvicePositions(int _positionsFromAdvice[]) {		
 		advised_positions = _positionsFromAdvice.clone();
 	}
-	
-	
 }

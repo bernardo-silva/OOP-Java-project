@@ -9,11 +9,12 @@ public class Card implements Comparable<Card>{
 	
 	//static final char[] Suit = {' ','C','S','H','D'};
 	enum Suit{
-		Any,
 		C,
 		S,
 		H,
-		D
+		D,
+		ANY,
+		SOME
 	}
 	static final char[] Face = {' ',' ','2','3','4','5','6','7','8','9','T','J','Q','K','A'};
 
@@ -23,8 +24,8 @@ public class Card implements Comparable<Card>{
 //constructors
 	public Card(int face, int suit)//using ints 
 	{   
-		if(face>13||face<1) throw new IllegalArgumentException("Card rank is not valid.");
-		if(suit>4||suit<0) throw new IllegalArgumentException("Card suit is not valid.");
+		if(face>13 || face<1) throw new IllegalArgumentException("Card rank is not valid.");
+		if(suit>5 || suit<0) throw new IllegalArgumentException("Card suit is not valid.");
 		cardFace = face; // initialize face of card
 		cardSuit = Suit.values()[suit]; // initialize suit of card
 	}
@@ -40,33 +41,20 @@ public class Card implements Comparable<Card>{
 		}
 		
 		if(card.length() == 1) {
-			cardSuit = Suit.Any;
+			cardSuit = Suit.ANY;
 			return;
 		}
-		
-		cardSuit = Suit.valueOf(card.substring(1,2));
 
-//		for (int i=1; i<Suit.length;i++) {
-//			if(Suit[i] == card.charAt(1)) {
-//				cardSuit=i;
-//				break;
-//			}
-//			else {
-//				cardSuit=-1;
-//			}
-//		}
-				
+		if(card.charAt(1) == '*')
+			cardSuit = Suit.ANY;
+		else if(card.charAt(1) == 'X')
+			cardSuit = Suit.SOME;
+		else
+			cardSuit = Suit.valueOf(card.substring(1,2));
+
 		
 //		if(cardSuit==-1) throw new IllegalArgumentException("Card suit is not valid.");
 		if(cardFace==-1) throw new IllegalArgumentException("Card rank is not valid.");
-		
-		//cardFace = Arrays.asList(Face).indexOf(card.substring(0,1)); // initialize face of card
-		//cardSuit =  Arrays.asList(Suit).indexOf(card.substring(0)); // initialize suit of card
-		
-		/*System.out.println(card.charAt(0));
-		System.out.println(Arrays.asList(Face).indexOf(card.charAt(0)));
-		cardFace = Arrays.asList(Face).indexOf(card.charAt(0)); // initialize face of card
-		cardSuit =  Arrays.asList(Suit).indexOf(card.charAt(1)); // initialize suit of card*/
 	}
 
 	public int getFace(){ 
@@ -82,13 +70,9 @@ public class Card implements Comparable<Card>{
 	}
 
 	public int compareTo(Card other) {
-		//if(cardSuit > other.getSuit()) return 1;
-//		if (cardSuit == other.getSuit()) {
 			if(cardFace > other.getFace()) return 1;
 			else if (cardFace == other.getFace()) return 0;
 			else return -1;
-//		}
-//		else return -1;
 	}
 	
 	
