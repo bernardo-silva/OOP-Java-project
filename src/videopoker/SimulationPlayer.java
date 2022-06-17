@@ -51,7 +51,7 @@ public class SimulationPlayer extends Player{
 		case HOLD:
 			// Player holds indexes given by advice
 			action = new Action('h');
-			action.addPositions(advised_positions); // add a flag to control the execution of this?
+			action.setPositions(advised_positions); // add a flag to control the execution of this?
 
 			stage = gameStage.BET; //Restart cyle
 			current_nbdeals++;

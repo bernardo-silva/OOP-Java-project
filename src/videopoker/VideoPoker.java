@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import playingCards.DeckOfCards;
+import videopoker.pokerHands.PokerHand;
 
 /**
  * @author bs

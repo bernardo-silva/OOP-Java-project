@@ -1,22 +1,19 @@
-package videopoker;
+package videopoker.pokerHands;
 
 import playingCards.HandOfCards;
 
-public class FullHouse extends PokerHand {
+public class StraightFlush extends PokerHand {
 
-	public FullHouse(String name, int[] payout) {
+	public StraightFlush(String name, int[] payout) {
 		super(name, payout);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public boolean checkHand(HandOfCards hand) {
-		int[] frequencies = hand.getFrequencies();
-
-		for(int i = 2; i<=14; i++) 
-			if(frequencies[i] == 1 || frequencies[i] == 4) return false;
-		
-		return true;
+		PokerHand straight = new Straight("S",null);
+		PokerHand flush = new Flush("F", null);
+		return straight.checkHand(hand) && flush.checkHand(hand);
 	}
 
 	@Override

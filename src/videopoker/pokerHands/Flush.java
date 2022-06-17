@@ -1,4 +1,4 @@
-package videopoker;
+package videopoker.pokerHands;
 
 import playingCards.HandOfCards;
 

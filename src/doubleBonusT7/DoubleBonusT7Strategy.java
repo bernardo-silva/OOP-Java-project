@@ -6,14 +6,14 @@ import java.util.function.Function;
 
 import playingCards.Card;
 import playingCards.HandOfCards;
-import videopoker.Flush;
-import videopoker.FourOfAKind;
-import videopoker.FullHouse;
-import videopoker.PokerHand;
-import videopoker.RoyalFlush;
-import videopoker.Straight;
-import videopoker.StraightFlush;
 import videopoker.Strategy;
+import videopoker.pokerHands.Flush;
+import videopoker.pokerHands.FourOfAKind;
+import videopoker.pokerHands.FullHouse;
+import videopoker.pokerHands.PokerHand;
+import videopoker.pokerHands.RoyalFlush;
+import videopoker.pokerHands.Straight;
+import videopoker.pokerHands.StraightFlush;
 
 public class DoubleBonusT7Strategy implements Strategy {
 
