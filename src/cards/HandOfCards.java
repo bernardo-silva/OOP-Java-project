@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.Scanner;
 
 public class HandOfCards {
 	protected ArrayList<Card> hand;
@@ -34,6 +35,51 @@ public class HandOfCards {
 		uniqueSuits = new LinkedHashSet<Integer>();
 		uniqueFaces = new LinkedHashSet<Integer>();
 		cardFrequencies = new int[15];
+	}
+
+	public HandOfCards(String cardString){
+		Scanner scanHand = new Scanner(cardString);
+		hand = new ArrayList<Card>(5);
+		scanHand.useDelimiter(" ");
+		
+		for (int i=0; scanHand.hasNext(); i++){
+			if (i>=5){
+				System.out.println("Hand can't have more than 5 cards");
+				break;
+			}
+			Card card = new Card(scanHand.next());
+			hand.add(card);
+		}
+
+		scanHand.close();	
+		uniqueSuits = new LinkedHashSet<Integer>(5);
+		uniqueFaces = new LinkedHashSet<Integer>(5);
+		cardFrequencies = new int[15];
+		sortCards();
+		countUniqueFacesSuits();
+		countFrequencies();
+		cardDistances = measureCardDistances();
+	}
+
+	public HandOfCards(String[] cardString){
+		hand = new ArrayList<Card>(5);
+		
+		for (int i=0; i < cardString.length; i++){
+			if (i>=5){
+				System.out.println("Hand can't have more than 5 cards");
+				break;
+			}
+			Card card = new Card(cardString[i]);
+			hand.add(card);
+		}
+	
+		uniqueSuits = new LinkedHashSet<Integer>(5);
+		uniqueFaces = new LinkedHashSet<Integer>(5);
+		cardFrequencies = new int[15];
+		sortCards();
+		countUniqueFacesSuits();
+		countFrequencies();
+		cardDistances = measureCardDistances();
 	}
 
 	public void add(ArrayList<Card> cards) {

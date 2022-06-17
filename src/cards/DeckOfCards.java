@@ -90,16 +90,16 @@ public class DeckOfCards{
         System.out.println();
     }
     
-//    public static void main(String[] args)
-//    { 
-//        DeckOfCards deckteste = new DeckOfCards("./files/card-file.txt");
-//        System.out.println(deckteste.deck);
-//        deckteste.reset();
-//        System.out.println(deckteste.deck);
-//        deckteste.shuffle();
-//        System.out.println(deckteste.deck);
-//        ArrayList<Card> testHand = deckteste.deal(3);
-//        System.out.println(deckteste.deck);
-//        System.out.println(testHand);
-//    }
+/*     public static void main(String[] args)
+    { 
+        DeckOfCards deckteste = new DeckOfCards("./files/card-file.txt");
+        System.out.println(deckteste.deck);
+        deckteste.reset();
+        System.out.println(deckteste.deck);
+        deckteste.shuffle();
+        System.out.println(deckteste.deck);
+        ArrayList<Card> testHand = deckteste.deal(3);
+        System.out.println(deckteste.deck);
+        System.out.println(testHand);
+    }*/
 }
