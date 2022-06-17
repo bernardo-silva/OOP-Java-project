@@ -1,5 +1,7 @@
 package playingCards;
 
+import java.util.Objects;
+
 //import java.util.Arrays;
 
 public class Card implements Comparable<Card>{
@@ -73,6 +75,27 @@ public class Card implements Comparable<Card>{
 			if(cardFace > other.getFace()) return 1;
 			else if (cardFace == other.getFace()) return 0;
 			else return -1;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(cardFace, cardSuit);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Card other = (Card) obj;
+		
+		if(cardFace != other.cardFace) return false;
+		if(cardSuit == Suit.ANY || cardSuit == Suit.SOME) return true;
+		if(other.cardSuit == Suit.ANY || other.cardSuit == Suit.SOME) return true;
+		return cardSuit == other.cardSuit;
 	}
 	
 	

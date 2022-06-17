@@ -202,7 +202,7 @@ public class HandOfCards {
 	}
 
 	public void sortCards() {
-		Collections.sort(hand);
+//		Collections.sort(hand);
 	}
 
 	@Override
@@ -222,10 +222,9 @@ public class HandOfCards {
 		ArrayList<Card> cards2 = hand2.getCards();
 
 		if (cards2.get(0).getSuit() == 4) { // Any
-			System.out.println("Testing any.");
 			for (int i = 0; i < hand.size(); i++) {
 				for (int j = 0; j < cards2.size(); j++) {
-					if (hand.get(i).getFace() == cards2.get(j).getFace()) {
+					if (hand.get(i).equals(cards2.get(j))) {
 						positions.add(i + 1);
 						cards2.remove(j);
 						break;
@@ -233,7 +232,6 @@ public class HandOfCards {
 				}
 			}
 		} else { // Some
-			System.out.println("Testing some.");
 			ArrayList<Integer> newPositions = new ArrayList<Integer>(5);
 
 			for (int suit = 0; suit < 4; suit++) {
@@ -242,8 +240,7 @@ public class HandOfCards {
 					if (hand.get(i).getSuit() != suit) continue;
 
 					for (int j = 0; j < cards2.size(); j++) {
-						System.out.println("Comparing " + hand.get(i) + " with " + cards2.get(j));
-						if (hand.get(i).getFace() == cards2.get(j).getFace()) {
+						if (hand.get(i).equals(cards2.get(j))) {
 							newPositions.add(i + 1);
 							cards2.remove(j);
 							break;

@@ -1,4 +1,4 @@
-package main;
+package doubleBonusT7;
 
 import videopoker.DebugPlayer;
 import videopoker.Player;
@@ -21,14 +21,14 @@ public class Main {
 
 		Player player;
 		VideoPoker game = null;
-		String stratfile = "strat.txt";
+		DoubleBonusT7Strategy strategy = new DoubleBonusT7Strategy();
 
 		switch(args[0]) {
 		case "-d":
 			try {
 				int credit = Integer.parseInt(args[1]);
 				player = new DebugPlayer(credit, args[2]);
-				game = new VideoPoker("hands.txt", stratfile, args[3], player, true);
+				game = new VideoPoker("hands.txt", args[3], player, strategy, true);
 			}
 			catch(Exception e){
 				e.printStackTrace();
@@ -43,7 +43,7 @@ public class Main {
 				int nbdeals = Integer.parseInt(args[3]);
 
 				player = new SimulationPlayer(credit, bet, nbdeals);
-				game = new VideoPoker(args[3], stratfile, player);
+				game = new VideoPoker(args[3], player, strategy);
 			}
 			catch(Exception e){
 				printCommandLineHelp();
