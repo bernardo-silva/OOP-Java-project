@@ -12,6 +12,7 @@ public abstract class Player {
 	//private String strategy;
 	protected HandOfCards hand;
 	protected int[] stats = new int[13]; 
+	protected int advised_positions[];
 	
 //	public Player(int _money, String _strategy, String _hand) {
 	public Player(int _money) {	
@@ -91,6 +92,7 @@ public abstract class Player {
 		
 	}
 	
+
 	public void addStatistic(int i){
 		stats[i] = stats[i] + 1;
 	}
@@ -99,7 +101,10 @@ public abstract class Player {
 		// discards the cards that aren't hold and swaps them with new cards from the deck
 		
 		// prints current hand
-		
+  }
+	public void setAdvicePositions(int _positionsFromAdvice[]) {		
+		advised_positions = _positionsFromAdvice.clone();
 	}
+	
 	
 }

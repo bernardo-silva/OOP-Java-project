@@ -28,6 +28,12 @@ public class Action {
 		positions.add(position);
 	}
 	
+	public void addPositions(int positions[]) {
+		for (int i = 0; i < positions.length; i++) {
+			addPosition(positions[i]);
+		}
+	}
+	
 	
 	public String toString(){ 
 		return "" + action; // + amount;
