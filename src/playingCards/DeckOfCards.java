@@ -79,7 +79,7 @@ public class DeckOfCards{
     	return giveCards;
     }
     public void reset() {
-		deck = fullDeck;
+		deck = (ArrayList<Card>) fullDeck.clone();
 	}
     
     public void print(boolean full) {

@@ -3,7 +3,7 @@ package videopoker;
 public class SimulationPlayer extends Player{
 	private int bet;
 	private int nbdeals;
-	private int current_nbdeals = 1;
+	private int current_nbdeals = 0;
 	
 	private enum gameStage{
 		BET,
@@ -25,7 +25,7 @@ public class SimulationPlayer extends Player{
 	public Action askAction() {
 		Action action;
 
-		if(current_nbdeals == nbdeals) {
+		if(current_nbdeals == nbdeals && stage != gameStage.END) {
 			stage = gameStage.END;
 			return new Action('s');   // "This method must return a result of type Action" -> return null é mesmo legit????
 		}

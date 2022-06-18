@@ -23,36 +23,6 @@ public class VideoPokerUtil {
 		return null;
 	}
 
-	public static Boolean testHandsFromFile(String filename) {
-        try{        
-            File testFile = new File(filename);
-            Scanner scanLine = new Scanner(testFile);
-			ArrayList<Boolean> tests = new ArrayList<Boolean>();
-			int count = 0;
-			Boolean test = true;
-            while (scanLine.hasNextLine()){
-				count++;
-				String subStrings[]= scanLine.nextLine().split(":",0);
-				HandOfCards testHand = new HandOfCards(subStrings[0]);
-				ArrayList<HandOfCards> testPositions = new ArrayList<Integer>();
-				String[] temp = subStrings[1].split(" ");
-				for (int i = 0; i < temp.length; i++) {
-					testPositions.add(Integer.parseInt(temp[i]));
-				}
-				if(testPositions !=  getOptimalStrategy(testHand)){
-					System.ou.println("a Strategy retorna as positions incorretas na linha",count,"strat:",getOptimalStrategy(testHand),"file:", testPositions);
-					toKnow = false;
-				}
-				tests.add(testPositions ==  getOptimalStrategy(testHand));			
-			}
-            scanLine.close();
-			return test;
-		}
-        catch(FileNotFoundException e){
-            System.out.println(e.getMessage());
-        }
-	}
-
 	public static ArrayList<Integer> testHandsFromFile(String stratFile) {
 		// TODO Auto-generated method stub
 		return null;

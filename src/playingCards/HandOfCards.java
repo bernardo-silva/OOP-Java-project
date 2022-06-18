@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.Scanner;
 
 public class HandOfCards {
 	protected ArrayList<Card> hand;
@@ -37,7 +36,7 @@ public class HandOfCards {
 	public HandOfCards(String cardString) {
 		hand = new ArrayList<Card>();
 
-		String[] cards = cardString.split(" ", 2);
+		String[] cards = cardString.split(" ", 0);
 		for(String c : cards)
 			hand.add(new Card(c));
 
@@ -76,15 +75,18 @@ public class HandOfCards {
 			throw new IllegalArgumentException("The hand must have less than 5 cards");
 		else {
 			hand.addAll(cards);
-			sortCards();
 		}
+		countUniqueFacesSuits();
+		countFrequencies();
 	}
 
 	public void add(Card card) {
 //		if (hand.size() + 1 > 5)
 //			throw new IllegalArgumentException("The hand must have less than 5 cards");
 //		else {
-			hand.add(card);
+		hand.add(card);
+		countUniqueFacesSuits();
+		countFrequencies();
 //		}
 	}
 
@@ -97,6 +99,8 @@ public class HandOfCards {
 	}
 
 	private void countUniqueFacesSuits() {
+		uniqueSuits.clear();
+		uniqueFaces.clear();
 		for (Card card : hand) {
 			uniqueSuits.add(card.getSuit());
 			uniqueFaces.add(card.getFace());
@@ -107,6 +111,8 @@ public class HandOfCards {
 		if (position >= this.size() || position < 0)
 			throw new IllegalArgumentException("Position out of bounds.");
 		hand.remove(position);
+		countUniqueFacesSuits();
+		countFrequencies();
 	}
 
 	public void discard(int[] positions) {
@@ -115,6 +121,8 @@ public class HandOfCards {
 				throw new IllegalArgumentException("Position out of bounds.");
 			hand.remove(positions[i]);
 		}
+		countUniqueFacesSuits();
+		countFrequencies();
 	}
 
 	public Card get(int i) {
@@ -160,6 +168,10 @@ public class HandOfCards {
 	}
 
 	public void replaceCards(ArrayList<Card> cards, ArrayList<Integer> positions) {
+		if(this.size() == 0) {
+			for(int i=0; i<cards.size(); i++)
+				hand.add(null);
+		}
 		for (int i = 0; i < positions.size(); i++) {
 			if (positions.get(i) >= this.size() || positions.get(i) < 0)
 				throw new IllegalArgumentException("Position out of bounds.");
@@ -171,6 +183,10 @@ public class HandOfCards {
 	}
 
 	public void replaceCards(ArrayList<Card> cards, int[] positions) {
+		if(this.size() == 0) {
+			for(int i=0; i<cards.size(); i++)
+				hand.add(null);
+		}
 		for (int i = 0; i < positions.length; i++) {
 			if (positions[i] >= this.size() || positions[i] < 0)
 				throw new IllegalArgumentException("Position out of bounds.");
@@ -204,23 +220,11 @@ public class HandOfCards {
 	}
 
 	public ArrayList<Integer> match(HandOfCards hand2) {
-		if (hand2.getUniqueSuits() != 1)
-			return null;
-
 		ArrayList<Integer> positions = new ArrayList<Integer>(5);
 		ArrayList<Card> cards2 = hand2.getCards();
 
-		if (cards2.get(0).getSuit() == 4) { // Any
-			for (int i = 0; i < hand.size(); i++) {
-				for (int j = 0; j < cards2.size(); j++) {
-					if (hand.get(i).equals(cards2.get(j))) {
-						positions.add(i + 1);
-						cards2.remove(j);
-						break;
-					}
-				}
-			}
-		} else { // Some
+		if (cards2.get(0).getSuit() == 5) { // Some
+//			System.out.println("Testing some.");
 			ArrayList<Integer> newPositions = new ArrayList<Integer>(5);
 
 			for (int suit = 0; suit < 4; suit++) {
@@ -241,23 +245,45 @@ public class HandOfCards {
 					positions = new ArrayList<Integer>(newPositions);
 				newPositions.clear();
 			}
+		} else { // Any
+//			System.out.println("Testing any.");
+			for (int i = 0; i < hand.size(); i++) {
+				for (int j = 0; j < cards2.size(); j++) {
+					if (hand.get(i).equals(cards2.get(j))) {
+						positions.add(i + 1);
+						cards2.remove(j);
+						break;
+					}
+				}
+			}
 		}
 
 		return positions;
 	}
 
 	public int getMostCommonSuit() {
-
-		return 0;
+		int maxFreq = 0;
+		int idx = 0;
+		for(int i=0; i<suitFrequencies.length; i++) {
+			if(suitFrequencies[i] > maxFreq) {
+				maxFreq = suitFrequencies[i];
+				idx = i;
+			}
+		}
+		return idx;
 	}
 
 	public HandOfCards getCardsOfSuit(int suit) {
-		// TODO Auto-generated method stub
-		return null;
+		HandOfCards suitedHand = new HandOfCards();
+		for(Card card : hand)
+			if(card.getSuit() == suit) suitedHand.add(card);
+
+		return suitedHand;
 	}
 
 	public HandOfCards sorted() {
-		HandOfCards sortedHand = new HandOfCards(hand);
+		ArrayList<Card> newCards = (ArrayList<Card>) hand.clone();
+		HandOfCards sortedHand = new HandOfCards(newCards);
 		sortedHand.sortCards();
 		return sortedHand;
 	}
@@ -277,5 +303,4 @@ public class HandOfCards {
 			frequencies.add(faceFrequencies[i]);
 		return frequencies;
 	}
-
 }

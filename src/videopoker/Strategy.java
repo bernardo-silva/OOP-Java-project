@@ -6,6 +6,6 @@ import playingCards.HandOfCards;
 
 public interface Strategy {
 
-	ArrayList<Integer> getOptimalStrategy(HandOfCards hand);
+	public ArrayList<Integer> getOptimalStrategy(HandOfCards hand);
 
 }

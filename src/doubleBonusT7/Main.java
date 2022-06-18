@@ -43,7 +43,7 @@ public class Main {
 				int nbdeals = Integer.parseInt(args[3]);
 
 				player = new SimulationPlayer(credit, bet, nbdeals);
-				game = new VideoPoker(args[3], player, strategy);
+				game = new VideoPoker("hands.txt", player, strategy);
 			}
 			catch(Exception e){
 				printCommandLineHelp();

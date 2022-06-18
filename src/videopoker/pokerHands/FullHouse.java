@@ -19,10 +19,4 @@ public class FullHouse extends PokerHand {
 		return true;
 	}
 
-	@Override
-	public boolean checkHandOffBy(HandOfCards hand, int n) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

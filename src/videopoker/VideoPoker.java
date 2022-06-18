@@ -49,7 +49,6 @@ public class VideoPoker {
 		hands = new ArrayList<PokerHand>();
 
 		hands = VideoPokerUtil.handsFromFile(handFile);
-		System.out.println(hands);
 	}
 
 	private int payout() {
@@ -74,8 +73,10 @@ public class VideoPoker {
 		ArrayList<Integer> positions = strategy.getOptimalStrategy(player.getHand());
 		player.setAdvicePositions(positions);
 
-		if(positions == null)
+		if(positions == null) {
 			if(debugMode) System.out.println("Player should discard all cards");
+			player.setAdvicePositions(new ArrayList<Integer>());
+		}
 
 		if(debugMode) System.out.println("Player should hold cards " + positions);
 		return true;
@@ -185,6 +186,10 @@ public class VideoPoker {
 			if (!gamePhase('h'))
 				break;
 			player.payout(payout());
+			if(!debugMode) {
+				deck.reset();
+				deck.shuffle();
+			}
 		}
 		System.out.println("Game finished.");
 	}

@@ -71,7 +71,7 @@ public abstract class Player {
                        + "\n___________________________"
                        + "\n Total                   " + stats[12]
                        + "\n___________________________"
-                       + "\n Credit                " + money + " (" + ((float)money/(float)money0*100) + "%)");
+                       + "\n Credit                " + money + " (" + String.format("%.2f",((float)money/(float)money0*100)) + "%)");
 		
 	}
 

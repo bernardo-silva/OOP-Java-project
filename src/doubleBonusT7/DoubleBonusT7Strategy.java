@@ -68,15 +68,19 @@ private enum StrategyCheckers {
 }
 //	private final static ArrayList<Integer> allPositions = new ArrayList<Integer>(Arrays.asList(1,2,3,4,5));
 
-	public DoubleBonusT7Strategy() {
-	}
+	public DoubleBonusT7Strategy() { }
 
 	@Override
 	public ArrayList<Integer> getOptimalStrategy(HandOfCards hand){
+		int counter = 1;
 		ArrayList<Integer> positions;
 		for(StrategyCheckers sc : StrategyCheckers.values()) {
 			positions = sc.check(hand);
-			if (positions != null) return positions;
+			if (positions != null) {
+//				System.out.println("Matched " + counter);
+				return positions;
+			}
+			counter++;
 		}
 		return null;
 	}
@@ -323,6 +327,7 @@ private enum StrategyCheckers {
 		//AKQJ unsuited
 		return matchCards(hand, "A* K* Q* J*", 4);
 	}
+
 	public static ArrayList<Integer> strat14(HandOfCards hand) {
 		//3 to straight flush (type 1)
 		int mostCommonSuit = hand.getMostCommonSuit();
@@ -348,13 +353,15 @@ private enum StrategyCheckers {
 	public static ArrayList<Integer> strat15(HandOfCards hand) {
 		//4 to an inside straight with 3 high cards
 		if(hand.getNHighCards() < 3) return null;
-		return matchCards(hand, "T* J* Q* K* A*", 4);
+		if(hand.getHighCard() == 14) return matchCards(hand, "T* J* Q* K* A*", 4);
+		return matchCards(hand, "9* T* J* Q* K*", 4);
 	}
 
 	public static ArrayList<Integer> strat16(HandOfCards hand) {
-		//QJ Unsuited
-		return matchCards(hand, "Q* J*", 2);
+		//QJ suited
+		return matchCards(hand, "QX JX", 2);
 	}
+
 	public static ArrayList<Integer> strat17(HandOfCards hand) {
 		//3 to a flush with 2 high cards
 		if(hand.getNHighCards() < 2) return null;
@@ -372,7 +379,8 @@ private enum StrategyCheckers {
 	public static ArrayList<Integer> strat19(HandOfCards hand) {
 		//4 to an inside straight with 2 high cards
 		if(hand.getNHighCards() < 2) return null;
-		return matchCards(hand, "9* T* J* Q* K*", 4);
+		if(hand.getHighCard() == 13) return matchCards(hand, "9* T* J* Q* K*", 4);
+		return matchCards(hand, "8* 9* T* J* Q*", 4);
 	}
 	public static ArrayList<Integer> strat20(HandOfCards hand) {
 		//3 to a straight flush (type 2)
@@ -394,7 +402,9 @@ private enum StrategyCheckers {
 	public static ArrayList<Integer> strat21(HandOfCards hand) {
 		// 4 to an inside straight with 1 high card
 		if(hand.getNHighCards() != 1) return null;
-		return matchCards(hand, "7* 8* 9* T* J* Q*", 4);
+		int highCard = hand.getHighCard();
+		if(highCard == 12) return matchCards(hand, "8* 9* T* J* Q*", 4);
+		return matchCards(hand, "7* 8* 9* T* J*", 4);
 	}
 	public static ArrayList<Integer> strat22(HandOfCards hand) {
 		// KQJ unsuited
@@ -437,7 +447,7 @@ private enum StrategyCheckers {
 	public static ArrayList<Integer> strat28(HandOfCards hand) {
 		// KQ, KJ unsuited
 		ArrayList<Integer> positions = matchCards(hand, "Q* K*", 2);
-		if(!positions.isEmpty()) return positions;
+		if(positions != null && !positions.isEmpty()) return positions;
 
 		return matchCards(hand, "J* K*", 2);
 	}
@@ -448,7 +458,7 @@ private enum StrategyCheckers {
 	}
 	public static ArrayList<Integer> strat30(HandOfCards hand) {
 		// KT suited
-		return matchCards(hand, "JX KX", 2);
+		return matchCards(hand, "TX KX", 2);
 	}
 	public static ArrayList<Integer> strat31(HandOfCards hand) {
 		//J, Q, K
@@ -473,7 +483,7 @@ private enum StrategyCheckers {
 		HandOfCards sequenceCards = new HandOfCards();
 		for(int i=0; i<5; i++)
 			if(pattern.get(i) != 0)
-				sequenceCards.add(new Card(subArrIdx + 2 + i, 4));
+				sequenceCards.add(new Card(subArrIdx + 1 + i, 4));
 
 		return matchCards(hand, sequenceCards, 4);
 	}

@@ -16,8 +16,6 @@ public abstract class PokerHand{
 	}
 	public abstract boolean checkHand(HandOfCards hand);
 
-	public abstract boolean checkHandOffBy(HandOfCards hand, int n);
-
 	public String getName() {
 		return name;
 	}

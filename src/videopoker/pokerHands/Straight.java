@@ -1,5 +1,10 @@
 package videopoker.pokerHands;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import playingCards.HandOfCards;
 
 public class Straight extends PokerHand {
@@ -10,13 +15,13 @@ public class Straight extends PokerHand {
 
 	@Override
 	public boolean checkHand(HandOfCards hand) {
-		return hand.getUniqueFaces() == 5 && hand.getCardDistances() == 4;
-	}
+		if( hand.getUniqueFaces() !=  5) return false;
 
-	@Override
-	public boolean checkHandOffBy(HandOfCards hand, int n) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		ArrayList<Integer> freqArr = hand.getFrequenciesArr();
+		freqArr.replaceAll(e -> (e>0)?1:0);
 
+		List<Integer> pattern = Arrays.asList(1,1,1,1,1);
+		int subArrIdx = Collections.indexOfSubList(freqArr, pattern);
+		return subArrIdx != -1;
+	}
 }

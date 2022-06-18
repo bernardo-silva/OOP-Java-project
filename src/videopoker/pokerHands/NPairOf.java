@@ -36,10 +36,4 @@ public class NPairOf extends PokerHand {
 		return nFound == n;
 	}
 
-	@Override
-	public boolean checkHandOffBy(HandOfCards hand, int n) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

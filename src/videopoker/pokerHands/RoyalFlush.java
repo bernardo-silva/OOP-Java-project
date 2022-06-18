@@ -18,10 +18,4 @@ public class RoyalFlush extends PokerHand {
 		(straight.checkHand(hand));
 	}
 
-	@Override
-	public boolean checkHandOffBy(HandOfCards hand, int n) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

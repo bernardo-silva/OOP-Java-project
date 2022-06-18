@@ -16,10 +16,4 @@ public class StraightFlush extends PokerHand {
 		return straight.checkHand(hand) && flush.checkHand(hand);
 	}
 
-	@Override
-	public boolean checkHandOffBy(HandOfCards hand, int n) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }
