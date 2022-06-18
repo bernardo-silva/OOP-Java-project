@@ -26,7 +26,7 @@ public class Card implements Comparable<Card>{
 //constructors
 	public Card(int face, int suit)//using ints 
 	{   
-		if(face>13 || face<1) throw new IllegalArgumentException("Card rank is not valid.");
+		if(face>14 || face<2) throw new IllegalArgumentException("Card rank is not valid.");
 		if(suit>5 || suit<0) throw new IllegalArgumentException("Card suit is not valid.");
 		cardFace = face; // initialize face of card
 		cardSuit = Suit.values()[suit]; // initialize suit of card
