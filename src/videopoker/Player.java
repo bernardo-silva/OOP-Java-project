@@ -18,7 +18,7 @@ public abstract class Player {
 	public Player(int _money) {
 		money = _money;
 		money0 = _money;
-		hand = new HandOfCards(5);
+		hand = new HandOfCards();
 	}
 
 	public void setHand(ArrayList<Card> cards) {

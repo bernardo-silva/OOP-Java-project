@@ -2,6 +2,9 @@ package doubleBonusT7;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Function;
 
 import playingCards.Card;
@@ -66,8 +69,8 @@ private enum StrategyCheckers {
 //	private final static ArrayList<Integer> allPositions = new ArrayList<Integer>(Arrays.asList(1,2,3,4,5));
 
 	public DoubleBonusT7Strategy() {
-
 	}
+
 	@Override
 	public ArrayList<Integer> getOptimalStrategy(HandOfCards hand){
 		ArrayList<Integer> positions;
@@ -78,6 +81,24 @@ private enum StrategyCheckers {
 		return null;
 	}
 
+	private static ArrayList<Integer> matchCards(HandOfCards hand, String cards, int amount){
+		HandOfCards matchHand = new HandOfCards(cards);
+		ArrayList<Integer> positions = hand.match(matchHand);
+
+		if (positions.size() != amount)
+			return null;
+		return positions;
+		
+	}
+
+	private static ArrayList<Integer> matchCards(HandOfCards hand, HandOfCards matchHand, int amount){
+		ArrayList<Integer> positions = hand.match(matchHand);
+
+		if (positions.size() != amount)
+			return null;
+		return positions;
+		
+	}
 	public static ArrayList<Integer> strat1(HandOfCards hand) {
 		//Straight flush, four of a kind, royal flush
 		ArrayList<Integer> allPositions = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5));
@@ -163,19 +184,16 @@ private enum StrategyCheckers {
 		if(hand.getUniqueSuits() > 2) return null; 
 		if(hand.getUniqueFaces() < 4) return null; 
 		
-		return null;
-//		int[] frequencies = hand.getFrequencies();
-//		int i = 0;
-//		while(true) {
-//			for(int j=0; j<4; j++) {
-//				if(frequencies[i+j]==0) {
-//					
-//				}
-//
-//				
-//			}
-//		}
+		int mostCommonSuit = hand.getMostCommonSuit();
+		HandOfCards suitedHand = hand.getCardsOfSuit(mostCommonSuit);
+		if(suitedHand.size() != 4) return null;
+
+		suitedHand.sortCards();
+		if(suitedHand.getCardDistances() > 4) return null;
+		
+		return matchCards(hand, suitedHand, suitedHand.size());
 	}
+
 	public static ArrayList<Integer> strat7(HandOfCards hand) {
 		//Two pair
 		int[] frequencies = hand.getFrequencies();
@@ -222,23 +240,14 @@ private enum StrategyCheckers {
 	
 	public static ArrayList<Integer> strat9(HandOfCards hand) {
 		//4 to a flush
-		if(hand.getUniqueSuits() != 2) return null;
+		if(hand.getUniqueSuits() > 2) return null; 
+		
+		int mostCommonSuit = hand.getMostCommonSuit();
+		HandOfCards suitedHand = hand.getCardsOfSuit(mostCommonSuit);
+		if(suitedHand.size() != 4) return null;
 
-		int commonSuit = 0;
-		for(int i=1; i<5; i++) {
-			if(hand.get(i-1).getSuit() == hand.get(i).getSuit()) {
-				commonSuit = hand.get(i).getSuit();
-				break;
-			}
-		}
-
-		ArrayList<Integer> positions = new ArrayList<Integer>(5);
-
-		for(int i=0; i<5; i++)
-			if(hand.get(i).getSuit() == commonSuit) positions.add(i+1);
-
-		if(positions.size() == 4) return positions;
-		return null;
+		
+		return matchCards(hand, suitedHand, suitedHand.size());
 	}
 
 	public static ArrayList<Integer> strat10(HandOfCards hand) {
@@ -248,24 +257,42 @@ private enum StrategyCheckers {
 
 	public static ArrayList<Integer> strat11(HandOfCards hand) {
 		// 4 to outside straight
-		int[] frequencies = hand.getFrequencies();
-		int lowCard = 0;
+		ArrayList<Integer> freqArr = hand.getFrequenciesArr();
+		freqArr.replaceAll(e -> (e>0)?1:0);
 
-		for(int i=3; i<=10; i++) {
-			if(frequencies[i] == frequencies[i+1])
-			if(frequencies[i+1] == frequencies[i+2])
-			if(frequencies[i+2] == frequencies[i+3])
-				lowCard = i;
-		}
-		if(lowCard == 0) return null;
+		List<Integer> pattern = Arrays.asList(0,1,1,1,1,0);
+		int subArrIdx = Collections.indexOfSubList(freqArr, pattern);
+		if(subArrIdx == -1) return null;
 
-		ArrayList<Integer> positions = new ArrayList<Integer>(4);
-		for(int i=0; i<5; i++) {
-			if(hand.get(i).getFace() == lowCard + positions.size())
-				positions.add(i+1);
-		}
-		return positions;
+		HandOfCards sequenceCards = new HandOfCards();
+
+		for(int i=0; i<4; i++)
+			sequenceCards.add(new Card(subArrIdx + 2 + i, 4));
+
+		
+		return matchCards(hand, sequenceCards, 4);
+		
+		
+		
+//		int[] frequencies = hand.getFrequencies();
+//		int lowCard = 0;
+//
+//		for(int i=3; i<=10; i++) {
+//			if(frequencies[i] == frequencies[i+1])
+//			if(frequencies[i+1] == frequencies[i+2])
+//			if(frequencies[i+2] == frequencies[i+3])
+//				lowCard = i;
+//		}
+//		if(lowCard == 0) return null;
+//
+//		ArrayList<Integer> positions = new ArrayList<Integer>(4);
+//		for(int i=0; i<5; i++) {
+//			if(hand.get(i).getFace() == lowCard + positions.size())
+//				positions.add(i+1);
+//		}
+//		return positions;
 	}
+
 	public static ArrayList<Integer> strat12(HandOfCards hand) {
 		//Low Pair
 		int[] frequencies = hand.getFrequencies();
@@ -279,11 +306,17 @@ private enum StrategyCheckers {
 		}
 		if(face == 0) return null; 
 
-		ArrayList<Integer> positions = new ArrayList<Integer>(5);
-		for(int i=0; i<5; i++)
-			if(hand.get(i).getFace() == face) positions.add(i+1);
+		HandOfCards pairOfCards = new HandOfCards();
+		pairOfCards.add(new Card(face, 4));
+		pairOfCards.add(new Card(face, 4));
+		
+		return matchCards(hand, pairOfCards, 2);
 
-		return positions;
+//		ArrayList<Integer> positions = new ArrayList<Integer>(5);
+//		for(int i=0; i<5; i++)
+//			if(hand.get(i).getFace() == face) positions.add(i+1);
+//
+//		return positions;
 	}
 
 	public static ArrayList<Integer> strat13(HandOfCards hand) {
@@ -292,12 +325,30 @@ private enum StrategyCheckers {
 	}
 	public static ArrayList<Integer> strat14(HandOfCards hand) {
 		//3 to straight flush (type 1)
-		return null;
+		int mostCommonSuit = hand.getMostCommonSuit();
+		HandOfCards suitedHand = hand.getCardsOfSuit(mostCommonSuit);
+		if(suitedHand.size() != 3) return null;
+		
+		switch(suitedHand.getNHighCards()) {
+		case 0:
+			if(suitedHand.getLowCard() == 2) return null;
+			if(suitedHand.getCardDistances() != 2) return null; 
+			break;
+		case 1:
+			if(suitedHand.getCardDistances() > 3) return null; 
+			break;
+		default: //2 or 3
+			if(suitedHand.getCardDistances() > 4) return null; 
+			break;
+		}
+			
+		return matchCards(hand, suitedHand, 3);
 	}
 
 	public static ArrayList<Integer> strat15(HandOfCards hand) {
 		//4 to an inside straight with 3 high cards
-		return null;
+		if(hand.getNHighCards() < 3) return null;
+		return matchCards(hand, "T* J* Q* K* A*", 4);
 	}
 
 	public static ArrayList<Integer> strat16(HandOfCards hand) {
@@ -306,7 +357,12 @@ private enum StrategyCheckers {
 	}
 	public static ArrayList<Integer> strat17(HandOfCards hand) {
 		//3 to a flush with 2 high cards
-		return null;
+		if(hand.getNHighCards() < 2) return null;
+		int mostCommonSuit = hand.getMostCommonSuit();
+		HandOfCards suitedHand = hand.getCardsOfSuit(mostCommonSuit);
+		if(suitedHand.size() < 3 || suitedHand.getNHighCards() < 2) return null;
+		
+		return matchCards(hand, suitedHand, 3);
 	}
 
 	public static ArrayList<Integer> strat18(HandOfCards hand) {
@@ -315,15 +371,30 @@ private enum StrategyCheckers {
 	}
 	public static ArrayList<Integer> strat19(HandOfCards hand) {
 		//4 to an inside straight with 2 high cards
-    return null;
+		if(hand.getNHighCards() < 2) return null;
+		return matchCards(hand, "9* T* J* Q* K*", 4);
 	}
 	public static ArrayList<Integer> strat20(HandOfCards hand) {
 		//3 to a straight flush (type 2)
-    return null;
+		int mostCommonSuit = hand.getMostCommonSuit();
+		HandOfCards suitedHand = hand.getCardsOfSuit(mostCommonSuit);
+		if(suitedHand.size() != 3) return null;
+		
+		switch(suitedHand.getNHighCards()) {
+		case 0:
+			if(suitedHand.getCardDistances() > 3) return null; 
+			break;
+		case 1:
+			if(suitedHand.getHighCard() == 14) return matchCards(hand, "A* 2* 3* 4* 5*", 3);
+			if(suitedHand.getCardDistances() > 4) return null; 
+			break;
+		}
+		return matchCards(hand, suitedHand, 3);
 	}
 	public static ArrayList<Integer> strat21(HandOfCards hand) {
 		// 4 to an inside straight with 1 high card
-    return null;
+		if(hand.getNHighCards() != 1) return null;
+		return matchCards(hand, "7* 8* 9* T* J* Q*", 4);
 	}
 	public static ArrayList<Integer> strat22(HandOfCards hand) {
 		// KQJ unsuited
@@ -339,16 +410,30 @@ private enum StrategyCheckers {
 	}
 	public static ArrayList<Integer> strat25(HandOfCards hand) {
 		// 3 to a flush with 1 high card
-		return null;
+		int mostCommonSuit = hand.getMostCommonSuit();
+		HandOfCards suitedHand = hand.getCardsOfSuit(mostCommonSuit);
+		if(suitedHand.size() != 3) return null;
+		if(suitedHand.getNHighCards() != 1) return null;
+
+		return matchCards(hand, suitedHand, 3);
 	}
+
 	public static ArrayList<Integer> strat26(HandOfCards hand) {
 		// QT suited
 		return matchCards(hand, "TX QX", 2);
 	}
+
 	public static ArrayList<Integer> strat27(HandOfCards hand) {
 		// 3 to a straight flush (type 3)
-		return null;
+		int mostCommonSuit = hand.getMostCommonSuit();
+		HandOfCards suitedHand = hand.getCardsOfSuit(mostCommonSuit);
+		if(suitedHand.size() != 3) return null;
+		
+		if(suitedHand.getCardDistances() > 4) return null; 
+
+		return matchCards(hand, suitedHand, 3);
 	}
+
 	public static ArrayList<Integer> strat28(HandOfCards hand) {
 		// KQ, KJ unsuited
 		ArrayList<Integer> positions = matchCards(hand, "Q* K*", 2);
@@ -371,20 +456,34 @@ private enum StrategyCheckers {
 	}
 	public static ArrayList<Integer> strat32(HandOfCards hand) {
 		// 4 to an inside straight with no high cards
-		return null;
+		if(hand.getNHighCards() != 0) return null;
+		ArrayList<Integer> freqArr = hand.getFrequenciesArr();
+		freqArr.replaceAll(e -> (e>0)?1:0);
+
+		int subArrIdx = -1;
+		List<Integer> pattern = Arrays.asList(1,0,1,1,1);
+
+		for(int i=0; i<3; i++) {
+			Collections.rotate(pattern, i);
+			subArrIdx = Collections.indexOfSubList(freqArr, pattern);
+			if(subArrIdx != -1) break;
+		}
+		if(subArrIdx == -1) return null;
+
+		HandOfCards sequenceCards = new HandOfCards();
+		for(int i=0; i<5; i++)
+			if(pattern.get(i) != 0)
+				sequenceCards.add(new Card(subArrIdx + 2 + i, 4));
+
+		return matchCards(hand, sequenceCards, 4);
 	}
 	public static ArrayList<Integer> strat33(HandOfCards hand) {
 		//  3 to a flush with no high cards
-		return null;
-	}
-	private static ArrayList<Integer> matchCards(HandOfCards hand, String cards, int amount){
-		HandOfCards matchHand = new HandOfCards(cards);
-		ArrayList<Integer> positions = hand.match(matchHand);
+		int mostCommonSuit = hand.getMostCommonSuit();
+		HandOfCards suitedHand = hand.getCardsOfSuit(mostCommonSuit);
+		if(suitedHand.size() != 3) return null;
 
-		if (positions.size() != amount)
-			return null;
-		return positions;
-		
+		return matchCards(hand, suitedHand, 3);
 	}
 
 	public static void main(String[] args) {

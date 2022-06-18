@@ -10,76 +10,65 @@ public class HandOfCards {
 	protected ArrayList<Card> hand;
 	private LinkedHashSet<Integer> uniqueSuits;
 	private LinkedHashSet<Integer> uniqueFaces;
-	private int[] cardFrequencies;
-
-	private int cardDistances;
+	private int[] faceFrequencies;
+	private int[] suitFrequencies;
 
 	public HandOfCards(ArrayList<Card> _hand) {
 //		hand = new ArrayList<Card>(_hand.size());
 //		if(_hand.size() > 5) throw new IllegalArgumentException("The hand must have less than 5 cards");
 		hand = _hand;
-		uniqueSuits = new LinkedHashSet<Integer>(5);
-		uniqueFaces = new LinkedHashSet<Integer>(5);
-		cardFrequencies = new int[15];
-		sortCards();
-		countUniqueFacesSuits();
-		countFrequencies();
-		cardDistances = measureCardDistances();
-	}
-
-	public HandOfCards(int size) {
-		hand = new ArrayList<Card>(size);
-		for (int i = 0; i < size; i++) {
-			hand.add(null);
-		}
 		uniqueSuits = new LinkedHashSet<Integer>();
 		uniqueFaces = new LinkedHashSet<Integer>();
-		cardFrequencies = new int[15];
-	}
+		faceFrequencies = new int[15];
+		suitFrequencies = new int[6];
 
-	public HandOfCards(String cardString){
-		Scanner scanHand = new Scanner(cardString);
-		hand = new ArrayList<Card>(5);
-		scanHand.useDelimiter(" ");
-		
-		for (int i=0; scanHand.hasNext(); i++){
-			if (i>=5){
-				System.out.println("Hand can't have more than 5 cards");
-				break;
-			}
-			Card card = new Card(scanHand.next());
-			hand.add(card);
-		}
-
-		scanHand.close();	
-		uniqueSuits = new LinkedHashSet<Integer>(5);
-		uniqueFaces = new LinkedHashSet<Integer>(5);
-		cardFrequencies = new int[15];
-		sortCards();
 		countUniqueFacesSuits();
 		countFrequencies();
-		cardDistances = measureCardDistances();
 	}
 
-	public HandOfCards(String[] cardString){
+	public HandOfCards() {
+		hand = new ArrayList<Card>();
+		uniqueSuits = new LinkedHashSet<Integer>();
+		uniqueFaces = new LinkedHashSet<Integer>();
+		faceFrequencies = new int[15];
+		suitFrequencies = new int[6];
+	}
+
+	public HandOfCards(String cardString) {
+		hand = new ArrayList<Card>();
+
+		String[] cards = cardString.split(" ", 2);
+		for(String c : cards)
+			hand.add(new Card(c));
+
+		uniqueSuits = new LinkedHashSet<Integer>();
+		uniqueFaces = new LinkedHashSet<Integer>();
+		faceFrequencies = new int[15];
+		suitFrequencies = new int[6];
+
+		countUniqueFacesSuits();
+		countFrequencies();
+	}
+
+	public HandOfCards(String[] cardString) {
 		hand = new ArrayList<Card>(5);
-		
-		for (int i=0; i < cardString.length; i++){
-			if (i>=5){
+
+		for (int i = 0; i < cardString.length; i++) {
+			if (i >= 5) {
 				System.out.println("Hand can't have more than 5 cards");
 				break;
 			}
 			Card card = new Card(cardString[i]);
 			hand.add(card);
 		}
-	
+
 		uniqueSuits = new LinkedHashSet<Integer>(5);
 		uniqueFaces = new LinkedHashSet<Integer>(5);
-		cardFrequencies = new int[15];
-		sortCards();
+		faceFrequencies = new int[15];
+		suitFrequencies = new int[6];
+
 		countUniqueFacesSuits();
 		countFrequencies();
-		cardDistances = measureCardDistances();
 	}
 
 	public void add(ArrayList<Card> cards) {
@@ -92,18 +81,18 @@ public class HandOfCards {
 	}
 
 	public void add(Card card) {
-		if (hand.size() + 1 > 5)
-			throw new IllegalArgumentException("The hand must have less than 5 cards");
-		else {
+//		if (hand.size() + 1 > 5)
+//			throw new IllegalArgumentException("The hand must have less than 5 cards");
+//		else {
 			hand.add(card);
-			sortCards();
-		}
+//		}
 	}
 
 	private void countFrequencies() {
-		Arrays.fill(cardFrequencies, 0);
+		Arrays.fill(faceFrequencies, 0);
 		for (Card card : hand) {
-			cardFrequencies[card.getFace()]++;
+			faceFrequencies[card.getFace()]++;
+			suitFrequencies[card.getSuit()]++;
 		}
 	}
 
@@ -115,36 +104,47 @@ public class HandOfCards {
 	}
 
 	public void discard(int position) {
-		if (position > 4 || position < 0)
-			throw new IllegalArgumentException("position is 0 for the first card and 4 for the last.");
+		if (position >= this.size() || position < 0)
+			throw new IllegalArgumentException("Position out of bounds.");
 		hand.remove(position);
 	}
 
 	public void discard(int[] positions) {
-		Arrays.sort(positions);
 		for (int i = 0; i < positions.length; i++) {
-			if (positions[i] > 4 || positions[i] < 0)
-				throw new IllegalArgumentException("position is 0 for the first card and 4 for the last.");
-			hand.remove(positions[i] - i);
+			if (positions[i] >= this.size() || positions[i] < 0)
+				throw new IllegalArgumentException("Position out of bounds.");
+			hand.remove(positions[i]);
 		}
 	}
+
 	public Card get(int i) {
 		return hand.get(i);
 	}
+
 	public int size() {
 		return hand.size();
 	}
 
 	public int getCardDistances() {
-		return cardDistances;
+		HandOfCards sortedHand = this.sorted();
+		int distance = 0;
+		for (int i = 1; i < hand.size(); i++) {
+			distance += sortedHand.get(i).getFace() - sortedHand.get(i - 1).getFace();
+		}
+		return distance;
 	}
 
 	public int[] getFrequencies() {
-		return cardFrequencies;
+		return faceFrequencies;
 	}
 
 	public int getLowCard() {
-		return hand.get(0).getFace();
+		HandOfCards sortedHand = this.sorted();
+		return sortedHand.get(0).getFace();
+	}
+	public int getHighCard() {
+		HandOfCards sortedHand = this.sorted();
+		return sortedHand.get(sortedHand.size()-1).getFace();
 	}
 
 	public int getUniqueFaces() {
@@ -155,54 +155,43 @@ public class HandOfCards {
 		return uniqueSuits.size();
 	}
 
-	private int measureCardDistances() {
-		int distance = 0;
-		for (int i = 1; i < hand.size(); i++) {
-			distance += hand.get(i).getFace() - hand.get(i - 1).getFace();
-		}
-		return distance;
-	}
-
 	public void print() {
 		System.out.println(hand);
 	}
 
 	public void replaceCards(ArrayList<Card> cards, ArrayList<Integer> positions) {
 		for (int i = 0; i < positions.size(); i++) {
-			if (positions.get(i) > 4 || positions.get(i) < 0)
-				throw new IllegalArgumentException("position is 0 for the first card and 4 for the last.");
+			if (positions.get(i) >= this.size() || positions.get(i) < 0)
+				throw new IllegalArgumentException("Position out of bounds.");
 			hand.set(positions.get(i), cards.get(i));
 		}
-		sortCards();
+
 		countUniqueFacesSuits();
 		countFrequencies();
-		cardDistances = measureCardDistances();
 	}
 
 	public void replaceCards(ArrayList<Card> cards, int[] positions) {
 		for (int i = 0; i < positions.length; i++) {
-			if (positions[i] > 4 || positions[i] < 0)
-				throw new IllegalArgumentException("position is 0 for the first card and 4 for the last.");
+			if (positions[i] >= this.size() || positions[i] < 0)
+				throw new IllegalArgumentException("Position out of bounds.");
 			hand.set(positions[i], cards.get(i));
 		}
-		sortCards();
+
 		countUniqueFacesSuits();
 		countFrequencies();
-		cardDistances = measureCardDistances();
 	}
 
 	public void replaceCards(Card card, int position) {
-		if (position > 4 || position < 0)
-			throw new IllegalArgumentException("position is 0 for the first card and 4 for the last.");
+		if (position >= this.size() || position < 0)
+			throw new IllegalArgumentException("Position out of bounds.");
 		hand.set(position, card);
-		sortCards();
+
 		countUniqueFacesSuits();
 		countFrequencies();
-		cardDistances = measureCardDistances();
 	}
 
 	public void sortCards() {
-//		Collections.sort(hand);
+		Collections.sort(hand);
 	}
 
 	@Override
@@ -237,7 +226,8 @@ public class HandOfCards {
 			for (int suit = 0; suit < 4; suit++) {
 				for (int i = 0; i < hand.size(); i++) {
 
-					if (hand.get(i).getSuit() != suit) continue;
+					if (hand.get(i).getSuit() != suit)
+						continue;
 
 					for (int j = 0; j < cards2.size(); j++) {
 						if (hand.get(i).equals(cards2.get(j))) {
@@ -247,12 +237,45 @@ public class HandOfCards {
 						}
 					}
 				}
-			if (newPositions.size() > positions.size())
-				positions = new ArrayList<Integer>(newPositions);
-			newPositions.clear();
+				if (newPositions.size() > positions.size())
+					positions = new ArrayList<Integer>(newPositions);
+				newPositions.clear();
 			}
 		}
 
 		return positions;
 	}
+
+	public int getMostCommonSuit() {
+
+		return 0;
+	}
+
+	public HandOfCards getCardsOfSuit(int suit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public HandOfCards sorted() {
+		HandOfCards sortedHand = new HandOfCards(hand);
+		sortedHand.sortCards();
+		return sortedHand;
+	}
+
+	public int getNHighCards() {
+		int nHighCards = 0;
+		for(int i=11; i<=14; i++)
+			nHighCards += faceFrequencies[i];
+			
+		return nHighCards;
+	}
+
+	public ArrayList<Integer> getFrequenciesArr() {
+		ArrayList<Integer> frequencies = new ArrayList<Integer>(14);
+		frequencies.add(faceFrequencies[14]);
+		for(int i=2; i<=14; i++)
+			frequencies.add(faceFrequencies[i]);
+		return frequencies;
+	}
+
 }
