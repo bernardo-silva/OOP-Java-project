@@ -1,7 +1,7 @@
-package videopoker;
+package videopoker.pokerHands;
 
-import cards.Card;
-import cards.HandOfCards;
+import playingCards.Card;
+import playingCards.HandOfCards;
 
 public class ThreeOfAKind extends PokerHand {
 	private  Card minCard = null;

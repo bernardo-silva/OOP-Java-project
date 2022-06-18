@@ -1,6 +1,6 @@
-package videopoker;
+package videopoker.pokerHands;
 
-import cards.HandOfCards;
+import playingCards.HandOfCards;
 
 public class StraightFlush extends PokerHand {
 
@@ -11,8 +11,9 @@ public class StraightFlush extends PokerHand {
 
 	@Override
 	public boolean checkHand(HandOfCards hand) {
-		// TODO Auto-generated method stub
-		return false;
+		PokerHand straight = new Straight("S",null);
+		PokerHand flush = new Flush("F", null);
+		return straight.checkHand(hand) && flush.checkHand(hand);
 	}
 
 	@Override

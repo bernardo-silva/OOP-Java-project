@@ -1,6 +1,6 @@
-package videopoker;
+package videopoker.pokerHands;
 
-import cards.HandOfCards;
+import playingCards.HandOfCards;
 
 public class Flush extends PokerHand {
 

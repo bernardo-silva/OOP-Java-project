@@ -4,9 +4,18 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import cards.Card;
+
 import playingCards.Card;
-import playingCards.HandOfCards;
+import videopoker.pokerHands.Flush;
+import videopoker.pokerHands.FourOfAKind;
+import videopoker.pokerHands.FullHouse;
+import videopoker.pokerHands.NPairOf;
+import videopoker.pokerHands.PokerHand;
+import videopoker.pokerHands.RoyalFlush;
+import videopoker.pokerHands.Straight;
+import videopoker.pokerHands.StraightFlush;
+import videopoker.pokerHands.ThreeOfAKind;
+
 
 public class VideoPokerUtil {
 	public static ArrayList<PokerHand> stratFromFile(String stratFile) {

@@ -1,16 +1,17 @@
-package videopoker;
+package videopoker.pokerHands;
 
-import cards.Card;
-import cards.HandOfCards;
+import playingCards.Card;
+import playingCards.HandOfCards;
 
-public class NPairOf extends PokerHand {
-	private final int n;
+public class FourOfAKind extends PokerHand {
 	private  Card minCard = null;
 	private  Card maxCard = null;
 
-	public NPairOf(String name, int[] payout, int n, Card minCard, Card maxCard) {
+	public FourOfAKind(String name, int[] payout){
 		super(name, payout);
-		this.n = n;
+	}
+	public FourOfAKind(String name, int[] payout, Card minCard, Card maxCard) {
+		super(name + " " + minCard.getFace() + " - " + maxCard.getFace(), payout);
 		this.minCard = minCard;
 		this.maxCard = maxCard;
 	}
@@ -19,7 +20,6 @@ public class NPairOf extends PokerHand {
 	public boolean checkHand(HandOfCards hand) {
 		int[] frequencies = hand.getFrequencies();
 		int start, end;
-		int nFound = 0;
 
 		if(minCard == null && maxCard == null) {
 			start = 2;
@@ -31,9 +31,9 @@ public class NPairOf extends PokerHand {
 		}
 
 		for(int i = start; i<=end; i++) 
-			if(frequencies[i] == 2) nFound ++;
+			if(frequencies[i] == 4) return true;
 		
-		return nFound == n;
+		return false;
 	}
 
 	@Override
@@ -41,5 +41,4 @@ public class NPairOf extends PokerHand {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }
