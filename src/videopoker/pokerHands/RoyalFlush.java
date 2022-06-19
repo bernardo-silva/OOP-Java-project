@@ -13,7 +13,7 @@ public class RoyalFlush extends PokerHand {
 	public boolean checkHand(HandOfCards hand) {
 		PokerHand straight = new Straight("Straight", null);
 		PokerHand flush = new Flush("Flush", null);
-		
+
 		return (hand.getLowCard() == 10) && (flush.checkHand(hand)) &&
 		(straight.checkHand(hand));
 	}
