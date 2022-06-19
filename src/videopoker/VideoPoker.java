@@ -231,10 +231,9 @@ public class VideoPoker {
 		}
 
 		if(debugMode) System.out.println();
-		if (!performAction(action)) {
-			System.out.println("aaa " + action.getAction() + expectedAction);
+		if (!performAction(action)) 
 			gamePhase(expectedAction);
-		}
+		
 
 		return true;
 	}

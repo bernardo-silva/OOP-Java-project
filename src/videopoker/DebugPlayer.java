@@ -80,7 +80,6 @@ public class DebugPlayer extends Player {
 	 */
 	@Override
 	public Action askAction() {
-		System.out.println(actions);
 		if (actions.isEmpty())
 			return null;
 		return actions.remove();
