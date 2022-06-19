@@ -18,7 +18,6 @@ public class Straight extends PokerHand {
 		if( hand.getUniqueFaces() !=  5) return false;
 
 		ArrayList<Integer> freqArr = hand.getFrequenciesArr();
-		freqArr.replaceAll(e -> (e>0)?1:0);
 
 		List<Integer> pattern = Arrays.asList(1,1,1,1,1);
 		int subArrIdx = Collections.indexOfSubList(freqArr, pattern);

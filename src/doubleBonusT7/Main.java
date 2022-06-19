@@ -22,13 +22,14 @@ public class Main {
 		Player player;
 		VideoPoker game = null;
 		DoubleBonusT7Strategy strategy = new DoubleBonusT7Strategy();
+		String pokerHandsFile = "resources/DoubleBonusT7Hands.txt";
 
 		switch(args[0]) {
 		case "-d":
 			try {
 				int credit = Integer.parseInt(args[1]);
 				player = new DebugPlayer(credit, args[2]);
-				game = new VideoPoker("hands.txt", args[3], player, strategy, true);
+				game = new VideoPoker(pokerHandsFile, args[3], player, strategy, true);
 			}
 			catch(Exception e){
 				e.printStackTrace();
@@ -43,7 +44,7 @@ public class Main {
 				int nbdeals = Integer.parseInt(args[3]);
 
 				player = new SimulationPlayer(credit, bet, nbdeals);
-				game = new VideoPoker("hands.txt", player, strategy);
+				game = new VideoPoker(pokerHandsFile, player, strategy);
 			}
 			catch(Exception e){
 				e.printStackTrace();

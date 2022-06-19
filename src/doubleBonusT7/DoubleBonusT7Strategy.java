@@ -2,7 +2,6 @@ package doubleBonusT7;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
@@ -66,21 +65,16 @@ private enum StrategyCheckers {
 	}
 
 }
-//	private final static ArrayList<Integer> allPositions = new ArrayList<Integer>(Arrays.asList(1,2,3,4,5));
 
 	public DoubleBonusT7Strategy() { }
 
 	@Override
 	public ArrayList<Integer> getOptimalStrategy(HandOfCards hand){
-		int counter = 1;
 		ArrayList<Integer> positions;
 		for(StrategyCheckers sc : StrategyCheckers.values()) {
 			positions = sc.check(hand);
-			if (positions != null) {
-//				System.out.println("Matched " + counter);
+			if (positions != null)
 				return positions;
-			}
-			counter++;
 		}
 		return null;
 	}
