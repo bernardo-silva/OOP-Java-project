@@ -7,7 +7,7 @@ import java.util.LinkedList;
 
 /**
  * Subclass of Player, with additional methods to implement the debug mode of videopoker
- * ____________________________________________________________________ say more stuff?
+ * ____________________________________________________________________ explain dynamics
  *
  */
 public class DebugPlayer extends Player {

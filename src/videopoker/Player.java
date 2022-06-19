@@ -6,7 +6,7 @@ import playingCards.Card;
 import playingCards.HandOfCards;
 
 /**
- * @author vicen
+ * 
  *
  */
 public abstract class Player {
@@ -103,8 +103,9 @@ public abstract class Player {
 
 
 	/**
-	 * Adds a new count to a statistic metric of the game
-	 * @param i index of the statistic metric to increase
+	 * Increases by a defined amount a statistic metric of the game
+	 * @param idx index of the statistic metric to increase
+	 * @param amount amount to increase
 	 */
 	public void addStatistic(int idx, int amount){
 		stats[idx] += amount;

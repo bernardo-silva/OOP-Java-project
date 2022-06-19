@@ -2,15 +2,31 @@ package videopoker;
 
 /**
  * Subclass of Player, with additional methods to implement the simulation mode of videopoker
- * ____________________________________________________________________ say more stuff?
+ * ____________________________________________________________________ explain dynamics
+ *
+ */
+/**
+ * @author vicen
  *
  */
 public class SimulationPlayer extends Player{
 
+	/**
+	 * bet amount to be used during all simulations
+	 */
 	private int bet;
+	/**
+	 * total number of deals of the game
+	 */
 	private int nbDeals;
+	/**
+	 * current number of deals of the game
+	 */
 	private int currentNbDeals = 0;
 	
+	/**
+	 * possible game stages
+	 */
 	private enum gameStage{
 		BET,
 		DEAL,
@@ -18,11 +34,14 @@ public class SimulationPlayer extends Player{
 		HOLD,
 		END;
 	}
+	
+	/**
+	 * holds the current stage of the game. Initialized to the first game stage: bet
+	 */
 	private gameStage stage = gameStage.BET;
 
 	/**
-	 * 
-	 * Constructor method that initializes 
+	 * Constructor method that initialises the simulation player attributes given on the terminal
 	 * @param credit initial balance of the player
 	 * @param _bet the bet with the value to bet during all simulations
 	 * @param _nbdeals the total number of deals of the game
