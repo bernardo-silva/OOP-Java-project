@@ -161,9 +161,9 @@ public class VideoPoker {
 
 	private boolean performAction(Action action) {
 		switch (action.getAction()) {
-		case 'a':
+		case 'a'://Advice
 			return advice();
-		case 'b':
+		case 'b'://Bet
 			return bet(action);
 		case '$': //Show player money
 			return credit();

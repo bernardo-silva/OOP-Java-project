@@ -46,6 +46,7 @@ public class Main {
 				game = new VideoPoker("hands.txt", player, strategy);
 			}
 			catch(Exception e){
+				e.printStackTrace();
 				printCommandLineHelp();
 				System.exit(0);
 			}

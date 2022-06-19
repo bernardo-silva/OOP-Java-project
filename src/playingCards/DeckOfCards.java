@@ -39,8 +39,8 @@ public class DeckOfCards{
     }    
 
     public DeckOfCards() { //Default deck
-    	for(int suit=1; suit <= 4; suit++) {
-    		for(int face=1; face <= 13; face++) {
+    	for(int suit=0; suit <= 3; suit++) {
+    		for(int face=2; face <= 14; face++) {
     			fullDeck.add(new Card(face, suit));
     			deck.add(new Card(face, suit));
     		}
