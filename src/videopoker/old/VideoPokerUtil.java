@@ -1,4 +1,4 @@
-package videopoker;
+package videopoker.old;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,16 +18,6 @@ import videopoker.pokerHands.ThreeOfAKind;
 
 
 public class VideoPokerUtil {
-	public static ArrayList<PokerHand> stratFromFile(String stratFile) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static ArrayList<Integer> testHandsFromFile(String stratFile) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static ArrayList<PokerHand> handsFromFile(String handFile) {
 		ArrayList<PokerHand> hands = new ArrayList<PokerHand>(); 
 		File f = new File(handFile);

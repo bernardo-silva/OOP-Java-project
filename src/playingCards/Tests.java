@@ -1,4 +1,4 @@
-package videopoker;
+package playingCards;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import doubleBonusT7.DoubleBonusT7Strategy;
-import playingCards.HandOfCards;
+import videopoker.Strategy;
 
 public class Tests {
 

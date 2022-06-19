@@ -1,13 +1,14 @@
-/**
- * 
- */
 package videopoker;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 import playingCards.DeckOfCards;
 import videopoker.pokerHands.PokerHand;
+import videopoker.pokerHands.PokerHandFactory;
 
 /**
  * @author bs
@@ -24,7 +25,8 @@ public class VideoPoker {
 
 	private int bet = 0;
 
-	public VideoPoker(String handFile, String deckFile, Player player, Strategy strategy, boolean debugMode) {
+	public VideoPoker(String handFile, String deckFile, Player player,
+						Strategy strategy, boolean debugMode) {
 		this.player = player;
 		this.strategy = strategy;
 		this.debugMode = debugMode;
@@ -36,9 +38,8 @@ public class VideoPoker {
 			System.out.println();
 		}
 
-
 		hands = new ArrayList<PokerHand>();
-		hands = VideoPokerUtil.handsFromFile(handFile);
+		readHandsFromFile(handFile);
 	}
 
 	public VideoPoker(String handFile, Player player, Strategy strategy) {
@@ -46,9 +47,49 @@ public class VideoPoker {
 		this.strategy = strategy;
 
 		deck = new DeckOfCards();
-		hands = new ArrayList<PokerHand>();
 
-		hands = VideoPokerUtil.handsFromFile(handFile);
+		hands = new ArrayList<PokerHand>();
+		readHandsFromFile(handFile);
+	}
+
+	private void readHandsFromFile(String handFile) {
+		File f = new File(handFile);
+		Scanner scan;
+		String[] params;
+		
+		try {
+			scan = new Scanner(f);
+			while(scan.hasNextLine()) {
+				params = scan.nextLine().split("\\s+", 0);
+				hands.add(PokerHandFactory.createPokerHand(params));
+			}
+			scan.close();
+
+		} catch (FileNotFoundException e) {
+			System.out.println("File " + handFile + " not found.");
+			System.out.println("Exiting.");
+			System.exit(1);
+			
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			System.out.println("Exiting.");
+			System.exit(1);
+		}
+	}
+
+	private PokerHand checkPlayerHand() {
+		int count = hands.size();
+		for (PokerHand hand : hands) {
+			if (hand.checkHand(player.getHand())) {
+				player.addStatistic(count, 1);
+				return hand;
+			}
+			count--;
+		}
+		//No hand matched. Player lost.
+		player.addStatistic(11, 1);
+		return null;
 	}
 
 	private int payout() {
@@ -96,6 +137,7 @@ public class VideoPoker {
 			return false;
 		}
 		player.credit(bet);
+		player.addStatistic(14, bet);
 		if (debugMode)
 			System.out.println("Player betted " + bet + ". Player cash is now " + player.getMoney());
 		return true;
@@ -111,7 +153,7 @@ public class VideoPoker {
 		if(debugMode) System.out.println("Performing action d");
 
 		player.setHand(deck.deal(5));
-		player.addStatistic(12);
+		player.addStatistic(12, 1);
 
 		if(debugMode) System.out.println("Dealt cards. Hand is " + player.getHand());
 		return true;
@@ -146,20 +188,8 @@ public class VideoPoker {
 		return true;
 	}
 
-	private PokerHand checkPlayerHand() {
-		int count = 10;
-		for (PokerHand hand : hands) {
-			if (hand.checkHand(player.getHand())) {
-				player.addStatistic(count); // aqui adicionar metodo que adiciona 1 às estatisticas da mao que ganhou.
-				return hand;
-			}
-			count--;
-		}
-		player.addStatistic(11);
-		return null;
-	}
-
 	private boolean performAction(Action action) {
+		
 		switch (action.getAction()) {
 		case 'a'://Advice
 			return advice();
@@ -177,30 +207,13 @@ public class VideoPoker {
 		return false;
 	}
 
-	public void playGame() {
-		while (true) {
-			if (!gamePhase('b'))
-				break;
-			if (!gamePhase('d'))
-				break;
-			if (!gamePhase('h'))
-				break;
-			player.payout(payout());
-			if(!debugMode) {
-				deck.reset();
-				deck.shuffle();
-			}
-		}
-		System.out.println("Game finished.");
-	}
-
 	private boolean gamePhase(char expectedAction) {
 		Action action = player.askAction();
 		if (action == null)
 			return false;
 
 		while (action.getAction() == '$' || action.getAction() == 'a' ||
-		action.getAction() == 's') {
+				action.getAction() == 's') {
 			if(debugMode) System.out.println();
 
 			performAction(action);
@@ -210,7 +223,7 @@ public class VideoPoker {
 		}
 
 		if (action.getAction() != expectedAction) {
-			System.out.println("Illegal action. Please provide a bet");
+			System.out.println("Illegal action. Expected " + expectedAction + ".");
 			gamePhase(expectedAction);
 		}
 
@@ -220,4 +233,28 @@ public class VideoPoker {
 
 		return true;
 	}
+
+	public void playGame() {
+		int payout;
+		while (true) {
+			if (!gamePhase('b'))
+				break;
+			if (!gamePhase('d'))
+				break;
+			if (!gamePhase('h'))
+				break;
+
+			payout = payout();
+			player.addStatistic(13, payout);
+			player.payout(payout);
+
+			if(!debugMode) {
+				deck.reset();
+				deck.shuffle();
+			}
+		}
+		System.out.println();
+		System.out.println("♦♣♥♠ GAME FINISHED ♠♥♣♦");
+	}
+
 }

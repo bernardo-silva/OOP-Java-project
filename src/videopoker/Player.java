@@ -11,17 +11,17 @@ import playingCards.HandOfCards;
  */
 public abstract class Player {
 
-	protected final int money0; //seria melhor guardar no stats? nao seria final nesse caso.
+//	protected final int money0; //seria melhor guardar no stats? nao seria final nesse caso.
 	protected int money;
 	protected int lastBet = 0;
 	protected HandOfCards hand;
 
-	protected int[] stats = new int[13]; 
+	protected int[] stats = new int[15]; 
 	protected ArrayList<Integer> advised_positions;
 
 	public Player(int _money) {
 		money = _money;
-		money0 = _money;
+//		money0 = _money;
 		hand = new HandOfCards();
 	}
 
@@ -97,16 +97,17 @@ public abstract class Player {
                        + "\n___________________________"
                        + "\n Total                   " + stats[12]
                        + "\n___________________________"
-                       + "\n Credit                " + money + " (" + String.format("%.2f",((float)money/(float)money0*100)) + "%)");
+                       + "\n Credit                " + money + " (" + String.format("%.2f",((float)stats[13]/(float)stats[14]*100)) + "%)");
 		
 	}
+
 
 	/**
 	 * Adds a new count to a statistic metric of the game
 	 * @param i index of the statistic metric to increase
 	 */
-	public void addStatistic(int i){
-		stats[i] = stats[i] + 1;
+	public void addStatistic(int idx, int amount){
+		stats[idx] += amount;
 	}
 
 	/**

@@ -8,8 +8,8 @@ package videopoker;
 public class SimulationPlayer extends Player{
 
 	private int bet;
-	private int nbdeals;
-	private int current_nbdeals = 0;
+	private int nbDeals;
+	private int currentNbDeals = 0;
 	
 	private enum gameStage{
 		BET,
@@ -30,7 +30,7 @@ public class SimulationPlayer extends Player{
 	public SimulationPlayer(int credit, int _bet, int _nbdeals) {
 		super(credit);
 		bet = _bet;
-		nbdeals = _nbdeals;
+		nbDeals = _nbdeals;
 	}
 
 
@@ -42,7 +42,7 @@ public class SimulationPlayer extends Player{
 	public Action askAction() {
 		Action action;
 
-		if(current_nbdeals == nbdeals && stage != gameStage.END) {
+		if(currentNbDeals == nbDeals && stage != gameStage.END) {
 			stage = gameStage.END;
 			return new Action('s');
 		}
@@ -68,10 +68,12 @@ public class SimulationPlayer extends Player{
 		case HOLD:
 			// Player holds cards according with the received advice
 			action = new Action('h');
-			action.setPositions(advised_positions);
-			
-			stage = gameStage.BET;  // Restart gaming cycle
-			current_nbdeals++;
+
+			action.setPositions(advised_positions); // add a flag to control the execution of this?
+
+			stage = gameStage.BET; //Restart cyle
+			currentNbDeals++;
+
 			return action;
 
 		case END:
