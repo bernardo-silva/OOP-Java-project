@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import playingCards.Card;
 import playingCards.HandOfCards;
 
+/**
+ * @author vicen
+ *
+ */
 public abstract class Player {
 
 	protected final int money0; //seria melhor guardar no stats? nao seria final nesse caso.
@@ -32,27 +36,49 @@ public abstract class Player {
 		hand.replaceCards(card, positions);
 	}
 
+	/**
+	 * 
+	 * @return the hand of cards
+	 */
 	public HandOfCards getHand() {
 		return hand;
 	}
 
-	public abstract Action askAction();
-
+	/**
+	 * Asks for an action to perform.
+	 * @return the action to perform
+	 */
+	public abstract Action askAction(); 
+	
+	/**
+	 * Gets the player's amount of money
+	 * @return amount of money
+	 */
 	public int getMoney() {
 		return money;
 
 	}
 
+	/**
+	 * Places money on the game, discounting on the player account.
+	 * @param amount amount of money to credit on the game
+	 */
 	public void credit(int amount) {
 		money -= amount;
 	}
 
+	/**
+	 * Rewards the payout money, adding it on the player account.
+	 * @param amount of payout money
+	 */
 	public void payout(int amount) {
 		money += amount;
 	}
 
+	/**
+	 * Prints the average statistics on the terminal.
+	 */
 	public void printStatistics() {
-		// prints average statistics of the game
 
 		System.out.println();
 		System.out.println("----- GAME STATISTICS -----");
@@ -75,10 +101,18 @@ public abstract class Player {
 		
 	}
 
+	/**
+	 * Adds a new count to a statistic metric of the game
+	 * @param i index of the statistic metric to increase
+	 */
 	public void addStatistic(int i){
 		stats[i] = stats[i] + 1;
 	}
 
+	/**
+	 * Sets the array containing the positions of the cards that are advised to be held
+	 * @param array with the indexes of the cards advised to be held
+	 */
 	public void setAdvicePositions(ArrayList<Integer> positions) {		
 		advised_positions = positions;
 	}
