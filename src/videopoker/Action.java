@@ -2,6 +2,12 @@ package videopoker;
 
 import java.util.ArrayList;
 
+/**
+ * @author Bernardo Silva 
+ * @author Miguel Madeira
+ * @author Vicente Silvestre
+ *
+ */
 public class Action {
 
 	/**

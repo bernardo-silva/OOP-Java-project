@@ -94,16 +94,16 @@ public abstract class Player {
 		System.out.println("----- GAME STATISTICS -----");
         System.out.println(" Hand                    Nb"
                        + "\n __________________________" 
-                       + "\n Jacks or Better         " + stats[0]
-                       + "\n Two Pair                " + stats[1]
-                       + "\n Three of a Kind         " + stats[2]
-                       + "\n Straight                " + stats[3]
-                       + "\n Flush                   " + stats[4]
-                       + "\n Full house              " + stats[5]
-                       + "\n Four of a Kind          " + (stats[6] + stats[7] + stats[8])
-                       + "\n Straight Flush          " + stats[9]
-                       + "\n Royal Flush             " + stats[10]
-                       + "\n Other                   " + stats[11]
+                       + "\n Jacks or Better         " + (float)stats[0]/(float)stats[12]
+                       + "\n Two Pair                " + (float)stats[1]/(float)stats[12]
+                       + "\n Three of a Kind         " + (float)stats[2]/(float)stats[12]
+                       + "\n Straight                " + (float)stats[3]/(float)stats[12]
+                       + "\n Flush                   " + (float)stats[4]/(float)stats[12]
+                       + "\n Full house              " + (float)stats[5]/(float)stats[12]
+                       + "\n Four of a Kind          " + (float)(stats[6] + stats[7] + stats[8])/(float)stats[12]
+                       + "\n Straight Flush          " + (float)stats[9]/(float)stats[12]
+                       + "\n Royal Flush             " + (float)stats[10]/(float)stats[12]
+                       + "\n Other                   " + (float)stats[11]/(float)stats[12]
                        + "\n___________________________"
                        + "\n Total                   " + stats[12]
                        + "\n___________________________"

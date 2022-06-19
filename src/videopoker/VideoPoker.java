@@ -37,6 +37,9 @@ public class VideoPoker {
 			System.out.println("Deck is: " + deck);
 			System.out.println();
 		}
+		else {
+			deck.shuffle();
+		}
 
 		hands = new ArrayList<PokerHand>();
 		readHandsFromFile(handFile);
@@ -47,6 +50,7 @@ public class VideoPoker {
 		this.strategy = strategy;
 
 		deck = new DeckOfCards();
+		if(!debugMode) deck.shuffle();
 
 		hands = new ArrayList<PokerHand>();
 		readHandsFromFile(handFile);
@@ -79,7 +83,7 @@ public class VideoPoker {
 	}
 
 	private PokerHand checkPlayerHand() {
-		int count = hands.size();
+		int count = hands.size() - 1;
 		for (PokerHand hand : hands) {
 			if (hand.checkHand(player.getHand())) {
 				player.addStatistic(count, 1);
@@ -97,13 +101,11 @@ public class VideoPoker {
 		if (highestHand == null) {
 			if (debugMode) {
 				System.out.println("Player lost.");
-				System.out.println("Player cash is now " + player.getMoney());
 			}
 			return 0;
 		}
 		if (debugMode) {
 			System.out.println("Player won with " + highestHand.getName() + ".");
-			System.out.println("Player cash is now " + player.getMoney());
 		}
 		return highestHand.getPayout(bet);
 	}
@@ -213,7 +215,7 @@ public class VideoPoker {
 			return false;
 
 		while (action.getAction() == '$' || action.getAction() == 'a' ||
-				action.getAction() == 's') {
+				(action.getAction() == 's' && expectedAction == 'h')) {
 			if(debugMode) System.out.println();
 
 			performAction(action);
@@ -248,6 +250,8 @@ public class VideoPoker {
 			player.addStatistic(13, payout);
 			player.payout(payout);
 
+			if(debugMode)
+				System.out.println("Player cash is now " + player.getMoney());
 			if(!debugMode) {
 				deck.reset();
 				deck.shuffle();

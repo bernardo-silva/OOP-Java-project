@@ -13,7 +13,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		if(args.length != 4) {
+		if (args.length != 4) {
 			System.out.println(args.length);
 			printCommandLineHelp();
 			System.exit(0);
@@ -24,14 +24,13 @@ public class Main {
 		DoubleBonusT7Strategy strategy = new DoubleBonusT7Strategy();
 		String pokerHandsFile = "resources/DoubleBonusT7Hands.txt";
 
-		switch(args[0]) {
+		switch (args[0]) {
 		case "-d":
 			try {
 				int credit = Integer.parseInt(args[1]);
 				player = new DebugPlayer(credit, args[2]);
 				game = new VideoPoker(pokerHandsFile, args[3], player, strategy, true);
-			}
-			catch(Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 				printCommandLineHelp();
 				System.exit(0);
@@ -45,8 +44,7 @@ public class Main {
 
 				player = new SimulationPlayer(credit, bet, nbdeals);
 				game = new VideoPoker(pokerHandsFile, player, strategy);
-			}
-			catch(Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 				printCommandLineHelp();
 				System.exit(0);
@@ -56,7 +54,7 @@ public class Main {
 			printCommandLineHelp();
 			System.exit(0);
 		}
-		
+
 		game.playGame();
 	}
 
