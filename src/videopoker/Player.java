@@ -9,6 +9,7 @@ import playingCards.HandOfCards;
  * 
  *
  */
+
 public abstract class Player {
 
 //	protected final int money0; //seria melhor guardar no stats? nao seria final nesse caso.
@@ -25,6 +26,9 @@ public abstract class Player {
 		hand = new HandOfCards();
 	}
 
+	/**
+	 * @param cards
+	 */
 	public void setHand(ArrayList<Card> cards) {
 		if (cards.size() != 5)
 			throw new IllegalArgumentException("The hand must have 5 cards");
@@ -32,13 +36,19 @@ public abstract class Player {
 		hand.replaceCards(cards, positions);
 	}
 
+
+	/**
+	 * 
+	 * @param card
+	 * @param positions
+	 */
 	public void replaceInHand(ArrayList<Card> card, ArrayList<Integer> positions) {
 		hand.replaceCards(card, positions);
 	}
 
 	/**
-	 * 
-	 * @return the hand of cards
+	 * Gets the hand of the card
+	 * @return the hand of the card
 	 */
 	public HandOfCards getHand() {
 		return hand;

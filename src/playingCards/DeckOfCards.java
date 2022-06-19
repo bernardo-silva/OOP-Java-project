@@ -6,11 +6,18 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * _________________________________________________________________
+ *
+ */
 public class DeckOfCards {
 	private final ArrayList<Card> fullDeck = new ArrayList<Card>();
 	private ArrayList<Card> deck = new ArrayList<Card>();
 
-	public DeckOfCards() { // Default deck
+	/**
+	 * Constructor method for a default deck; builds the full deck on both variables fullDeck and deck
+	 */
+	public DeckOfCards() {
 		for (int suit = 0; suit <= 3; suit++) {
 			for (int face = 2; face <= 14; face++) {
 				fullDeck.add(new Card(face, suit));
@@ -19,6 +26,10 @@ public class DeckOfCards {
 		}
 	}
 
+	/**
+	 * Constructor method for a deck specified within a file; builds the full deck on both variables fullDeck and deck
+	 * @param filename name of the file with the deck of cards
+	 */
 	public DeckOfCards(String filename) {
 		try {
 			File deckFile = new File(filename);
@@ -42,6 +53,12 @@ public class DeckOfCards {
 		}
 	}
 
+	/**
+	 * Deals a specified number of cards. 
+	 * @param nCards number of cards to deal
+	 * @return array of cards from the deck
+	 * @exception IllegalArgumentException if the number of dealt cards is non positive
+	 */
 	public ArrayList<Card> deal(int nCards) {
 		if (nCards <= 0)
 			throw new IllegalArgumentException("Number of dealt cards must be greater than 0.");
@@ -54,14 +71,25 @@ public class DeckOfCards {
 		return giveCards;
 	}
 
+	/**
+	 * Gets the deck.
+	 * @return the deck
+	 */
 	public ArrayList<Card> getDeck() {
 		return deck;
 	}
 
+	/**
+	 * Gets the full deck.
+	 * @return the full deck
+	 */
 	public ArrayList<Card> getFullDeck() {
 		return fullDeck;
 	}
 
+	/**
+	 * Prints the number of cards in the deck, as well as each individual card.
+	 */
 	public void print() {
 		System.out.println("Deck with " + this.size() + " cards.");
 		for (Card card : deck) {
@@ -70,14 +98,24 @@ public class DeckOfCards {
 		System.out.println();
 	}
 
+	/**
+	 * Resets the deck to the fulldeck.
+	 */
 	public void reset() {
 		deck = new ArrayList<Card>(fullDeck);
 	}
 
+	/**
+	 * Gets the size of the deck.
+	 * @return the size of the deck
+	 */
 	public int size() {
 		return deck.size();
 	}
 
+	/**
+	 * Shuffles the deck.
+	 */
 	public void shuffle() {
 		Collections.shuffle(deck);
 	}
