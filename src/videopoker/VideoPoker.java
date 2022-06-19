@@ -211,6 +211,7 @@ public class VideoPoker {
 
 	private boolean gamePhase(char expectedAction) {
 		Action action = player.askAction();
+		System.out.println("Expecting " + expectedAction);
 		if (action == null)
 			return false;
 
@@ -225,13 +226,15 @@ public class VideoPoker {
 		}
 
 		if (action.getAction() != expectedAction) {
-			System.out.println("Illegal action. Expected " + expectedAction + ".");
+			System.out.println("Illegal action " + action.getAction() +". Expected " + expectedAction + ".");
 			gamePhase(expectedAction);
 		}
 
 		if(debugMode) System.out.println();
-		if (!performAction(action))
+		if (!performAction(action)) {
+			System.out.println("aaa " + action.getAction() + expectedAction);
 			gamePhase(expectedAction);
+		}
 
 		return true;
 	}

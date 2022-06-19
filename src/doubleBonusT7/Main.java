@@ -31,8 +31,8 @@ public class Main {
 				player = new DebugPlayer(credit, args[2]);
 				game = new VideoPoker(pokerHandsFile, args[3], player, strategy, true);
 			} catch (Exception e) {
-				e.printStackTrace();
-				printCommandLineHelp();
+				System.out.println(e);
+				System.out.println("Exiting.");
 				System.exit(0);
 			}
 			break;
@@ -45,8 +45,8 @@ public class Main {
 				player = new SimulationPlayer(credit, bet, nbdeals);
 				game = new VideoPoker(pokerHandsFile, player, strategy);
 			} catch (Exception e) {
-				e.printStackTrace();
-				printCommandLineHelp();
+				System.out.println(e);
+				System.out.println("Exiting.");
 				System.exit(0);
 			}
 			break;

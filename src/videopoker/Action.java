@@ -28,6 +28,9 @@ public class Action {
 	 * @param _action char referring to the type of action (first letter)
 	 */
 	public Action(char _action) {
+		if(_action != 'a' && _action != 'b' && _action !='d' &&
+				_action != 'h' && _action != '$' && _action != 's')
+			throw new IllegalArgumentException("Action " + _action + " is not valid.");
 		action = _action;
 
 		if (action == 'h')
