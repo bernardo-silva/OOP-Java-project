@@ -2,11 +2,16 @@ package playingCards;
 
 import java.util.Objects;
 
+
 /**
- * @author bs
+ * ______________________________________
  *
  */
 public class Card implements Comparable<Card>{
+	/**
+	 * possible suit types (clubs, spades, heart and diamond), as well as the attributes Any and Some
+	 *
+	 */
 	enum Suit{
 		C,
 		S,
@@ -15,17 +20,27 @@ public class Card implements Comparable<Card>{
 		ANY,
 		SOME
 	}
+	
+	/**
+	 * stores the possible faces
+	 */
 	static final char[] allFaces = {' ',' ','2','3','4','5','6','7','8','9','T','J','Q','K','A'};
-
+	/**
+	 * the face of the card
+	 */
 	private final int cardFace;
+	/**
+	 * the suit of the card
+	 */
 	private final Suit cardSuit;
 
-//constructors
+
 	/**
-	 * @param face
-	 * @param suit
+	 * Constructor method of the Card, with its face and suit represented as integers
+	 * @param face of the card
+	 * @param suit of the card
 	 */
-	public Card(int face, int suit){//using ints
+	public Card(int face, int suit){
 		if(face>14 || face<2) 
 			throw new IllegalArgumentException("Card face '" + face + "' is not valid.");
 
@@ -36,6 +51,11 @@ public class Card implements Comparable<Card>{
 		cardSuit = Suit.values()[suit]; 
 	}
 
+	
+	/**
+	 * Constructor method of the Card, using the textual representation of a card
+	 * @param card two characters string representation of a card
+	 */
 	public Card(String card)
 	{
 		if(card.length() > 2)
@@ -72,10 +92,18 @@ public class Card implements Comparable<Card>{
 		}
 	}
 
+	/**
+	 * Gets the face of the card
+	 * @return the face of the card
+	 */
 	public int getFace(){ 
 		return cardFace; 
 	}
 	
+	/**
+	 * Gets the suit of the card
+	 * @return the suit of the card
+	 */
 	public int getSuit(){ 
 		return cardSuit.ordinal(); 
 	}
@@ -84,6 +112,10 @@ public class Card implements Comparable<Card>{
 		return "" + allFaces[cardFace] + cardSuit;
 	}
 
+	/**
+	 * Compares the card with another card
+	 * @return 1 if it is bigger, 0 if they have same face and -1 if it is smaller
+	 */
 	public int compareTo(Card other) {
 			if(cardFace > other.getFace()) return 1;
 			else if (cardFace == other.getFace()) return 0;
