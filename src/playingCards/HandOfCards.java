@@ -13,6 +13,9 @@ import java.util.List;
  * It provides useful metrics and statistics that ease the checking of a given
  * hand for some type of patterns.
  *
+ * @author Bernardo Silva
+ * @author Miguel Madeira
+ * @author Vicente Silvestre
  */
 public class HandOfCards {
 	/**
