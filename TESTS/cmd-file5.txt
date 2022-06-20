@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 b d h 5 4 3 2 1 b d h 4 4 b d h 4 2 1 5 3 b d h 1 1 2 2 b d h 25 b d h -1
+=======
+b 5 d a h 0 2 3 4
+>>>>>>> 9396d41 (Coiso)

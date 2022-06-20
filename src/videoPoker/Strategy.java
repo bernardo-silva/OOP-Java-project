@@ -1,4 +1,4 @@
-package videopoker;
+package videoPoker;
 
 import java.util.ArrayList;
 

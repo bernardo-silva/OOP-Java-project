@@ -1,4 +1,4 @@
-package videopoker;
+package videoPoker;
 
 import java.io.File;
 import java.io.*;
@@ -68,9 +68,13 @@ public class DebugPlayer extends Player {
 			scanFile.close();
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
+			System.out.println("Exiting.");
+			System.exit(1);
 		} catch(IllegalArgumentException e) {
 			System.out.println(e.getMessage());
-			System.out.println("Error on reading action from file " + filename);
+			System.out.println("Error on file " + filename);
+			System.out.println("Exiting.");
+			System.exit(1);
 		}
 	}
 

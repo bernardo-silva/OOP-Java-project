@@ -8,8 +8,7 @@ import java.util.function.Function;
 
 import playingCards.Card;
 import playingCards.HandOfCards;
-import videopoker.Strategy;
-
+import videoPoker.Strategy;
 import videopoker.pokerHands.Flush;
 import videopoker.pokerHands.FourOfAKind;
 import videopoker.pokerHands.FullHouse;

@@ -1,9 +1,9 @@
 package doubleBonusT7;
 
-import videopoker.DebugPlayer;
-import videopoker.Player;
-import videopoker.SimulationPlayer;
-import videopoker.VideoPoker;
+import videoPoker.DebugPlayer;
+import videoPoker.Player;
+import videoPoker.SimulationPlayer;
+import videoPoker.VideoPoker;
 
 public class Main {
 	private static void printCommandLineHelp() {
@@ -31,9 +31,9 @@ public class Main {
 				player = new DebugPlayer(credit, args[2]);
 				game = new VideoPoker(pokerHandsFile, args[3], player, strategy, true);
 			} catch (Exception e) {
-				System.out.println(e);
+				System.out.println(e.getMessage());
 				System.out.println("Exiting.");
-				System.exit(0);
+				System.exit(1);
 			}
 			break;
 		case "-s":
@@ -45,14 +45,14 @@ public class Main {
 				player = new SimulationPlayer(credit, bet, nbdeals);
 				game = new VideoPoker(pokerHandsFile, player, strategy);
 			} catch (Exception e) {
-				System.out.println(e);
+				System.out.println(e.getMessage());
 				System.out.println("Exiting.");
-				System.exit(0);
+				System.exit(1);
 			}
 			break;
 		default:
 			printCommandLineHelp();
-			System.exit(0);
+			System.exit(1);
 		}
 
 		game.playGame();

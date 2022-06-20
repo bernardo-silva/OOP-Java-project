@@ -1,4 +1,4 @@
-package videopoker;
+package videoPoker;
 
 /**
  * Subclass of Player, with additional methods to implement the simulation mode of videopoker

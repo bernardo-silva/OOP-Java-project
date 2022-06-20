@@ -1,4 +1,4 @@
-package videopoker;
+package videoPoker;
 
 import java.util.ArrayList;
 
@@ -42,6 +42,8 @@ public class Action {
 	 * @param position index of the card to hold
 	 */
 	public void addPosition(int position) {
+                if(position < 1 || position > 5)
+                        throw new IllegalArgumentException("Invalid hold position " + position + ".");
 		positions.add(position);
 	}
 

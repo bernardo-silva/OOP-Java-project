@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import doubleBonusT7.DoubleBonusT7Strategy;
-import videopoker.Strategy;
+import videoPoker.Strategy;
 
 public class Tests {
 
