@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"doubleBonusT7"},{"l":"playingCards"},{"l":"videoPoker"},{"l":"videopoker.pokerHands"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"doubleBonusT7"},{"l":"playingCards"},{"l":"videoPoker"},{"l":"videopoker.old"},{"l":"videopoker.pokerHands"}];updateSearchResults();
