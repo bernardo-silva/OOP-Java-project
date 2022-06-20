@@ -45,8 +45,7 @@ public class Card implements Comparable<Card>{
 
 
 	/**
-	 * Constructor method of the Card, with its face and suit represented as integers
-	 * Constructs a card with the values given as integers.
+	 * Constructs a card from values given as integers.
 	 * <p>
 	 * The face value should be the corresponding number for numbered cards and
 	 * 11 for Jacks, 12 for Queens, 13 for Kings and 14 for aces.
@@ -56,6 +55,8 @@ public class Card implements Comparable<Card>{
 	 *
 	 * @param face Card's face value
 	 * @param suit Card's suit value
+         * @exception IllegalArgumentException if the face or the suit values
+         * are invalid.
 	 */
 	public Card(int face, int suit){
 		if(face>14 || face<2) 

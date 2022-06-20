@@ -7,8 +7,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import playingCards.DeckOfCards;
-import videopoker.pokerHands.PokerHand;
-import videopoker.pokerHands.PokerHandFactory;
+import videoPoker.pokerHands.PokerHand;
+import videoPoker.pokerHands.PokerHandFactory;
 
 /**
  * @author Bernardo Silva 

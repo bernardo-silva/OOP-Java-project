@@ -7,15 +7,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * _________________________________________________________________
+ * This class implements a deck of cards, used to deal cards from.
+ * <p>
+ * A standard deck of 52 cards can be created, as well as an arbitrary one read
+ * from a file. The deck can be shuffled an reset to the initial state.
  *
+ * @author Bernardo Silva
+ * @author Miguel Madeira
+ * @author Vicente Silvestre
  */
 public class DeckOfCards {
 	private final ArrayList<Card> fullDeck = new ArrayList<Card>();
 	private ArrayList<Card> deck = new ArrayList<Card>();
 
 	/**
-	 * Constructor method for a default deck; builds the full deck on both variables fullDeck and deck
+	 * Constructs a standard deck of 52 cards.
 	 */
 	public DeckOfCards() {
 		for (int suit = 0; suit <= 3; suit++) {
@@ -27,8 +33,9 @@ public class DeckOfCards {
 	}
 
 	/**
-	 * Constructor method for a deck specified within a file; builds the full deck on both variables fullDeck and deck
-	 * @param filename name of the file with the deck of cards
+	 * Constructs an arbitrary deck read from a file.
+	 * @param filename name of the file with the card representations
+         * separated by whitespace
 	 */
 	public DeckOfCards(String filename) {
 		try {
@@ -61,12 +68,16 @@ public class DeckOfCards {
 	/**
 	 * Deals a specified number of cards. 
 	 * @param nCards number of cards to deal
-	 * @return array of cards from the deck
+	 * @return ArrayList of cards dealt from the deck
 	 * @exception IllegalArgumentException if the number of dealt cards is non positive
+         * or if the amount of cards to deal is greater than the amount of
+         * available cards.
 	 */
 	public ArrayList<Card> deal(int nCards) {
 		if (nCards <= 0)
 			throw new IllegalArgumentException("Number of dealt cards must be greater than 0.");
+		if (nCards > deck.size())
+			throw new IllegalArgumentException("Insufficient amount of cards to deal.");
 
 		ArrayList<Card> giveCards = new ArrayList<Card>(nCards);
 		for (int i = 0; i < nCards; i++) {
@@ -77,16 +88,16 @@ public class DeckOfCards {
 	}
 
 	/**
-	 * Gets the deck.
-	 * @return the deck
+	 * Returns an ArrayList with the cards in the deck.
+	 * @return an ArrayList with the cards in the deck.
 	 */
 	public ArrayList<Card> getDeck() {
 		return deck;
 	}
 
 	/**
-	 * Gets the full deck.
-	 * @return the full deck
+	 * Returns an ArrayList with the initial cards in the deck.
+	 * @return an ArrayList with the initial cards in the deck.
 	 */
 	public ArrayList<Card> getFullDeck() {
 		return fullDeck;
@@ -104,15 +115,15 @@ public class DeckOfCards {
 	}
 
 	/**
-	 * Resets the deck to the fulldeck.
+	 * Resets the deck to the initial state.
 	 */
 	public void reset() {
 		deck = new ArrayList<Card>(fullDeck);
 	}
 
 	/**
-	 * Gets the size of the deck.
-	 * @return the size of the deck
+	 * Returns the number of cards in the deck.
+	 * @return the number of cards in the deck
 	 */
 	public int size() {
 		return deck.size();
@@ -125,6 +136,10 @@ public class DeckOfCards {
 		Collections.shuffle(deck);
 	}
 
+	/**
+	 * Returns a string representation of the deck.
+         * @return string representation of the deck
+	 */
 	@Override
 	public String toString() {
 		return "" + deck;

@@ -163,6 +163,8 @@ public class HandOfCards {
 	/**
 	 * Removes the card at the specified position from the hand.
 	 * @param position of the card to be removed
+         * @exception IllegalArgumentException if the position provided is out
+         * of bounds.
 	 */
 	public void discard(int position) {
 		if (position >= this.size() || position < 0)
@@ -176,6 +178,8 @@ public class HandOfCards {
 	/**
 	 * Removes the cards at the specified positions from the hand.
 	 * @param positions array with the positions of the cards to be discarded
+         * @exception IllegalArgumentException if any of the positions provided are out
+         * of bounds.
 	 */
 	public void discard(int[] positions) {
 		for (int i = 0; i < positions.length; i++) {
@@ -397,7 +401,7 @@ public class HandOfCards {
 	 * Replaces the cards at the specified positions in the hand with the new given cards.
 	 * @param cards list of new cards to replace the discarded ones
 	 * @param positions array with the positions of the cards to be replaced
-	 * @throws IllegalArgumentException if the position of the card to replace is out of bonds
+	 * @throws IllegalArgumentException if the position of the card to replace is out of bounds
 	 */
 	public void replaceCards(List<Card> cards, List<Integer> positions) {
 		if(cards.size() != positions.size())
