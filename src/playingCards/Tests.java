@@ -16,6 +16,7 @@ public class Tests {
             File testFile = new File(filename);
             Scanner scanLine = new Scanner(testFile);
 			int count = 0;
+			boolean success = true;
 
             while (scanLine.hasNextLine()){
 				count++;
@@ -32,6 +33,7 @@ public class Tests {
 				stratPositions = strat.getOptimalStrategy(testHand);
 
 				if(!testPositions.equals(stratPositions)){
+					success = false;
 					System.out.println();
 					System.out.println("Strategy incorrect on line " + count + " with hand " + testHand);
 					System.out.println("Expected: " + testPositions + " Got: " + stratPositions);
@@ -39,6 +41,8 @@ public class Tests {
 				}
 //				tests.add(testPositions ==  strat.getOptimalStrategy(testHand));			
 			}
+			if(success)
+				System.out.println("All tests passed");
             scanLine.close();
 		}
         catch(FileNotFoundException e){

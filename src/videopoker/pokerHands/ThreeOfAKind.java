@@ -30,9 +30,9 @@ public class ThreeOfAKind extends PokerHand {
 			end = maxCard.getFace();
 		}
 
-		for(int i = start; i<=end; i++) 
+		for(int i = start; i<=end; i++)
 			if(frequencies[i] == 3) return true;
-		
+
 		return false;
 	}
 

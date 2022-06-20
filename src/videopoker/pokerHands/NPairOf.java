@@ -9,7 +9,7 @@ public class NPairOf extends PokerHand {
 	private  Card maxCard = null;
 
 	public NPairOf(String name, int[] payout, int n, Card minCard, Card maxCard) {
-		super(name, payout);
+		super(n + " " + name, payout);
 		this.n = n;
 		this.minCard = minCard;
 		this.maxCard = maxCard;
@@ -30,9 +30,9 @@ public class NPairOf extends PokerHand {
 			end = maxCard.getFace();
 		}
 
-		for(int i = start; i<=end; i++) 
+		for(int i = start; i<=end; i++)
 			if(frequencies[i] == 2) nFound ++;
-		
+
 		return nFound == n;
 	}
 

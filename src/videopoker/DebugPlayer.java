@@ -35,7 +35,7 @@ public class DebugPlayer extends Player {
 			File actionFile = new File(filename);
 			Scanner scanFile = new Scanner(actionFile);
 
-			scanFile.useDelimiter(" ");
+			scanFile.useDelimiter("\\s+");
 
 			String read;
 			Action new_action;
@@ -68,6 +68,9 @@ public class DebugPlayer extends Player {
 			scanFile.close();
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
+		} catch(IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			System.out.println("Error on reading action from file " + filename);
 		}
 	}
 
