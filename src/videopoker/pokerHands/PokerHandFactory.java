@@ -3,18 +3,18 @@ package videopoker.pokerHands;
 import playingCards.Card;
 
 public class PokerHandFactory {
-	public static PokerHand createPokerHand(String[] params) {
+	public static PokerHand createPokerHand(String name, String[] params) {
 		if(params.length < 2)
 			throw new IllegalArgumentException("The hand should have a name, payout and optional arguments.");
 		PokerHand hand;
 
-		String name = params[0];
+		String handType = params[0];
 		int[] payouts = stringArrToIntArr(params[params.length-1].split(",",0));
 
 		Card minCard, maxCard;
 		String[] cards;
 
-		switch(name) {
+		switch(handType) {
 		case "RoyalFlush":
 			hand = new RoyalFlush(name, payouts);
 			break;

@@ -9,7 +9,7 @@ public class NPairOf extends PokerHand {
 	private  Card maxCard = null;
 
 	public NPairOf(String name, int[] payout, int n, Card minCard, Card maxCard) {
-		super(n + " " + name, payout);
+		super(name, payout);
 		this.n = n;
 		this.minCard = minCard;
 		this.maxCard = maxCard;

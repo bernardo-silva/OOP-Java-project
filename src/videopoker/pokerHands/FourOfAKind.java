@@ -11,7 +11,7 @@ public class FourOfAKind extends PokerHand {
 		super(name, payout);
 	}
 	public FourOfAKind(String name, int[] payout, Card minCard, Card maxCard) {
-		super(name + " " + minCard.getFace() + " - " + maxCard.getFace(), payout);
+		super(name, payout);
 		this.minCard = minCard;
 		this.maxCard = maxCard;
 	}

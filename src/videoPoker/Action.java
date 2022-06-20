@@ -17,11 +17,11 @@ public class Action {
 	/**
 	 * Amount of money to bet
 	 */
-	private int bet;
+	private int bet = 0;
 	/**
 	 * List of the indexes of the cards to hold
 	 */
-	private ArrayList<Integer> positions;
+	private ArrayList<Integer> positions = null;
 
 	/**
 	 * Constructor method that assigns the action type, and initializes the array of positions of cards for the case of hold action
@@ -92,7 +92,12 @@ public class Action {
 	 * @return string representation of the object
 	 */
 	public String toString() {
-		return "" + action;
+		String out = "" + action;
+		if(bet != 0) out += " " + bet;
+		if(positions != null)
+			if(!positions.isEmpty()) 
+				out += " " + positions;
+		return out;
 	}
 
 }

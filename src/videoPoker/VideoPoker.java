@@ -60,12 +60,15 @@ public class VideoPoker {
 		File f = new File(handFile);
 		Scanner scan;
 		String[] params;
+		String name;
 		
 		try {
 			scan = new Scanner(f);
 			while(scan.hasNextLine()) {
-				params = scan.nextLine().split("\\s+", 0);
-				hands.add(PokerHandFactory.createPokerHand(params));
+				params = scan.nextLine().split(":",2);
+				name = params[0];
+				params = params[1].strip().split("\\s+", 0);
+				hands.add(PokerHandFactory.createPokerHand(name, params));
 			}
 			scan.close();
 
@@ -111,8 +114,6 @@ public class VideoPoker {
 	}
 
 	private boolean advice() {
-		if(debugMode) System.out.println("Performing action a");
-
 		ArrayList<Integer> positions = strategy.getOptimalStrategy(player.getHand());
 		player.setAdvicePositions(positions);
 
@@ -126,8 +127,6 @@ public class VideoPoker {
 	}
 
 	private boolean bet(Action action) {
-		if(debugMode) System.out.println("Performing action b " + action.getBet());
-
 		if (action.getBet() != 0)
 			bet = action.getBet();
 		else if (bet == 0)
@@ -141,19 +140,16 @@ public class VideoPoker {
 		player.credit(bet);
 		player.addStatistic(14, bet);
 		if (debugMode)
-			System.out.println("Player betted " + bet + ". Player cash is now " + player.getMoney());
+			System.out.println("Player betted " + bet + ". Player credit is now " + player.getMoney());
 		return true;
 	}
 
 	private boolean credit() {
-			if(debugMode) System.out.println("Performing action $");
-			System.out.println("Player cash is " + player.getMoney());
+			System.out.println("Player credit is " + player.getMoney());
 			return true;
 	}
 
 	private boolean deal() {
-		if(debugMode) System.out.println("Performing action d");
-
 		player.setHand(deck.deal(5));
 		player.addStatistic(12, 1);
 
@@ -162,8 +158,6 @@ public class VideoPoker {
 	}
 
 	private boolean hold(Action action) {
-		if(debugMode) System.out.println("Performing action " + action + " " + action.getPositions());
-
 		ArrayList<Integer> positions = new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3, 4));
 		ArrayList<Integer> holdPositions = action.getPositions();
 
@@ -183,14 +177,13 @@ public class VideoPoker {
 	}
 
 	private boolean statistics() {
-		if(debugMode) System.out.println("Performing action s");
-
 		player.printStatistics();
 
 		return true;
 	}
 
 	private boolean performAction(Action action) {
+		if(debugMode) System.out.println("Performing action " + action);
 		
 		switch (action.getAction()) {
 		case 'a'://Advice
@@ -252,7 +245,7 @@ public class VideoPoker {
 			player.payout(payout);
 
 			if(debugMode)
-				System.out.println("Player cash is now " + player.getMoney());
+				System.out.println("Player credit is now " + player.getMoney());
 			if(!debugMode) {
 				deck.reset();
 				deck.shuffle();
