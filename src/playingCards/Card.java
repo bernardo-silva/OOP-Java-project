@@ -11,6 +11,10 @@ import java.util.Objects;
  * <p>
  * Two extra suit values are also provided, Any and Some, to provide functionality when
  * comparing the equality of cards.
+ *
+ * @author Bernardo Silva
+ * @author Miguel Madeira
+ * @author Vicente Silvestre
  */
 public class Card implements Comparable<Card>{
 	/**
