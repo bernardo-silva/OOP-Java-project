@@ -68,7 +68,7 @@ public class DoubleBonusT7Strategy implements Strategy {
 	}
 	/**
 	 * Method implementation of the interface defined method getOptimalStrategy
-	 * @return the positions of the cards to hold from @param hand following a given strategy
+	 * @return the positions of the cards to hold from the hand following a given strategy
 	 */
 	@Override
 	public ArrayList<Integer> getOptimalStrategy(HandOfCards hand) {
@@ -87,7 +87,7 @@ public class DoubleBonusT7Strategy implements Strategy {
 	/**
 	 * Allows the use of the method {@link playingCards.HandOfCards#match()} with the second hand given as a String @param cards
 	 * Limits the amount of cards to match by @param amount
-	 * @return null if the number of matching cards is different from the intended @param amount
+	 * @return null if the number of matching cards is different from the intended amount
 	 */
 	private static ArrayList<Integer> matchCards(HandOfCards hand, String cards, int amount) {
 		HandOfCards matchHand = new HandOfCards(cards);
@@ -101,7 +101,7 @@ public class DoubleBonusT7Strategy implements Strategy {
 	/**
 	 * Allows the use of the method {@link playingCards.HandOfCards#match()} with the second hand given as a HandOfCards @param matchHand
 	 * Limits the amount of cards to match by @param amount
-	 * @return null if the number of matching cards is different from the intended @param amount
+	 * @return null if the number of matching cards is different from the intended amount
 	 */
 	private static ArrayList<Integer> matchCards(HandOfCards hand, HandOfCards matchHand, int amount) {
 		ArrayList<Integer> positions = hand.match(matchHand);
