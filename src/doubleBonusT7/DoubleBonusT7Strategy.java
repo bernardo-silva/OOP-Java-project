@@ -9,19 +9,25 @@ import java.util.function.Function;
 import playingCards.Card;
 import playingCards.HandOfCards;
 import videoPoker.Strategy;
-import videopoker.pokerHands.Flush;
-import videopoker.pokerHands.FourOfAKind;
-import videopoker.pokerHands.FullHouse;
-import videopoker.pokerHands.PokerHand;
-import videopoker.pokerHands.RoyalFlush;
-import videopoker.pokerHands.Straight;
-import videopoker.pokerHands.StraightFlush;
+import videoPoker.pokerHands.Flush;
+import videoPoker.pokerHands.FourOfAKind;
+import videoPoker.pokerHands.FullHouse;
+import videoPoker.pokerHands.PokerHand;
+import videoPoker.pokerHands.RoyalFlush;
+import videoPoker.pokerHands.Straight;
+import videoPoker.pokerHands.StraightFlush;
 
 /**
+ * Implementation of the class {@link Strategy} to be used in the Double Bonus
+ * 10/7 variant of video poker.
+ *
+ * <p>
+ * Provides a method that returns which cards should be held to perform the
+ * optimal play.
+ *
  * @author Bernardo Silva 
  * @author Miguel Madeira
  * @author Vicente Silvestre
- * DoubleBonusT7 strategy implementation
  */
 public class DoubleBonusT7Strategy implements Strategy {
 	/**
@@ -62,13 +68,10 @@ public class DoubleBonusT7Strategy implements Strategy {
 
 	}
 	/**
-	 * Default Constructor
-	 */
-	public DoubleBonusT7Strategy() {
-	}
-	/**
-	 * Method implementation of the interface defined method getOptimalStrategy
-	 * @return the positions of the cards to hold from the hand following a given strategy
+         * Returns the indexes of the cards that should be kept (1 indexing).
+         * @param hand the hand of cards
+	 * @return the positions of the cards to hold from the hand given by the
+         * optimal strategy
 	 */
 	@Override
 	public ArrayList<Integer> getOptimalStrategy(HandOfCards hand) {

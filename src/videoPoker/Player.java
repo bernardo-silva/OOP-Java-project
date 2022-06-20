@@ -6,12 +6,11 @@ import playingCards.Card;
 import playingCards.HandOfCards;
 
 /**
- * Abstract implementation of a Player. All players to be used in the {@link
- * VideoPoker} game should inherit from this class. 
+ * Abstract implementation of a Player. All players to be used in the {@link VideoPoker}
+ * game should inherit from this class.
  * <p>
  * The player has a hand of cards and credits. It collects useful statistics
  * about the game and stores the last advised positions.
- * 
  *
  * @author Bernardo Silva 
  * @author Miguel Madeira
@@ -19,13 +18,32 @@ import playingCards.HandOfCards;
  */
 
 public abstract class Player {
+	/**
+	 * Stores the player's money
+	 */
 	protected int money;
+	/**
+	 * Stores the last bet amount
+	 */
 	protected int lastBet = 0;
+	/**
+	 * Player's hand of cards
+	 */
 	protected HandOfCards hand;
-
+	/**
+	 * Array that stores the statistics of the game
+	 */
 	protected int[] stats = new int[15]; 
+	/**
+	 * Array that stores the advised hold positions
+	 */
 	protected ArrayList<Integer> advised_positions;
 
+	/**
+	 * Constructor method that sets the player's money and creates a new empty 
+         * hand of cards.
+	 * @param _money player's starting money
+	 */
 	public Player(int _money) {
 		money = _money;
 //		money0 = _money;
@@ -33,7 +51,9 @@ public abstract class Player {
 	}
 
 	/**
-	 * @param cards
+	 * Sets the player's hand with the provided cards.
+	 * @param cards array of cards to be added to the hand
+	 * @throws IllegalArgumentException if the array of cards does not contain 5 elements
 	 */
 	public void setHand(ArrayList<Card> cards) {
 		if (cards.size() != 5)
@@ -44,16 +64,16 @@ public abstract class Player {
 
 
 	/**
-	 * 
-	 * @param card
-	 * @param positions
+	 * Replaces the cards at the specified positions in the hand with new specified cards.
+	 * @param card array of new cards to add to the hand
+	 * @param positions array with the indexes of the cards to replace
 	 */
 	public void replaceInHand(ArrayList<Card> card, ArrayList<Integer> positions) {
 		hand.replaceCards(card, positions);
 	}
 
 	/**
-	 * Gets the hand of the card
+	 * Gets the hand of the card.
 	 * @return the hand of the card
 	 */
 	public HandOfCards getHand() {
@@ -67,7 +87,7 @@ public abstract class Player {
 	public abstract Action askAction(); 
 	
 	/**
-	 * Gets the player's amount of money
+	 * Gets the player's amount of money.
 	 * @return amount of money
 	 */
 	public int getMoney() {
@@ -119,7 +139,7 @@ public abstract class Player {
 
 
 	/**
-	 * Increases by a defined amount a statistic metric of the game
+	 * Increases by a defined amount a statistic metric of the game.
 	 * @param idx index of the statistic metric to increase
 	 * @param amount amount to increase
 	 */
@@ -128,8 +148,8 @@ public abstract class Player {
 	}
 
 	/**
-	 * Sets the array containing the positions of the cards that are advised to be held
-	 * @param array with the indexes of the cards advised to be held
+	 * Sets the array containing the positions of the cards that are advised to be held.
+	 * @param positions array with the indexes of the cards advised to be held
 	 */
 	public void setAdvicePositions(ArrayList<Integer> positions) {		
 		advised_positions = positions;

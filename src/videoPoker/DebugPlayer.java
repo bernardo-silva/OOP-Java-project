@@ -6,9 +6,11 @@ import java.util.Scanner;
 import java.util.LinkedList;
 
 /**
- * Subclass of Player, with additional methods to implement the debug mode of videopoker
- * ____________________________________________________________________ explain dynamics
+ * Implements a {@link Player} that returns actions read from a file.
  *
+ * @author Bernardo Silva 
+ * @author Miguel Madeira
+ * @author Vicente Silvestre
  */
 public class DebugPlayer extends Player {
 
@@ -18,6 +20,7 @@ public class DebugPlayer extends Player {
 	LinkedList<Action> actions = new LinkedList<Action>();
 
 	/**
+         * Constructs a player that reads actions from a file.
 	 * @param _money amount of money the player starts with
 	 * @param filename name of the file with the actions to perform
 	 */

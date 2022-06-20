@@ -2,7 +2,23 @@ package videoPoker.pokerHands;
 
 import playingCards.Card;
 
+/**
+ * Factory class that returns a {@link PokerHand} given a name and an array of
+ * parameters.
+ *
+ * @author Bernardo Silva
+ * @author Miguel Madeira
+ * @author Vicente Silvestre
+ */
 public class PokerHandFactory {
+        /**
+         * Returns a {@link PokerHand} given a name and an array of parameters
+         *
+         * @param name the name to give to the {@link PokerHand}
+         * @param params parameters necessary to create the poker hand
+         * @return an object that checks the desired poker hand
+         * @exception IllegalArgumentException if the parameters are invalid.
+         */
 	public static PokerHand createPokerHand(String name, String[] params) {
 		if(params.length < 2)
 			throw new IllegalArgumentException("The hand should have a name, payout and optional arguments.");

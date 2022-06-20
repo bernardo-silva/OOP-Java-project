@@ -7,12 +7,31 @@ import java.util.List;
 
 import playingCards.HandOfCards;
 
+/**
+ * Implementation of {@link PokerHand} that checks the hand for a straight.
+ *
+ * @author Bernardo Silva
+ * @author Miguel Madeira
+ * @author Vicente Silvestre
+ */
 public class Straight extends PokerHand {
 
+        /**
+         * Constructs an object that checks straights.
+         *
+         * @param name name of the hand
+         * @param payout array of payout values
+         */
 	public Straight(String name, int[] payout) {
 		super(name, payout);
 	}
 
+        /**
+         * Returns true if the provided hand has a straight.
+         *
+         * @param hand a hand of cards
+         * @return true if the hand has a straight
+         */
 	@Override
 	public boolean checkHand(HandOfCards hand) {
 		if( hand.getUniqueFaces() !=  5) return false;

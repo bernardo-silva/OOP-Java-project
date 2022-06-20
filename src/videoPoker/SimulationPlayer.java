@@ -1,13 +1,12 @@
 package videoPoker;
 
 /**
- * Subclass of Player, with additional methods to implement the simulation mode of videopoker
- * ____________________________________________________________________ explain dynamics
+ * Implements a {@link Player} that always asks for the optimal strategy and
+ * performs it.
  *
- */
-/**
- * @author vicen
- *
+ * @author Bernardo Silva 
+ * @author Miguel Madeira
+ * @author Vicente Silvestre
  */
 public class SimulationPlayer extends Player{
 
@@ -90,7 +89,7 @@ public class SimulationPlayer extends Player{
 
 			action.setPositions(advised_positions); // add a flag to control the execution of this?
 
-			stage = gameStage.BET; //Restart cyle
+			stage = gameStage.BET; //Restart cycle
 			currentNbDeals++;
 
 			return action;

@@ -8,8 +8,20 @@ import java.util.Scanner;
 import playingCards.HandOfCards;
 import videoPoker.Strategy;
 
+/**
+ * Provides a function to test the strategy implementation.
+ *
+ * @author Bernardo Silva 
+ * @author Miguel Madeira
+ * @author Vicente Silvestre
+ */
 public class Tests {
 
+        /**
+         * Tests the strategy implementation.
+         * @param filename path to file containing the hands and expected
+         * strategy output.
+         */
 	public static void testHandsFromFile(String filename) {
 		Strategy strat = new DoubleBonusT7Strategy();
         try{        
@@ -49,6 +61,10 @@ public class Tests {
             System.out.println(e.getMessage());
         }
 	}
+        /**
+         * Main function that runs the test.
+         * @param args command line arguments
+         */
 	public static void main(String[] args) {
 		testHandsFromFile("TESTS/strategy-hands-tests.txt");
 	}
