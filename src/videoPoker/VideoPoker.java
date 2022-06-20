@@ -11,6 +11,25 @@ import videoPoker.pokerHands.PokerHand;
 import videoPoker.pokerHands.PokerHandFactory;
 
 /**
+ * This class implements a generic Video Poker game. 
+ * <p>
+ * The game requires an instance of {@link Player} that should return an {@link
+ * Action} at the appropriate times.
+ * <p> 
+ * For the advice command to work, the game also needs to be provided an
+ * instance of {@link Strategy} that returns the optimal play for the respective
+ * kind of game.
+ * <p>
+ * The game can be played in two modes:
+ * <ul>
+ * <li> Regular Mode: This mode has no output except the ones asked by the
+ * player, and is played as an usual game, where the deck is shuffled after
+ * every play.
+ * <li> Debug Mode: This mode prints information about the game being played
+ * and requires a file with the available playing cards to be provided. The deck
+ * generated from these cards is never shuffled or reset.
+ * </ul>
+ * 
  * @author Bernardo Silva 
  * @author Miguel Madeira
  * @author Vicente Silvestre
@@ -41,10 +60,19 @@ public class VideoPoker {
 	 */
 	private int bet = 0;
 	/**
-	 * Constructor method that obtains the hand combinations that correspond to a payout from the file @param handFile ,
-	 * the deck from the file @param deckFile , 
-	 * initializes the player @param player and the strategy @param strategy and picks the game mode, 
-	 * debug mode if @param debugMode = true and simulation mode otherwise.
+	 * Constructs a Video Poker game instance.
+         * <p>
+         * Receives a file with the available poker hands and respective payouts,
+	 * a file with the available cards, and an instance of a Player and Strategy.
+         * <p>
+         * The game can be set to debug mode.
+         * @param handFile file containing the poker hands and respective
+         * payouts
+         * @param deckFile file containing the available playing cards passed to
+         * the constructor of DeckOfCards
+         * @param player instance of a Player
+         * @param strategy instance of a Strategy
+         * @param debugMode true if game should be played on debug mode
 	 */
 	public VideoPoker(String handFile, String deckFile, Player player,
 						Strategy strategy, boolean debugMode) {
@@ -66,9 +94,16 @@ public class VideoPoker {
 		readHandsFromFile(handFile);
 	}
 	/**
-	 * Constructor method that obtains the hand combinations that correspond to a payout from the file @param handFile ,
-	 * creates a default deck, initializes the player @param player 
-	 * and the strategy @param strategy and prepares the game for Simulation mode.
+	 * Constructs a Video Poker game instance.
+         * <p>
+         * Receives a file with the available poker hands and respective payouts,
+	 * an instance of a Player and Strategy cards.
+         * <p>
+         * The deck used is the standard 52 card deck.
+         * @param handFile file containing the poker hands and respective
+         * payouts
+         * @param player instance of a Player
+         * @param strategy instance of a Strategy
 	 */
 	public VideoPoker(String handFile, Player player, Strategy strategy) {
 		this.player = player;
@@ -291,9 +326,18 @@ public class VideoPoker {
 		return true;
 	}
 	/**
-	 *Begins the game. The game usually follows and repeats the sequence: bet -> deal -> hold.
-	 *The game is played until there are no more actions or an error occurs that leads {@link #gamePhase(char)} to return false
-	 *breaking the infinite loop and doing a print. In simulation mode the deck is always reset and shuffled at the end of each round.
+	 * Begins playing the game.
+         * <p>
+         * The game usually follows and repeats the sequence: bet -> deal -> hold.
+         * <p>
+         * At every game phase, the game ask the player which action he wants to
+         * perform, expressed in the form of an instance of the class {@link Action}. 
+         * The available actions are:
+         * <table><thead><tr><th>Command</th><th>Meaning</th></tr></thead><tbody><tr><td>b</td><td>bet</td></tr><tr><td>$</td><td>credit</td></tr><tr><td>d</td><td>deal</td></tr><tr><td>h</td><td>hold</td></tr><tr><td>a</td><td>advice</td></tr><tr><td>s</td><td>statistics</td></tr></tbody></table>
+         * <p>
+	 * The game is played until there are no more actions.
+	 * In debug mode, the game prints useful information to the Stdout and the
+         * deck is never reset or shuffled.
 	 */
 	public void playGame() {
 		int payout;

@@ -80,7 +80,9 @@ public class Card implements Comparable<Card>{
 	 * or by an "X" corresponding to the Some suit or a "*" corresponding to the Any
 	 * suit. In case of omission, the suit is considered to be Any.
 	 *
-	 * @param string representation of a card with at most 2 characters
+	 * @param card string representation of a card with at most 2 characters
+         * @exception IllegalArgumentException if the provided string does not
+         * represent a valid card
 	 */
 	public Card(String card)
 	{

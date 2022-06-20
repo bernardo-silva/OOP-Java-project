@@ -6,8 +6,16 @@ import playingCards.Card;
 import playingCards.HandOfCards;
 
 /**
+ * Abstract implementation of a Player. All players to be used in the {@link
+ * VideoPoker} game should inherit from this class. 
+ * <p>
+ * The player has a hand of cards and credits. It collects useful statistics
+ * about the game and stores the last advised positions.
  * 
  *
+ * @author Bernardo Silva 
+ * @author Miguel Madeira
+ * @author Vicente Silvestre
  */
 
 public abstract class Player {

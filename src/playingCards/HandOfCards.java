@@ -423,7 +423,7 @@ public class HandOfCards {
 	/**
 	 * Replaces the cards at the specified positions in the hand with the new given cards.
 	 * @param cards list of new cards to replace the discarded ones
-	 * @param array with the positions of the cards to be replaced
+	 * @param positions array with the positions of the cards to be replaced
 	 * @throws IllegalArgumentException if the position of the card to replace is out of bonds
 	 */
 	public void replaceCards(List<Card> cards, int[] positions) {
