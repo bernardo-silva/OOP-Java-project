@@ -61,7 +61,7 @@ public class DoubleBonusT7Strategy implements Strategy {
 		for (StrategyCheckers sc : StrategyCheckers.values()) {
 			positions = sc.check(hand);
 			if (positions != null){
-				System.out.println("Passed with strat " + counter);
+//				System.out.println("Passed with strat " + counter);
 				return positions;
 			}
 			counter++;

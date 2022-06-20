@@ -50,6 +50,11 @@ public class DeckOfCards {
 			System.out.println("Card file " + filename + " not found.");
 			System.out.println("Exiting.");
 			System.exit(1);
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			System.out.println("Error on card file " + filename);
+			System.out.println("Exiting.");
+			System.exit(1);
 		}
 	}
 

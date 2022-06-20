@@ -121,6 +121,7 @@ public class HandOfCards {
 	 */
 	private void countFrequencies() {
 		Arrays.fill(faceFrequencies, 0);
+		Arrays.fill(suitFrequencies, 0);
 		for (Card card : hand) {
 			faceFrequencies[card.getFace()]++;
 			suitFrequencies[card.getSuit()]++;

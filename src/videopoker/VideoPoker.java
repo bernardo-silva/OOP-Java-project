@@ -211,12 +211,11 @@ public class VideoPoker {
 
 	private boolean gamePhase(char expectedAction) {
 		Action action = player.askAction();
-		System.out.println("Expecting " + expectedAction);
 		if (action == null)
 			return false;
 
-		while (action.getAction() == '$' || action.getAction() == 'a' ||
-				(action.getAction() == 's' && expectedAction == 'h')) {
+		while (action.getAction() == '$' || action.getAction() == 's' ||
+				(action.getAction() == 'a' && expectedAction == 'h')) {
 			if(debugMode) System.out.println();
 
 			performAction(action);
